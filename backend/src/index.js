@@ -1,6 +1,7 @@
 import os from 'os'
 import cluster from 'cluster'
-import dbconnect from './db';
+import dbconnect from './db/index.js';
+import app from './app.js';
 const numcpus= os.cpus().length
 if (cluster.isPrimary) {
     console.log(`masterprocessor is runnig.forking ${numcpus}`)
