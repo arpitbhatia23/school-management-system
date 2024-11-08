@@ -1,15 +1,14 @@
 
 import './App.css'
-import { Appsidebar } from '@/components/ui/appsidebar'
-import Navbar from './component/Navbar'
+import Navbar from '@/components/Navbar'
 
 function App() { 
 
   return (
     <>
     
-    <Appsidebar/>
-    {/* <Navbar/> */}
+    {/* <Appsidebar/> */}
+    <Navbar/>
     </>
   )
 }

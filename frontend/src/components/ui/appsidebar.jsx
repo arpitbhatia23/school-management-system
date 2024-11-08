@@ -26,6 +26,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarTrigger,
+  SidebarInset,
+  SidebarRail
 } from "@/components/ui/sidebar";
 
 // Menu items.
@@ -103,26 +106,28 @@ const items = [
   }
 ];
 
-export function Appsidebar() {
+export default function Appsidebar() {
   const [expandedSubmenu, setExpandedSubmenu] = useState(null);
-
+ 
   const toggleSubmenu = (title) => {
     setExpandedSubmenu((prev) => (prev === title ? null : title));
   };
 
   return (
     <SidebarProvider>
-      <Sidebar>
+      <SidebarTrigger/>
+      <Sidebar collapsible={"icon"} >
+      <SidebarRail/>
         <SidebarContent>
           <SidebarGroup className="px-0 py-0">
-            <SidebarGroupLabel className="text-sm text-black font-bold rounded-none bg-orange-600 py-8">
-              School Management System
+            <SidebarGroupLabel className="text-sm text-black font-bold rounded-none bg-orange-600 py-8 flex-row justify-center items-center">
+              School Management System     
             </SidebarGroupLabel>
             <SidebarGroupContent className="px-0 py-4">
               <SidebarMenu >
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title} className="px-0 py-1 border-b border-black">
-                    <SidebarMenuButton asChild >
+                    <SidebarMenuButton asChild className="peer-data-[active=true]/menu-button:opacity-100" >
                       <div
                         onClick={() => item.submenu && toggleSubmenu(item.title)}
                         className="flex items-center justify-between w-full cursor-pointer"

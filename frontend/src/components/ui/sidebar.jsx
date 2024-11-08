@@ -15,6 +15,7 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip"
 import { ViewVerticalIcon } from "@radix-ui/react-icons"
+import { MenuIcon } from "lucide-react";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -218,6 +219,7 @@ Sidebar.displayName = "Sidebar"
 const SidebarTrigger = React.forwardRef(({ className, onClick, ...props }, ref) => {
   const { toggleSidebar } = useSidebar()
 
+
   return (
     (<Button
       ref={ref}
@@ -230,7 +232,7 @@ const SidebarTrigger = React.forwardRef(({ className, onClick, ...props }, ref) 
         toggleSidebar()
       }}
       {...props}>
-      <ViewVerticalIcon />
+      <MenuIcon  />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>)
   );
