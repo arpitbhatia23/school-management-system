@@ -2,7 +2,7 @@
 import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva } from "class-variance-authority";
-import { cn } from "s/lib/utils"
+import { cn } from "../../lib/utils"
 import { Cross2Icon } from "@radix-ui/react-icons"
 
 const Sheet = SheetPrimitive.Root

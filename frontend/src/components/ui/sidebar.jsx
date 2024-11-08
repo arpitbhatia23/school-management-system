@@ -1,19 +1,19 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority";
-import { useIsMobile } from "src/hooks/use-mobile"
-import { cn } from "src/lib/utils"
-import { Button } from "src/components/ui/button"
-import { Input } from "src/components/ui/input"
-import { Separator } from "src/components/ui/separator"
-import { Sheet, SheetContent } from "src/components/ui/sheet"
-import { Skeleton } from "src/components/ui/skeleton"
+import { useIsMobile } from "../../hooks/use-mobile"
+import { cn } from "../../lib/utils"
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
+import { Separator } from "../ui/separator"
+import { Sheet, SheetContent } from "../ui/sheet"
+import { Skeleton } from "../ui/skeleton"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "src/components/ui/tooltip"
+} from "../ui/tooltip"
 import { ViewVerticalIcon } from "@radix-ui/react-icons"
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state"
