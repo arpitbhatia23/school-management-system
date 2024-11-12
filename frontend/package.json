@@ -9,9 +9,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "dev-host":"vite --host",
-    "format": "prettier --write .",
-    "preview": "vite preview"
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.1.1",
