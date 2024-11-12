@@ -10,4 +10,4 @@ const attendance = new Schema({
         enum:['leave','present','absent']
     }
 })
-export default attendance
+export const Attendance =model("attendance", attendance)

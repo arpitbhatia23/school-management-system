@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const assignment =new Schema ({
     title:{
@@ -22,4 +22,4 @@ const assignment =new Schema ({
         required:true
     }
 })
-export default assignment
+export const Assignment = model ('assignment',assignment)

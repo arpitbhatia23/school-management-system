@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const exam = new Schema({
     exam_title:{
@@ -22,4 +22,4 @@ const exam = new Schema({
         required:true
     }
 })
-export default exam
+export const Exam =model ('exam',exam)

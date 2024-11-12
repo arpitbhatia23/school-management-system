@@ -23,4 +23,4 @@ const result =new Schema({
         }
     }
 )
-export default result
+export const Result =model ('result',result)

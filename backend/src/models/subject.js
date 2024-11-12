@@ -18,4 +18,4 @@ const subject = new Schema({
         required:true
     }
 })
-export default subject
+export const Subject =model('subject', subject)
