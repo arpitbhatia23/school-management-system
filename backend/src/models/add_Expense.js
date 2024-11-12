@@ -1,4 +1,5 @@
-import { Schema } from "mongoose";
+
+import { model, Schema } from "mongoose";
 
 const add_Expense =new Schema({
     name:{
@@ -32,4 +33,4 @@ const add_Expense =new Schema({
             },
 
 })
-export default add_Expense
+export const add_expense = model ('add_expense',add_Expense)

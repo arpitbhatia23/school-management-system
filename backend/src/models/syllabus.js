@@ -18,4 +18,4 @@ const syllabus= new Schema({
         required:true
     }
 })
-export cosnt Syllabus =model('syllabus', syllabus)
+export const Syllabus =model('syllabus', syllabus)
