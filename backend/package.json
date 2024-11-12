@@ -1,73 +1,32 @@
 {
-  
   "name": "backend",
-  
   "version": "1.0.0",
-  
   "description": "school management sytem backend",
-  
   "main": "index.js",
-  
   "type": "module",
-  
   "scripts": {
-  
-    
-  "dev": "nodemon --env-file=.env src/index.js",
-  
-    
-  "start": "nodemon src/index.js"
-  
+    "format": "prettier --write .",
+    "dev": "nodemon --env-file=.env src/index.js",
+    "start": "nodemon src/index.js"
   },
-  
   "dependencies": {
-  
-    
-  "argon2": "^0.41.1",
-  
-    
-  "cookie-parser": "^1.4.7",
-  
-    
-  "cors": "^2.8.5",
-  
-    
-  "express": "^4.21.1",
-  
-    
-  "jsonwebtoken": "^9.0.2",
-  
-    
-  "mongoose": "^8.8.0",
-  
-    
-  "nodemon": "^3.1.7"
-  
+    "argon2": "^0.41.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.0",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3"
   },
-  
   "keywords": [
-  
-    
-  "backend",
-  
-    
-  "school",
-  
-    
-  "managment",
-  
-    
-  "system",
-  
-    
-  "node",
-  
-    
-  "js"
-  
+    "backend",
+    "school",
+    "managment",
+    "system",
+    "node",
+    "js"
   ],
-  
   "author": "Aurpit Tamanna",
-  
   "license": "ISC"
 }
