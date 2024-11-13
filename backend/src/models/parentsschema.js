@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const parents_schema = new Schema({
   father_name: {
@@ -23,4 +23,4 @@ const parents_schema = new Schema({
     required: true,
   },
 });
-export default parents_schema;
+export const parents_Detail= model('parents_schema', parents_schema)
