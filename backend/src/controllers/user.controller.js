@@ -21,7 +21,7 @@ const generateStudentRollNo = async (className) => {
 
 const register = asyncHandler(async (req, res) => {
     // Destructure main user details from request body
-    const { name, gender, email, password, role, profile, profile_image, phone_no } = req.body;
+    const { name, gender, email, password, role, profile, phone_no } = req.body;
 
     console.log(profile_image)
     // Validate required fields
@@ -77,7 +77,7 @@ const register = asyncHandler(async (req, res) => {
             profile: { ...profile, parents_Detail: parentsDetailRecord._id ,
                 roll_no
             },
-            profile_image,
+            
             phone_no,
         });
 
