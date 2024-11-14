@@ -60,9 +60,7 @@ const studentProfile = new Schema(
       unique: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
-
-
 
 export const Student = model('Student', studentProfile);
