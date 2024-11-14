@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { Student } from './studentprofile.js';
-import {teacher} from './teacherprofile.js';
+import { teacher } from './teacherprofile.js';
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 const userSchema = new mongoose.Schema(

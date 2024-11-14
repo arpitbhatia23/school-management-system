@@ -1,8 +1,8 @@
 class apiResponse {
-    constructor (statusCode,data,message='success'){
-        this.statusCode =statusCode,
-        this.data =data,
-        this.message=message
-    }
+  constructor(statusCode, data, message = 'success') {
+    (this.statusCode = statusCode),
+      (this.data = data),
+      (this.message = message);
+  }
 }
-export {apiResponse}
+export { apiResponse };
