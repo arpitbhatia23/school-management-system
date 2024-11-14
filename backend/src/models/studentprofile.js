@@ -35,7 +35,7 @@ const studentProfile = new Schema(
     parents_Detail: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: 'parents_schema',
+      ref: 'parents_Detail',
     },
     address: {
       type: String,

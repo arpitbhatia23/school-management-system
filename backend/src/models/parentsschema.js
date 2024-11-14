@@ -22,5 +22,5 @@ const parents_schema = new Schema({
     type: String,
     required: true,
   },
-});
-export const parents_Detail= model('parents_schema', parents_schema)
+},{timestamps:true});
+export const parents_Detail= model('parents_Detail', parents_schema)
