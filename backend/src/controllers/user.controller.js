@@ -23,7 +23,6 @@ const register = asyncHandler(async (req, res) => {
     // Destructure main user details from request body
     const { name, gender, email, password, role, profile, phone_no } = req.body;
 
-    console.log(profile_image)
     // Validate required fields
     if ([name, gender , role].some((field) =>field?.trim()==="")) {
         throw new apiError(400, "All user fields are required");
