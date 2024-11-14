@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { Student } from './studentprofile.js';
-import teacherProfile from './teacherprofile.js';
+import {teacher} from './teacherprofile.js';
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 const userSchema = new mongoose.Schema(
@@ -49,7 +49,7 @@ userSchema.pre('save', function (next) {
     if (error)
       return next(new Error(`Invalid student profile: ${error.message}`));
   } else if (this.role === 'teacher') {
-    const { error } = teacherProfile.validateSync(this.profile);
+    const { error } = teacher.validate(this.profile);
     if (error)
       return next(new Error(`Invalid teacher profile: ${error.message}`));
   }
