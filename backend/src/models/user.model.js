@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
-import studentProfile from './studentprofile';
-import teacherProfile from './teacherprofile';
+import { Student } from './studentprofile.js';
+import teacherProfile from './teacherprofile.js';
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 const userSchema = new mongoose.Schema(
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
     },
     profile_image: {
       type: String,
-      required: ture,
+      required: true,
     },
   },
   {
@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre('save', function (next) {
   if (this.role === 'student') {
-    const { error } = studentProfile.validateSync(this.profile);
+    const { error } = Student(this.profile);
     if (error)
       return next(new Error(`Invalid student profile: ${error.message}`));
   } else if (this.role === 'teacher') {
@@ -57,7 +57,7 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) return next();
+  if (!this.isModified('password')) return next();
   this.password = await argon2.hash(this.password, { type: argon2.argon2id });
   next();
 });
@@ -70,6 +70,7 @@ userSchema.methods.generateaccessToken = async function () {
     {
       _id: this._id,
       email: this.email,
+      role: this.role,
     },
     process.env.ACCESSTOKENSECRET,
     {

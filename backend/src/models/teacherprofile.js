@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const teacher_profile = new Schema({
   class_incharge: {
@@ -48,8 +48,8 @@ const teacher_profile = new Schema({
     required: true,
   },
   attendence: {
-    type: Schema.Types.objectid,
+    type: Schema.Types.ObjectId,
     required: true,
   },
 });
-export default teacher_profile;
+export const teacher= model('teacher', teacher_profile);
