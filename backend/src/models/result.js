@@ -21,6 +21,8 @@ const result =new Schema({
             type:String,
             required:true
         }
+    },{
+        timestamps:true
     }
 )
 export const Result =model ('result',result)

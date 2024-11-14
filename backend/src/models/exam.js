@@ -21,5 +21,5 @@ const exam = new Schema({
         type:String,
         required:true
     }
-})
+},{timestamps:true})
 export const Exam =model ('exam',exam)

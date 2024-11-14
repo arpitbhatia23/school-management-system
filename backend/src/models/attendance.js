@@ -9,5 +9,5 @@ const attendance = new Schema({
         type :String,
         enum:['leave','present','absent']
     }
-})
+},{timestamps:true})
 export const Attendance =model("attendance", attendance)

@@ -21,5 +21,5 @@ const assignment =new Schema ({
         type:String,
         required:true
     }
-})
+},{timestamps:true})
 export const Assignment = model ('assignment',assignment)

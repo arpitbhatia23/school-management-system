@@ -18,5 +18,5 @@ const syllabus= new Schema({
         type:String,
         required:true
     }
-})
+},{timestamps:true})
 export const Syllabus =model('syllabus', syllabus)

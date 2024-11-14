@@ -17,5 +17,5 @@ const subject = new Schema({
         type:String,
         required:true
     }
-})
+},{timestamps:true})
 export const Subject =model('subject', subject)

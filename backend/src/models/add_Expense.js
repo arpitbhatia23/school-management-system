@@ -32,5 +32,5 @@ const add_Expense =new Schema({
             required:true
             },
 
-})
+},{timestamps:true})
 export const add_expense = model ('add_expense',add_Expense)
