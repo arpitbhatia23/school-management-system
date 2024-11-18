@@ -15,15 +15,14 @@ const uploadonCloudinary = async (localfilepath) => {
             format: 'webp',
             transformation: [
                 {
-                    aspect_ratio: "1:1", 
-                    gravity: "face", 
-                    width: 600, 
-                    height: 700, 
-                    crop: "fill", 
-                    quality: "auto",
-                  }                
-            
-                ]
+                    aspect_ratio: '1:1',
+                    gravity: 'face',
+                    width: 600,
+                    height: 700,
+                    crop: 'fill',
+                    quality: 'auto',
+                },
+            ],
         });
         fs.unlinkSync(localfilepath);
         // console.log('response', response);
@@ -34,18 +33,14 @@ const uploadonCloudinary = async (localfilepath) => {
     }
 };
 
-
-
-const deleteOnCloudninary=async(public_id)=>{
+const deleteOnCloudninary = async (public_id) => {
     try {
-        if(!public_id){
-            return null
+        if (!public_id) {
+            return null;
         }
-        await cloudinary.uploader.destroy(public_id,{resource_type:"image"})
-        
+        await cloudinary.uploader.destroy(public_id, { resource_type: 'image' });
     } catch (error) {
-        console.log(error.message)
-        
+        console.log(error.message);
     }
-}
+};
 export default uploadonCloudinary;

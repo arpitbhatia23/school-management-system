@@ -34,9 +34,12 @@ const userSchema = new mongoose.Schema(
         },
         profile_image: {
             type: {
-                url:String,
-                public_id:String
+                url: String,
+                public_id: String,
             },
+        },
+        refreshToken: {
+            type: String,
         },
     },
     {
@@ -64,12 +67,18 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isPasswordCorrect = async function (password) {
     return await argon2.verify(this.password, password);
 };
+
+userSchema.methods.isPasswordcorrect = async function (password) {
+    console.log(password);
+    return await argon2.verify(this.password, password);
+};
 userSchema.methods.generateaccessToken = async function () {
     return jwt.sign(
         {
             _id: this._id,
             email: this.email,
             role: this.role,
+            name: this.name,
         },
         process.env.ACCESSTOKENSECRET,
         {
@@ -81,7 +90,7 @@ userSchema.methods.generateaccessToken = async function () {
 userSchema.methods.generaterefreshtoken = async function () {
     return jwt.sign(
         {
-            _id: this.id,
+            _id: this._id,
         },
         process.env.REFRESHTOKENSECRET,
         {

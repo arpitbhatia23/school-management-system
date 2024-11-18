@@ -5,6 +5,8 @@ import { parents_Detail } from '../models/parentsschema.js';
 import { apiResponse } from '../utils/apiResponse.js';
 // import cloudinary from "../utils/cloudinary.js";
 import uploadonCloudinary from '../utils/cloudinary.js';
+import { generateAccessTokenAndRefreshToken } from '../utils/generateToken.js';
+// generate student roll no
 const generateStudentRollNo = async (className) => {
     // Count the number of students in the specified class
     const studentCount = await User.countDocuments({
@@ -16,7 +18,7 @@ const generateStudentRollNo = async (className) => {
     const rollNo = `${studentCount + 1}`.padStart(3, '0'); // Ensure 3 digits
     return rollNo;
 };
-
+// register user
 const register = asyncHandler(async (req, res) => {
     // Destructure main user details from request body
     const {
@@ -47,12 +49,11 @@ const register = asyncHandler(async (req, res) => {
         throw new apiError(400, 'All user fields are required');
     }
 
-    console.log(name);
     // Handle student-specific logic
     if (role === 'student') {
-        const admission_Date =  Date.now();
-        if(!admission_Date){
-            throw new apiError(500,"some thing went wrong while gentating date")
+        const admission_Date = Date.now();
+        if (!admission_Date) {
+            throw new apiError(500, 'some thing went wrong while gentating date');
         }
         // Destructure and validate `parents` details
 
@@ -111,6 +112,7 @@ const register = asyncHandler(async (req, res) => {
 
         const profile_image = await uploadonCloudinary(avtar);
 
+        console.log('hi', profile_image);
         // Create user record with profile data
         const user = await User.create({
             name,
@@ -121,24 +123,25 @@ const register = asyncHandler(async (req, res) => {
             profile: { ...profile, parents_Detail: parentsDetailRecord._id, roll_no },
 
             phone_no,
-            profile_image:{ url:profile_image?.secure_url,
-                            public_id:profile_image?.public_id
-            },
+            profile_image: { url: profile_image?.secure_url, public_id: profile_image?.public_id },
         });
 
         if (!user) {
             throw new apiError(500, 'Error registering user');
         }
+        const createdUser = await User.findById(user._id).select('-password -refreshToken');
 
         // Return successful registration response
-        return res.status(201).json(new apiResponse(201, {}, 'student registered successfully'));
+        return res
+            .status(201)
+            .json(new apiResponse(201, createdUser, 'student registered successfully'));
     }
 
     // register teacher
     if (role === 'teacher') {
-        const admission_Date =  Date.now();
-        if(!admission_Date){
-            throw new apiError(500,"some thing went wrong while gentating date")
+        const admission_Date = Date.now();
+        if (!admission_Date) {
+            throw new apiError(500, 'some thing went wrong while gentating date');
         }
 
         if (
@@ -191,21 +194,22 @@ const register = asyncHandler(async (req, res) => {
             phone_no,
             email,
             password,
-            profile_image: profile_image?.secure_url,
+            profile_image: { url: profile_image?.secure_url, public_id: profile_image?.public_id },
         });
 
         if (!user) {
             throw new apiError(500, 'Error while registering user');
         }
-
-        return res.status(201).json(new apiResponse(201, {}, 'teacher registered successfully'));
+        const createdUser = await User.findById(user._id).select('-password -refreshToken');
+        return res
+            .status(201)
+            .json(new apiResponse(201, createdUser, 'teacher registered successfully'));
     }
     // register admin
 
     console.log(role);
 
     if (role === 'admin') {
-
         const avatar = req?.file?.path;
 
         const profile_image = await uploadonCloudinary(avatar);
@@ -226,7 +230,8 @@ const register = asyncHandler(async (req, res) => {
         if (!user) {
             throw new apiError(400, 'something went wrong while registering user');
         }
-        return res.status(201).json(new apiResponse(201, {}, 'admin create succesfully'));
+        const createdUser = await User.findById(user._id).select('-password -refreshToken');
+        return res.status(201).json(new apiResponse(201, createdUser, 'admin create succesfully'));
     }
 
     throw new apiError(400, 'role is  not matched');
@@ -234,6 +239,44 @@ const register = asyncHandler(async (req, res) => {
 
 // login
 
-const login = asyncHandler();
+const login = asyncHandler(async (req, res) => {
+    const { email, password, phone_no } = req.body;
 
-export { register };
+    if (!(email || phone_no)) {
+        throw new apiError(400, 'email and phone_no is required');
+    }
+    if (!password) {
+        throw new apiError(400, 'password is required');
+    }
+
+    const user = await User.findOne({ $or: [{ email }, { phone_no }] });
+    if (!user) {
+        throw new apiError(400, 'user not find');
+    }
+
+    const isValidPassword = await user.isPasswordcorrect(password);
+    if (!isValidPassword) {
+        throw new apiError(401, 'unauthorised user');
+    }
+
+    const { accessToken, refreshToken } = await generateAccessTokenAndRefreshToken(user._id);
+    const loggedInUser = await User.findById(user._id).select('-password -refreshToken');
+    const option = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    return res
+        .status(200)
+        .cookie('acessToken', accessToken, option)
+        .cookie('refreshToken', refreshToken, option)
+        .json(
+            new apiResponse(
+                200,
+                { user: loggedInUser, accessToken, refreshToken },
+                'user login suceesfully',
+            ),
+        );
+});
+
+export { register, login };
