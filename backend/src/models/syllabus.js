@@ -1,24 +1,24 @@
 import { model, Schema } from 'mongoose';
 
 const syllabus = new Schema(
-  {
-    title: {
-      type: String,
-      required: true,
+    {
+        title: {
+            type: String,
+            required: [true, 'title is required'],
+        },
+        subject: {
+            type: Schema.Types.ObjectId,
+            required: [true, 'subject is required'],
+        },
+        class: {
+            type: String,
+            required: [true, 'class is required'],
+        },
+        file: {
+            type: String,
+            required: [true, 'file is required'],
+        },
     },
-    subject: {
-      type: Schema.Types.ObjectId,
-      required: true,
-    },
-    class: {
-      type: String,
-      required: true,
-    },
-    file: {
-      type: String,
-      required: true,
-    },
-  },
-  { timestamps: true },
+    { timestamps: true },
 );
 export const Syllabus = model('syllabus', syllabus);
