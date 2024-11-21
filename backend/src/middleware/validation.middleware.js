@@ -17,7 +17,7 @@ export const validate = asyncHandler(async (req, res, next) => {
     if (parents_phone && !numberRegex.test(parents_phone)) {
         throw new apiError(400, 'Invalid parents_phone');
     }
-    if (parents_email && !numberRegex.test(parents_email)) {
+    if (parents_email && !emailRegex.test(parents_email)) {
         throw new apiError(400, 'Invalid parents_email');
     }
 
