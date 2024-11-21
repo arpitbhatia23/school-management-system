@@ -341,7 +341,9 @@ const updateProfileImage = asyncHandler(async (req, res) => {
         }
         const  image_id= user?.profile_image?.public_id
         const deleteImage =await deleteOnCloudninary(image_id)
-
+if(!deleteImage){
+    throw new apiError(400,'image delete failed')
+}
         user.profile_image = {url:newImage?.url,public_id:newImage.public_id}
         await user.save({validateBeforeSave:false})
         return res.status(200).json(
@@ -352,7 +354,7 @@ const updateProfileImage = asyncHandler(async (req, res) => {
 })
 
 
-//
+//change password
 
 const change_password=asyncHandler(async(req,res)=>{
     const {oldPassword,newPassword} = req.body;
@@ -372,5 +374,27 @@ return res.status(200).json(new apiResponse(200,{},'password changed successfull
 
 })
 
+// update profile 
+const update_profile_detail=asyncHandler(async(req,res)=>{
+    const { name,gender,phone_no,email} = req.body
 
-export { register, login,change_password,updateProfileImage };
+    const { _id } = req.user;
+
+    const user=await User.findById(_id)
+    if(!user){
+        throw new apiError(400,"user not found ")
+    }
+
+    const updatedUser=await User.findByIdAndUpdate(_id,{name,gender,phone_no,email},{new:true})
+
+    if(!updatedUser){
+        throw new apiError(500,"something went wrong while updating profile")
+    }
+
+    return res.status(200).json(new apiResponse(200,updatedUser,'profile updated successfully'))
+
+
+})
+
+
+export { register, login,change_password,updateProfileImage ,update_profile_detail};
