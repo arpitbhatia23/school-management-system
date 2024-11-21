@@ -333,7 +333,16 @@ const updateProfileImage = asyncHandler(async (req, res) => {
     if (!user) {
         throw new apiError(400, 'user not found');
     }
-    
+    const newImage = await uploadonCloudinary(image
+        );
+        user.profile_image = newImage
+        await user.save
+        return res.status(200).json(
+            new apiResponse
+            (200, { user }, 'profile image updated successfully')
+            )
+
+
 })
 
 
