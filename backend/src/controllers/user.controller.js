@@ -337,4 +337,25 @@ const updateProfileImage = asyncHandler(async (req, res) => {
 })
 
 
-export { register, login };
+//
+
+const change_password=asyncHandler(async(req,res)=>{
+    const {oldPassword,newPassword} = req.body;
+    if(!(oldPassword && newPassword)){
+        throw new apiError(400,'old password and new password is required')
+    }
+    const {_id}=req.user._id;
+    const user=await User.findById(_id);
+    const isValidPassword = await user.isPasswordcorrect(oldPassword);
+    if(!isValidPassword){
+        throw new apiError(401,'invalid old password')
+    }
+
+    user.password=newPassword
+    await user.save({validateBeforeSave:false})
+return res.status(200).json(new apiResponse(200,user,'password changed successfully'))
+
+})
+
+
+export { register, login,change_password };
