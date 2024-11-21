@@ -324,7 +324,8 @@ const login = asyncHandler(async (req, res) => {
 
 // update profile image 
 const updateProfileImage = asyncHandler(async (req, res) => {
-    const  image  = res?.file?.profile_image;
+    const  image  = req?.file?.path;
+    console.log(req.file)
     const { id } = req.user;
     const user = await User.findById(id);
     if (!image) {
@@ -340,11 +341,9 @@ const updateProfileImage = asyncHandler(async (req, res) => {
         }
         const  image_id= user?.profile_image?.public_id
         const deleteImage =await deleteOnCloudninary(image_id)
-        if(!deleteImage){
-            throw new apiError(500,'image delete failed')
-        }
+
         user.profile_image = {url:newImage?.url,public_id:newImage.public_id}
-        await user.save
+        await user.save({validateBeforeSave:false})
         return res.status(200).json(
             new apiResponse(200,{}, 'profile image updated successfully')
             )

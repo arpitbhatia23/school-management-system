@@ -4,14 +4,14 @@ import { User } from "../models/user.model.js";
 import jwt from 'jsonwebtoken'
 export const verifyJwt=asyncHandler(async(req,res,next)=>{
   try {
-    const token=  req.cookies?.accessToken || req.header('Authorization')?.replace('Bearer ','')
+    const token=  req.cookies?.acessToken || req.header('Authorization')?.replace('Bearer ','')
   
     if(!token){
       throw new apiError(401,'unauthorized request')
     }
    
 
-   const decodetokeninfo= jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+   const decodetokeninfo= jwt.verify(token, process.env.ACCESSTOKENSECRET)
   const user =await User.findById(decodetokeninfo?._id).select('-password -refreshToken')
   if(!user){
     console.log(401,'invalid access token')
