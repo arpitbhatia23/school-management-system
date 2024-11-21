@@ -4,7 +4,7 @@ import { User } from '../models/user.model.js';
 import { parents_Detail } from '../models/parentsschema.js';
 import { apiResponse } from '../utils/apiResponse.js';
 // import cloudinary from "../utils/cloudinary.js";
-import uploadonCloudinary from '../utils/cloudinary.js';
+import uploadonCloudinary, { deleteOnCloudninary } from '../utils/cloudinary.js';
 import { generateAccessTokenAndRefreshToken } from '../utils/generateToken.js';
 // generate student roll no
 const generateStudentRollNo = async (className) => {
@@ -335,11 +335,18 @@ const updateProfileImage = asyncHandler(async (req, res) => {
     }
     const newImage = await uploadonCloudinary(image
         );
-        user.profile_image = newImage
+        if(!newImage){
+            throw new apiError(400,'image upload failed')
+        }
+        const  image_id= user?.profile_image?.public_id
+        const deleteImage =await deleteOnCloudninary(image_id)
+        if(!deleteImage){
+            throw new apiError(500,'image delete failed')
+        }
+        user.profile_image = {url:newImage?.url,public_id:newImage.public_id}
         await user.save
         return res.status(200).json(
-            new apiResponse
-            (200, { user }, 'profile image updated successfully')
+            new apiResponse(200,{}, 'profile image updated successfully')
             )
 
 
@@ -353,7 +360,7 @@ const change_password=asyncHandler(async(req,res)=>{
     if(!(oldPassword && newPassword)){
         throw new apiError(400,'old password and new password is required')
     }
-    const {_id}=req.user._id;
+    const _id=req.user._id;
     const user=await User.findById(_id);
     const isValidPassword = await user.isPasswordcorrect(oldPassword);
     if(!isValidPassword){
@@ -362,9 +369,9 @@ const change_password=asyncHandler(async(req,res)=>{
 
     user.password=newPassword
     await user.save({validateBeforeSave:false})
-return res.status(200).json(new apiResponse(200,user,'password changed successfully'))
+return res.status(200).json(new apiResponse(200,{},'password changed successfully'))
 
 })
 
 
-export { register, login,change_password };
+export { register, login,change_password,updateProfileImage };
