@@ -299,7 +299,7 @@ const login = asyncHandler(async (req, res) => {
 
     const isValidPassword = await user.isPasswordcorrect(password);
     if (!isValidPassword) {
-        throw new apiError(401, 'unauthorised user');
+        throw new apiError(401, 'invailed password');
     }
 
     const { accessToken, refreshToken } = await generateAccessTokenAndRefreshToken(user._id);
@@ -325,7 +325,6 @@ const login = asyncHandler(async (req, res) => {
 // update profile image 
 const updateProfileImage = asyncHandler(async (req, res) => {
     const  image  = req?.file?.path;
-    console.log(req.file)
     const { id } = req.user;
     const user = await User.findById(id);
     if (!image) {
@@ -352,7 +351,7 @@ const updateProfileImage = asyncHandler(async (req, res) => {
 })
 
 
-//
+//change password
 
 const change_password=asyncHandler(async(req,res)=>{
     const {oldPassword,newPassword} = req.body;
