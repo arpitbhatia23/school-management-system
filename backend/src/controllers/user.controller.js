@@ -301,7 +301,7 @@ const login = asyncHandler(async (req, res) => {
 
     const isValidPassword = await user.isPasswordcorrect(password);
     if (!isValidPassword) {
-        throw new apiError(401, 'unauthorised user');
+        throw new apiError(401, ' invalid password');
     }
 
     const { accessToken, refreshToken } = await generateAccessTokenAndRefreshToken(user._id);
