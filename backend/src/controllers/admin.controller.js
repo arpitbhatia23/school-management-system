@@ -20,7 +20,7 @@ const getStudent = asyncHandler(async (req, res) => {
         },
         {
             $lookup: {
-                from: 'profiles', // Ensure the correct collection name is used
+                from: 'users', // Ensure the correct collection name is used
                 localField: 'profile', // Assuming 'profile' is the field in 'users' that references 'profiles'
                 foreignField: '_id',
                 as: 'profile'
