@@ -193,8 +193,9 @@ const register = asyncHandler(async (req, res) => {
         }
 
         const isUserexit = await User.findOne(
-            { $or: [{ email }, { phone_no }] },
-            { role: 'teacher' },
+            {  role: 'teacher',
+            $or: [{ email }, { phone_no }] },
+           
         );
         if (isUserexit) {
             throw new apiError(400, 'email or phone number already exist');
@@ -301,7 +302,7 @@ const login = asyncHandler(async (req, res) => {
 
     const isValidPassword = await user.isPasswordcorrect(password);
     if (!isValidPassword) {
-        throw new apiError(401, 'unauthorised user');
+        throw new apiError(401, ' invalid password');
     }
 
     const { accessToken, refreshToken } = await generateAccessTokenAndRefreshToken(user._id);

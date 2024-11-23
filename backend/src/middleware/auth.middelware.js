@@ -24,3 +24,16 @@ export const verifyJwt=asyncHandler(async(req,res,next)=>{
   }
 next()
 })
+
+export const verifyAdmin=asyncHandler(async(req,res,next)=>{
+  const token=  req.cookies?.acessToken || req.header('Authorization')?.replace('Bearer ','')
+  if(!token){
+    throw new apiError(401,'unauthorized request')
+  }
+  const decodetokeninfo= jwt.verify(token, process.env.ACCESSTOKENSECRET)
+   if(decodetokeninfo?.role!=='admin'){
+    throw new apiError(401,'unauthorized request only admin can access')
+   }
+   next()
+
+})

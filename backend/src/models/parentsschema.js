@@ -26,4 +26,4 @@ const parents_schema = new Schema(
     },
     { timestamps: true },
 );
-export const parents_Detail = model('parents_Detail', parents_schema);
+export const parents_Detail = model('parents_detail', parents_schema);
