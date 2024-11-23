@@ -15,7 +15,7 @@ app.use(status());
 // routers
 
 import userRouter from './router/user.routes.js';
-import adminRouter  from './router/admin.router.js';
+import adminRouter  from './router/admin.routes.js';
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/admin', adminRouter);

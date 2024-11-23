@@ -26,7 +26,7 @@ const studentProfile = new Schema(
         parents_Detail: {
             type: Schema.Types.ObjectId,
             required: [true, 'Parents detail is required'],
-            ref: 'parents_Detail',
+            ref: 'parents_details',
         },
         address: {
             type: String,
