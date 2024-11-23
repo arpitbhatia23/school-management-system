@@ -41,10 +41,10 @@ const studentProfile = new Schema(
             type: String,
             required: [true, 'Admission date is required'],
         },
-        attendance: {
+        attendance: [{
             type: Schema.Types.ObjectId,
             ref: 'Attendance',
-        },
+        }],
         roll_no: {
             type: String,
             required: [true, 'Roll number is required'],

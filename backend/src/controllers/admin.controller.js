@@ -184,8 +184,44 @@ return res.status(200).json(new apiResponse(200,updatedStudent,'student promoted
 
 // get all parents
 
-const getAllParents=asyncHandler(async()=>{
+const getAllParents=asyncHandler(async(req,res)=>{
+
+    const {name,className}=req.body
+    if(!(name&&className)){
+        throw new apiError(400,'name and class is required')
+    }
+
+const parents=await User.aggregate([
+    {$match:{$and:[{role:"student",name,"profile.className":className}]}},
+    {$lookup:{
+        from:"parents_details",
+        localField:"profile.parents_Detail",
+        foreignField:"_id",
+        as:"parents"
+    }},
+    {$unwind:"$parents"},
+
+    {$project:{
+
+        _id:0,
+        father_name:"$parents.father_name",
+        mother_name:"$parents.mother_name",
+        father_occupation:"$parents.father_occupation",
+        parents_email:"$parents.email",
+        parents_phone:"$parents.phone",
+        address:"$parents.address",
+        
+    }}
+   
+])
+
+if(parents.length===0){
+       throw new apiError(404,'parents not found') 
+}
+
+return res.status(200).json(new apiResponse(200,parents,'parents found'))
+
 
 
 })
-export { getStudent,getStudentById ,promoteStudents}
+export { getStudent,getStudentById ,promoteStudents,getAllParents}
