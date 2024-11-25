@@ -227,4 +227,36 @@ return res.status(200).json(new apiResponse(200,parents,'parents found'))
 
 
 })
-export { getStudent,getStudentById ,promoteStudents,getAllParents}
+// get all teacher
+const getAllTeacher= asyncHandler(async(req,res)=>{
+    const {name,class_incharge}= req.body
+    if(!(name||class_incharge))
+    {
+        throw new apiError(400,'name kne class tere pape pani')
+    }
+    const teachers= await User.aggregate([
+        {
+            $match:{
+                role:'teacher',
+                $or:[{'profile.class_incharge':class_incharge},{name:name}]
+            }}
+        ])
+        if(teachers.length===0){
+            throw new apiError(204,'teacher ni aaa')
+        }
+        return res.status(200).json(new apiResponse(200,teachers,'teachers found'))
+
+}) 
+// get teacher by id
+const getTeacherById =asyncHandler(async(res,req)=>{
+    const {id} =req.body
+    if(!getTeacherById){
+        throw new apiError(400,'id tere pape pani ki mmiya🤦‍♂️😖😡 ')
+    }
+    const teacher = await User.findById(_id)
+    if(!teacher){
+        throw new apiError(404,'guru ji ni mile 😒 koi or id pava....')
+        }
+        return res.status(200).json(new apiResponse(200,teacher,'😁guruji mili gye🤞'))
+    })
+export { getStudent,getStudentById ,promoteStudents,getAllParents,getTeacherById,getAllTeacher}
