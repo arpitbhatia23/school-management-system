@@ -192,7 +192,7 @@ const getAllParents = asyncHandler(async (req, res) => {
     const parents = await User.aggregate([
         {
             $match: {
-                $or: [{ role: 'student', name: name }, { 'profile.className': className || '' }],
+                $or: [{ role: 'student'},{ name: name }, { 'profile.className': className || '' }],
             },
         },
         {
