@@ -224,4 +224,48 @@ return res.status(200).json(new apiResponse(200,parents,'parents found'))
 
 
 })
-export { getStudent,getStudentById ,promoteStudents,getAllParents}
+//  get all teacher
+// get class_incharge and name from req.body
+// validate class_incharge and name 
+//  match classincharge and name with user
+//  if match return user
+//  else return error
+const getAllTeacher=asyncHandler(async(req,res)=>{
+    const {class_incharge,name}=req.body
+    // if(!class_incharge||name
+    //     ){
+    //         throw new apiError(400,'class_incharge or name is required')
+    //         }
+            const teacher=await User.aggregate
+            ([
+                {$match:{$and:[{role:"teacher",name:name,"profile.class_incharge":class_incharge}]}},
+                    {$project:{
+                        _id:0,
+                        name:"$name",
+                        class_incharge:"$profile.class_incharge",
+                        email:"$email",
+                        phone:"$phone_no",
+                        address:"$profile.address",
+                        profile_image:{image:"$profile_image.url"}
+                        }}
+                        ])
+                        if(teacher.length===0){
+                            throw new apiError(404,'teacher not found')
+                            }
+                            return res.status(200).json(new apiResponse(200,teacher,'teacher found'))
+                            })
+
+                            const getTeacherById =asyncHandler(async(res,req)=>{
+                                const {id} =req.body
+                                if(!getTeacherById){
+                                    throw new apiError(400,'id tere pape pani ki mmiya🤦‍♂️😖😡 ')
+                                }
+                                const teacher = await User.findById(_id)
+                                if(!teacher){
+                                    throw new apiError(404,'guru ji ni mile 😒 koi or id pava....')
+                                    }
+                                    return res.status(200).json(new apiResponse(200,teacher,'😁guruji mili gye🤞'))
+                                })
+
+                        
+export { getStudent,getStudentById ,promoteStudents,getAllParents,getAllTeacher,getTeacherById}
