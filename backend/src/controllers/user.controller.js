@@ -7,7 +7,7 @@ import { apiResponse } from '../utils/apiResponse.js';
 import uploadonCloudinary, { deleteOnCloudninary } from '../utils/cloudinary.js';
 import { generateAccessTokenAndRefreshToken } from '../utils/generateToken.js';
 
-import jwt from "jsonwebtoken"
+import jwt from 'jsonwebtoken';
 // generate student roll no
 const generateStudentRollNo = async (className) => {
     // Count the number of students in the specified class
@@ -47,9 +47,7 @@ const register = asyncHandler(async (req, res) => {
         qualification,
     } = req.body;
     // Validate required fields
-    console.log(
-        'check 1'
-    )
+    console.log('check 1');
     if ([name, gender, role].some((field) => field?.trim() === '')) {
         throw new apiError(400, 'All user fields are required');
     }
@@ -61,31 +59,33 @@ const register = asyncHandler(async (req, res) => {
             throw new apiError(500, 'some thing went wrong while gentating date');
         }
         // Destructure and validate `parents` details
-        console.log(
-            'check 2'
-        )
+        console.log('check 2');
         if (
             [father_name, mother_name, father_occupation, parents_email].some(
-                (field) => field?.trim() === ''
+                (field) => field?.trim() === '',
             )
-
         ) {
             throw new apiError(400, 'All parent fields are required');
         }
-        console.log(
-            'check 3'
-        )
+        console.log('check 3');
         if (!parents_phone) {
-            throw new apiError(400,'parents phone no required')
+            throw new apiError(400, 'parents phone no required');
         }
+        console.log('check 4');
         console.log(
-            'check 4'
-        )
-        console.log(className ,DOB,religion,blood_group,nationality,category,address,admission_Date)
+            className,
+            DOB,
+            religion,
+            blood_group,
+            nationality,
+            category,
+            address,
+            admission_Date,
+        );
         // Destructure and validate additional profile details
         if (
-            
-               !(className &&
+            !(
+                className &&
                 DOB &&
                 religion &&
                 blood_group &&
@@ -94,7 +94,6 @@ const register = asyncHandler(async (req, res) => {
                 category &&
                 admission_Date
             )
-            
         ) {
             throw new apiError(400, 'All profile fields are required');
         }
@@ -116,9 +115,7 @@ const register = asyncHandler(async (req, res) => {
             phone: parents_phone,
             email: parents_email,
         });
-        console.log(
-            'check 5'
-        )
+        console.log('check 5');
 
         if (!parentsDetailRecord) {
             throw new apiError(500, 'Error registering parent details');
@@ -130,14 +127,13 @@ const register = asyncHandler(async (req, res) => {
 
         // upload profile image on cloudnary
         const avtar = req.file?.path;
-        if(!avtar){
+        if (!avtar) {
             throw new apiError(400, 'Profile image is required');
         }
 
         const profile_image = await uploadonCloudinary(avtar);
         if (!profile_image) {
-            throw new apiError(400,"something went wrong in cloudnary");
-            
+            throw new apiError(400, 'something went wrong in cloudnary');
         }
 
         console.log('hi', profile_image);
@@ -153,9 +149,7 @@ const register = asyncHandler(async (req, res) => {
             phone_no,
             profile_image: { url: profile_image?.secure_url, public_id: profile_image?.public_id },
         });
-        console.log(
-            'check 6'
-        )
+        console.log('check 6');
 
         if (!user) {
             throw new apiError(500, 'Error registering user');
@@ -192,23 +186,18 @@ const register = asyncHandler(async (req, res) => {
             throw new apiError(400, 'All teacher profile fields are required');
         }
 
-        const isUserexit = await User.findOne(
-            {  role: 'teacher',
-            $or: [{ email }, { phone_no }] },
-           
-        );
+        const isUserexit = await User.findOne({ role: 'teacher', $or: [{ email }, { phone_no }] });
         if (isUserexit) {
             throw new apiError(400, 'email or phone number already exist');
         }
 
         const avatar = req?.file?.path;
-        if(!avatar){
-            throw new apiError(400,"image is required");
-            
+        if (!avatar) {
+            throw new apiError(400, 'image is required');
         }
         const profile_image = await uploadonCloudinary(avatar);
-        if(!profile_image){
-            throw new apiError(400, 'Error uploading image')
+        if (!profile_image) {
+            throw new apiError(400, 'Error uploading image');
         }
 
         const profile = {
@@ -250,14 +239,13 @@ const register = asyncHandler(async (req, res) => {
 
     if (role === 'admin') {
         const avatar = req?.file?.path;
-        if(!avatar){
-            throw new apiError(400,"image is required");
+        if (!avatar) {
+            throw new apiError(400, 'image is required');
         }
 
         const profile_image = await uploadonCloudinary(avatar);
-        if(!profile_image)
-        {
-            throw new apiError(400, 'Error uploading image')
+        if (!profile_image) {
+            throw new apiError(400, 'Error uploading image');
         }
         if (!(email && password)) {
             throw new apiError(400, 'email and password is required');
@@ -287,33 +275,37 @@ const register = asyncHandler(async (req, res) => {
 
 const login = asyncHandler(async (req, res) => {
     const { email, password, phone_no } = req.body;
-
+    console.log('check 1');
     if (!(email || phone_no)) {
         throw new apiError(400, 'email and phone_no is required');
     }
+    console.log('check 2');
+
     if (!password) {
         throw new apiError(400, 'password is required');
     }
+    console.log('check 3');
 
     const user = await User.findOne({ $or: [{ email }, { phone_no }] });
     if (!user) {
         throw new apiError(400, 'user not find');
     }
+    console.log('check 4');
 
     const isValidPassword = await user.isPasswordcorrect(password);
     if (!isValidPassword) {
         throw new apiError(401, ' invalid password');
     }
+    console.log('check 5');
 
     const { accessToken, refreshToken } = await generateAccessTokenAndRefreshToken(user._id);
     const loggedInUser = await User.findById(user._id).select('-password -refreshToken');
-    loggedInUser.refreshToken=refreshToken
-    await loggedInUser.save({validateBeforeSave:false})
+    loggedInUser.refreshToken = refreshToken;
+    await loggedInUser.save({ validateBeforeSave: false });
     const option = {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
-
+        sameSite: 'strict',
     };
 
     return res
@@ -329,160 +321,168 @@ const login = asyncHandler(async (req, res) => {
         );
 });
 
-// update profile image 
+// update profile image
 const updateProfileImage = asyncHandler(async (req, res) => {
-    const  image  = req?.file?.path;
+    const image = req?.file?.path;
     const { id } = req.user;
     const user = await User.findById(id);
     if (!image) {
-        throw new apiError(400,'image is required')
+        throw new apiError(400, 'image is required');
     }
     if (!user) {
         throw new apiError(400, 'user not found');
     }
-    const newImage = await uploadonCloudinary(image
-        );
-        if(!newImage){
-            throw new apiError(400,'image upload failed')
-        }
-        const  image_id= user?.profile_image?.public_id
-        const deleteImage =await deleteOnCloudninary(image_id)
-if(!deleteImage){
-    throw new apiError(400,'image delete failed')
-}
-        user.profile_image = {url:newImage?.url,public_id:newImage.public_id}
-        await user.save({validateBeforeSave:false})
-        return res.status(200).json(
-            new apiResponse(200,{}, 'profile image updated successfully')
-            )
-
-
-})
-
+    const newImage = await uploadonCloudinary(image);
+    if (!newImage) {
+        throw new apiError(400, 'image upload failed');
+    }
+    const image_id = user?.profile_image?.public_id;
+    const deleteImage = await deleteOnCloudninary(image_id);
+    if (!deleteImage) {
+        throw new apiError(400, 'image delete failed');
+    }
+    user.profile_image = { url: newImage?.url, public_id: newImage.public_id };
+    await user.save({ validateBeforeSave: false });
+    return res.status(200).json(new apiResponse(200, {}, 'profile image updated successfully'));
+});
 
 //change password
 
-const change_password=asyncHandler(async(req,res)=>{
-    const {oldPassword,newPassword} = req.body;
-    if(!(oldPassword && newPassword)){
-        throw new apiError(400,'old password and new password is required')
+const change_password = asyncHandler(async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    if (!(oldPassword && newPassword)) {
+        throw new apiError(400, 'old password and new password is required');
     }
-    const _id=req.user._id;
-    const user=await User.findById(_id);
+    const _id = req.user._id;
+    const user = await User.findById(_id);
     const isValidPassword = await user.isPasswordcorrect(oldPassword);
-    if(!isValidPassword){
-        throw new apiError(401,'invalid old password')
+    if (!isValidPassword) {
+        throw new apiError(401, 'invalid old password');
     }
 
-    user.password=newPassword
-    await user.save({validateBeforeSave:false})
-return res.status(200).json(new apiResponse(200,{},'password changed successfully'))
+    user.password = newPassword;
+    await user.save({ validateBeforeSave: false });
+    return res.status(200).json(new apiResponse(200, {}, 'password changed successfully'));
+});
 
-})
-
-// update profile 
-const update_profile_detail=asyncHandler(async(req,res)=>{
-    const { name,gender,phone_no,email} = req.body
+// update profile
+const update_profile_detail = asyncHandler(async (req, res) => {
+    const { name, gender, phone_no, email } = req.body;
 
     const { _id } = req.user;
 
-    const user=await User.findById(_id)
-    if(!user){
-        throw new apiError(400,"user not found ")
+    const user = await User.findById(_id);
+    if (!user) {
+        throw new apiError(400, 'user not found ');
     }
 
-    const updatedUser=await User.findByIdAndUpdate(_id,{name,gender,phone_no,email},{new:true})
+    const updatedUser = await User.findByIdAndUpdate(
+        _id,
+        { name, gender, phone_no, email },
+        { new: true },
+    );
 
-    if(!updatedUser){
-        throw new apiError(500,"something went wrong while updating profile")
+    if (!updatedUser) {
+        throw new apiError(500, 'something went wrong while updating profile');
     }
 
-    return res.status(200).json(new apiResponse(200,updatedUser,'profile updated successfully'))
+    return res.status(200).json(new apiResponse(200, updatedUser, 'profile updated successfully'));
+});
 
+const logout = asyncHandler(async (req, res) => {
+    const _id = req?.user?._id;
+    await User.findByIdAndUpdate(
+        _id,
+        {
+            $unset: { refreshToken: 1 },
+        },
+        { new: true },
+    );
 
-})
-
-const logout =asyncHandler(async(req,res)=>{
-    const _id=req?.user?._id
-   await User.findByIdAndUpdate(_id,{
-        $unset:{refreshToken:1}
-    },{new:true})
-
-    return res.status(200).json(new apiResponse(200,{},'user logout successfully'))
-    
-})
+    return res.status(200).json(new apiResponse(200, {}, 'user logout successfully'));
+});
 // update refreshtoken
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
-  
+
     // Check if refresh token is provided
     if (!incomingRefreshToken) {
-      throw new apiError(401, "Unauthorized request - refresh token is missing");
+        throw new apiError(401, 'Unauthorized request - refresh token is missing');
     }
-  
+
     try {
-      // Verify the incoming refresh token
-      const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESHTOKENSECRET);
-      console.log("Decoded Token:", decodedToken);
-  
-      // Fetch the user from the database
-      const user = await User.findById(decodedToken?._id);
-      if (!user) {
-        throw new apiError(401, "Invalid refresh token - user not found");
-      }
-  
-      // Check if the refresh token matches
-      if (incomingRefreshToken !== user.refreshToken) {
-        throw new apiError(401, "Refresh token is expired or already used");
-      }
-  
-      // Generate new tokens
-      const { accessToken, refreshToken } = await generateAccessTokenAndRefreshToken(user._id);
-  
-      // Update the user's refresh token in the database
-      user.refreshToken = refreshToken;
-      await user.save();
-  
-      // Set cookie options
-      const cookieOptions = {
-        httpOnly: true,
-        secure: true, // Only secure in production
-        sameSite: "strict",
-      };
-  
-      // Send the new tokens in cookies and response
-      return res
-        .status(200)
-        .cookie("acessToken", accessToken, { ...cookieOptions }) // Correct name
-        .cookie("refreshToken", refreshToken, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1000 }) // Refresh token persistent
-        .json(
-          new apiResponse(
-            200,
-            {
-              newRefreshToken: refreshToken,
-              accessToken,
-            },
-            "Access token refreshed successfully"
-          )
-        );
+        // Verify the incoming refresh token
+        const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESHTOKENSECRET);
+        console.log('Decoded Token:', decodedToken);
+
+        // Fetch the user from the database
+        const user = await User.findById(decodedToken?._id);
+        if (!user) {
+            throw new apiError(401, 'Invalid refresh token - user not found');
+        }
+
+        // Check if the refresh token matches
+        if (incomingRefreshToken !== user.refreshToken) {
+            throw new apiError(401, 'Refresh token is expired or already used');
+        }
+
+        // Generate new tokens
+        const { accessToken, refreshToken } = await generateAccessTokenAndRefreshToken(user._id);
+
+        // Update the user's refresh token in the database
+        user.refreshToken = refreshToken;
+        await user.save();
+
+        // Set cookie options
+        const cookieOptions = {
+            httpOnly: true,
+            secure: true, // Only secure in production
+            sameSite: 'strict',
+        };
+
+        // Send the new tokens in cookies and response
+        return res
+            .status(200)
+            .cookie('acessToken', accessToken, { ...cookieOptions }) // Correct name
+            .cookie('refreshToken', refreshToken, {
+                ...cookieOptions,
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+            }) // Refresh token persistent
+            .json(
+                new apiResponse(
+                    200,
+                    {
+                        newRefreshToken: refreshToken,
+                        accessToken,
+                    },
+                    'Access token refreshed successfully',
+                ),
+            );
     } catch (error) {
-      // Handle specific JWT errors
-      if (error.name === "TokenExpiredError") {
-        throw new apiError(401, "Refresh token expired, please log in again");
-      } else if (error.name === "JsonWebTokenError") {
-        throw new apiError(401, "Invalid token");
-      } else {
-        throw new apiError(401, error.message || "Authentication error");
-      }
+        // Handle specific JWT errors
+        if (error.name === 'TokenExpiredError') {
+            throw new apiError(401, 'Refresh token expired, please log in again');
+        } else if (error.name === 'JsonWebTokenError') {
+            throw new apiError(401, 'Invalid token');
+        } else {
+            throw new apiError(401, error.message || 'Authentication error');
+        }
     }
-  });
-  
+});
 
- // current user
+// current user
 
- const currentUser=asyncHandler(async(req,res)=>{
-    return res.status(200).json(new apiResponse(200,req.user,'current user'))
-     
- })
+const currentUser = asyncHandler(async (req, res) => {
+    return res.status(200).json(new apiResponse(200, req.user, 'current user'));
+});
 
-export { register, login,change_password,updateProfileImage ,update_profile_detail,logout,refreshAccessToken,currentUser};
+export {
+    register,
+    login,
+    change_password,
+    updateProfileImage,
+    update_profile_detail,
+    logout,
+    refreshAccessToken,
+    currentUser,
+};

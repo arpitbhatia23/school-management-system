@@ -2,9 +2,9 @@ import { model, Schema } from 'mongoose';
 
 const attendance = new Schema(
     {
-        student_id:{
-            type:string,
-            required:[true,'student id is required'],
+        student_id: {
+            type: string,
+            required: [true, 'student id is required'],
         },
         date: {
             type: date,

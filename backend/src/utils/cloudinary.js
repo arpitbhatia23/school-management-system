@@ -38,8 +38,8 @@ const deleteOnCloudninary = async (public_id) => {
         if (!public_id) {
             return null;
         }
-     const res=    await cloudinary.uploader.destroy(public_id, { resource_type: 'image' });
-        return  res
+        const res = await cloudinary.uploader.destroy(public_id, { resource_type: 'image' });
+        return res;
     } catch (error) {
         console.log(error.message);
     }
