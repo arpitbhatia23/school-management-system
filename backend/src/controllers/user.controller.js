@@ -208,7 +208,6 @@ const register = asyncHandler(async (req, res) => {
             qualification,
             phone_no,
             email,
-            subject,
             admission_Date,
             address,
             DOB,

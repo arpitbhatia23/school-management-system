@@ -30,10 +30,6 @@ const teacher_profile = new Schema(
             type: String,
             required: [true, 'Addmission date is required'],
         },
-        subject: {
-            type: String,
-            required: [true, 'Subject is required'],
-        },
         qualification: {
             type: String,
             required: [true, 'Qualification is required'],

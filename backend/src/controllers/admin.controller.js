@@ -4,6 +4,7 @@ import { apiError } from '../utils/apiError.js';
 import { apiResponse } from '../utils/apiResponse.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import mongoose from 'mongoose';
+import { Subject } from '../models/subject.js';
 
 // Get student
 const getStudent = asyncHandler(async (req, res) => {
@@ -248,10 +249,10 @@ const getAllTeacher= asyncHandler(async(req,res)=>{
 
 }) 
 // get teacher by id
-const getTeacherById =asyncHandler(async(res,req)=>{
+const getTeacherById =asyncHandler(async(req,res)=>{
     const {id} =req.body
-    if(!getTeacherById){
-        throw new apiError(400,'id tere pape pani ki mmiya🤦‍♂️😖😡 ')
+    if(!id){
+        throw new apiError(400,'id tere pape pani ki mmiya 🤦‍♂️😖😡 ')
     }
     const teacher = await User.findById(_id)
     if(!teacher){
@@ -259,4 +260,72 @@ const getTeacherById =asyncHandler(async(res,req)=>{
         }
         return res.status(200).json(new apiResponse(200,teacher,'😁guruji mili gye🤞'))
     })
-export { getStudent,getStudentById ,promoteStudents,getAllParents,getTeacherById,getAllTeacher}
+
+
+
+
+
+
+
+
+// add subject
+
+    const addsuject=asyncHandler(async(req,res)=>{
+   const {subject_name,class_name,day,teacher_id}=req.body
+if([subject_name,class_name,day,teacher_id].some(fileds=>fileds?.trim()==='')){
+ throw new apiError(400,'all fields are required')
+}
+const subject = await Subject.create({
+    subject_name,
+    class:class_name,
+    days:day,
+    teacher_id
+})
+
+if(!subject){
+    throw new apiError(400,'some thing went wrong while registering subject')
+}
+
+return res.status(200).json(new apiResponse(200,subject,'subject registered successfully'))
+
+        
+    })
+
+ // getall subject 
+ const getallsubject=asyncHandler(async(req,res)=>{
+    const {subject_name,class_name}=req.body
+const sujects=await Subject.aggregate([
+    {
+    $match:{$or:[
+        {subject_name:subject_name||""},
+        {class:{$regex: class_name||"",$options:"i"}}]}
+    },
+    {
+        $lookup:{
+            from:"users",
+            localField:"teacher_id",
+            foreignField:"_id",
+            as:"teacher"
+        }
+    },
+    {$unwind:"$teacher"},
+    {
+    $project:{
+        subject_name:1,
+        days:1,
+        class:1,
+        teacher_name:"$teacher.name"
+    }
+    }
+
+    
+])
+if(sujects.length===0){
+    throw new apiError(404,'subject not found')
+}
+
+return res.status(200).json(new apiResponse(200,sujects,'sujects found'))
+ })
+
+
+export { getStudent,getStudentById ,promoteStudents,getAllParents,getTeacherById,getAllTeacher,addsuject,getallsubject}

@@ -6,9 +6,9 @@ const subject = new Schema(
             type: String,
             required: [true, 'Subject name is required'],
         },
-        teacher_name: {
-            type: String,
-            required: [true, 'Teacher name is required'],
+        teacher_id: {
+            type: Schema.Types.ObjectId,
+            required:[true,"Teacher id is required"],
         },
         class: {
             type: String,
