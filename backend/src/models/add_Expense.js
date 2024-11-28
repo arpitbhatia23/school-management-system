@@ -20,7 +20,7 @@ const add_Expense = new Schema(
             required: [true, 'amount is required'],
         },
         due_date: {
-            type: Date,
+            type: String,
             required: [true, 'due date is required'],
         },
         email: {

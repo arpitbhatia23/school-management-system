@@ -4,7 +4,8 @@ import { apiError } from '../utils/apiError.js';
 import { apiResponse } from '../utils/apiResponse.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import mongoose from 'mongoose';
-import { Subject } from '../models/subject.js';
+import { parents_Detail } from '../models/parentsschema.js';
+import { add_expense } from '../models/add_Expense.js';
 
 // Get student
 const getStudent = asyncHandler(async (req, res) => {
@@ -209,6 +210,7 @@ const getAllParents = asyncHandler(async (req, res) => {
         {
             $project: {
                 _id: 0,
+                parents_id:'$parents._id',
                 father_name: '$parents.father_name',
                 mother_name: '$parents.mother_name',
                 father_occupation: '$parents.father_occupation',
@@ -252,80 +254,102 @@ const getAllTeacher= asyncHandler(async(req,res)=>{
 const getTeacherById =asyncHandler(async(req,res)=>{
     const {id} =req.body
     if(!id){
-        throw new apiError(400,'id tere pape pani ki mmiya 🤦‍♂️😖😡 ')
+        throw new apiError(400,'id tere pape pani ki mmiya🤦‍♂️😖😡 ')
     }
-    const teacher = await User.findById(_id)
+    const teacher = await User.findById(id)
     if(!teacher){
         throw new apiError(404,'guru ji ni mile 😒 koi or id pava....')
         }
         return res.status(200).json(new apiResponse(200,teacher,'😁guruji mili gye🤞'))
     })
 
-
-
-
-
-
-
-
-// add subject
-
-    const addsuject=asyncHandler(async(req,res)=>{
-   const {subject_name,class_name,day,teacher_id}=req.body
-if([subject_name,class_name,day,teacher_id].some(fileds=>fileds?.trim()==='')){
- throw new apiError(400,'all fields are required')
-}
-const subject = await Subject.create({
-    subject_name,
-    class:class_name,
-    days:day,
-    teacher_id
-})
-
-if(!subject){
-    throw new apiError(400,'some thing went wrong while registering subject')
-}
-
-return res.status(200).json(new apiResponse(200,subject,'subject registered successfully'))
-
-        
-    })
-
- // getall subject 
- const getallsubject=asyncHandler(async(req,res)=>{
-    const {subject_name,class_name}=req.body
-const sujects=await Subject.aggregate([
-    {
-    $match:{$or:[
-        {subject_name:subject_name||""},
-        {class:{$regex: class_name||"",$options:"i"}}]}
-    },
-    {
-        $lookup:{
-            from:"users",
-            localField:"teacher_id",
-            foreignField:"_id",
-            as:"teacher"
+    //get Parents by id
+    const getParentsById = asyncHandler(async(req,res)=>{
+        const {id}= req.body
+        if(!id){
+            throw new apiError(400,'master ji id dalna bhul gye,Dhyan kon c madam pr hai😁')
         }
-    },
-    {$unwind:"$teacher"},
-    {
-    $project:{
-        subject_name:1,
-        days:1,
-        class:1,
-        teacher_name:"$teacher.name"
-    }
-    }
-
+        const parents= await parents_Detail.findById(id)
+        if(!parents){
+throw new apiError(404,"master ji ni mili  vaise kiski mmy ko dhund re ho . ")
+        }
+        return res.status(200).json(new apiResponse(200,parents,"mil gye ab mt chodna bache ko sari sikayat lgana 😂"))
+    })
     
-])
-if(sujects.length===0){
-    throw new apiError(404,'subject not found')
+    // add new expense
+    const addNewExpense = asyncHandler(async(req,res)=>{ 
+        const {
+            name,
+            expense_type,
+            status,
+            amount,
+            due_date,
+              email,
+            phone
+                     }=req.body
+                     if([name,expense_type,
+                        status,
+                        amount,
+                        due_date,
+                          email,
+                        phone].some((field)=> field?.trim()==="")){
+
+                          throw new apiError(400,'all fieslds are required')
+
+    }
+    const expense = await add_expense.create({
+        name,
+        expense_type,
+        status,
+        amount,
+        due_date,
+        email,
+        phone
+})
+    if(!expense){
+        throw new apiError(404,'expense ni add hua😒')
+    }
+
+
+                   return res.status(200).json (new apiResponse(200,expense,"expense added "))
+                
+})
+// get all expense
+const getAllExpense = asyncHandler(async(req,res)=>{
+    const {name,status,expense_type}=req.body
+    if(!(name||status||expense_type)){
+        throw new apiError(400,'all fields are required')
+    }
+
+    const getExpense= await add_expense.aggregate(
+        [
+            {
+                $match: {
+                    $or:[
+                        {name:name},
+                        {status:status},
+                        {expense_type:expense_type},
+                        
+                    ],
+                    }
+                    },
+                    {
+                        $project:{
+                            name:1,
+                            expense_type:1,
+                            status:1,
+                            amount:1,
+                            due_date:1,
+                            email:1,
+                            phone:1
+                            }
+                            }
+                            ])
+if(getExpense.length===0){
+    throw new apiError(404,'no expense found')
 }
+return res.status(200).json(new apiResponse(200,getExpense,"expense found "))
+})
+   
 
-return res.status(200).json(new apiResponse(200,sujects,'sujects found'))
- })
-
-
-export { getStudent,getStudentById ,promoteStudents,getAllParents,getTeacherById,getAllTeacher,addsuject,getallsubject}
+export { getStudent,getStudentById ,promoteStudents,getAllParents,getTeacherById,getAllTeacher,getParentsById,addNewExpense,getAllExpense}
