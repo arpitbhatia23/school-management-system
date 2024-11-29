@@ -7,7 +7,6 @@ import mongoose from 'mongoose';
 import { Subject } from '../models/subject.js';
 import {add_expense} from "../models/add_Expense.js"
 import { parents_Detail } from '../models/parentsschema.js';
-import { parents_Detail } from '../models/parentsschema.js';
 
 // Get student
 const getStudent = asyncHandler(async (req, res) => {
@@ -330,6 +329,27 @@ if(sujects.length===0){
 return res.status(200).json(new apiResponse(200,sujects,'sujects found'))
  })
 
+//  update subject
+const updateSubject = asyncHandler(async(req,res)=>{
+    const {subject_id,subject_name,class_name,days,teacher_id}=req.body
+    if(!isValidObjectId(subject_id)){
+        throw new apiError(400,"subject_id is required")
+    }
+    // findby id and update
+   const subject =await Subject. findByIdAndUpdate(subject_id,
+        {$set:{subject_name,
+            class:class_name,
+        days,
+    teacher_id}},
+    {new:true}
+        )
+    if(!subject){
+        throw new apiError(404,'subject not found ')
+    }
+    return res.status(200).json( new apiResponse(200,subject,"subject updated "))
+})
+
+//  get parents byid
  const getParentsById = asyncHandler(async(req,res)=>{
     const {id}= req.body
     if(!id){
@@ -418,4 +438,4 @@ return res.status(200).json(new apiResponse(200,getExpense,"expense found "))
 })
 
 
-export { getStudent,getStudentById ,promoteStudents,getAllParents,getTeacherById,getAllTeacher,addsuject,getallsubject,getAllExpense,getParentsById,addNewExpense}
+export { getStudent,getStudentById ,promoteStudents,getAllParents,getTeacherById,getAllTeacher,addsuject,getallsubject,getAllExpense,getParentsById,addNewExpense,updateSubject}
