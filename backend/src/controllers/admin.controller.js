@@ -7,7 +7,6 @@ import mongoose from 'mongoose';
 import { Subject } from '../models/subject.js';
 import {add_expense} from "../models/add_Expense.js"
 import { parents_Detail } from '../models/parentsschema.js';
-import { parents_Detail } from '../models/parentsschema.js';
 
 // Get student
 const getStudent = asyncHandler(async (req, res) => {
@@ -417,5 +416,21 @@ throw new apiError(404,'no expense found')
 return res.status(200).json(new apiResponse(200,getExpense,"expense found "))
 })
 
+// update parents by id 
 
-export { getStudent,getStudentById ,promoteStudents,getAllParents,getTeacherById,getAllTeacher,addsuject,getallsubject,getAllExpense,getParentsById,addNewExpense}
+const updateParentsById=asyncHandler(async(req,res)=>{
+    const {father_name,mother_name,father_occupation,parents_email,parents_phone,parents_id}=req.body
+    if(!isValidObjectId(parents_id)){
+        throw new apiError(400,'invalid id')
+    }
+ const  updatedParents =await parents_Detail.findByIdAndUpdate(parents_id,{$set:{father_name,mother_name,father_occupation,parents_email,parents_phone}},{new:true})
+ if(!updatedParents){
+    throw new apiError(404,"some thing went wrong while updating parents") 
+
+ }
+ return res.status(200).json(new apiResponse(200,updatedParents,"parents updated successfully"))
+
+})
+
+
+export { getStudent,getStudentById ,promoteStudents,getAllParents,getTeacherById,getAllTeacher,addsuject,getallsubject,getAllExpense,getParentsById,addNewExpense,updateParentsById}

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { verifyAdmin, verifyJwt } from "../middleware/auth.middelware.js";
-import { addsuject, getAllParents, getallsubject, getAllTeacher, getStudent ,getStudentById, getTeacherById, promoteStudents,getParentsById,addNewExpense,getAllExpense} from "../controllers/admin.controller.js";
+import { addsuject, getAllParents, getallsubject, getAllTeacher, getStudent ,getStudentById, getTeacherById, promoteStudents,getParentsById,addNewExpense,getAllExpense, updateParentsById} from "../controllers/admin.controller.js";
 const router =Router()
 router.route('/getstudent').get(verifyJwt,getStudent)
  router.route('/getstudentbyid/:student_id').get(verifyJwt,getStudentById)
@@ -13,5 +13,6 @@ router.route("/getallsubject").get(verifyJwt,verifyAdmin,getallsubject)
 router.route('/getparentsById').get(verifyJwt,getParentsById)
 router.route('/addNewExpense').post(verifyJwt,addNewExpense)
 router.route('/getAllExpense').get(verifyJwt,getAllExpense)
+router.route("/updateParentsById").patch(verifyJwt,verifyAdmin,updateParentsById)
 export default router
 
