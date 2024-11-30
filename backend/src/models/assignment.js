@@ -6,10 +6,7 @@ const assignment = new Schema(
             type: String,
             required: [true, 'title is required'],
         },
-        discription: {
-            type: String,
-            required: [true, 'discription is required'],
-        },
+       
         due_date: {
             type: Date,
             required: [true, 'due date is required'],
