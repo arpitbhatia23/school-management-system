@@ -1,8 +1,9 @@
 import { Assignment } from "../models/assignment";
+import { User } from "../models/user.model";
 import { apiError } from "../utils/apiError";
 import { asyncHandler } from "../utils/asyncHandler";
 
-S
+
 
 const getallAssignment=asyncHandler(async(req,res)=>{
     const teacher_id=req.user._id
