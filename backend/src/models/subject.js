@@ -8,7 +8,7 @@ const subject = new Schema(
         },
         teacher_id: {
             type: Schema.Types.ObjectId,
-            required:[true,"Teacher id is required"],
+            required: [true, 'Teacher id is required'],
         },
         class: {
             type: String,

@@ -250,10 +250,10 @@ const register = asyncHandler(async (req, res) => {
             throw new apiError(400, 'email and password is required');
         }
 
-        const user =await User.create({
+        const user = await User.create({
             name,
             gender,
-            profile_image: {url:profile_image.secure_url,public_id:profile_image.public_id},
+            profile_image: { url: profile_image.secure_url, public_id: profile_image.public_id },
             role,
             email,
             phone_no,
@@ -264,9 +264,9 @@ const register = asyncHandler(async (req, res) => {
             throw new apiError(400, 'something went wrong while registering user');
         }
 
-        console.log(user)
+        console.log(user);
         const createdUser = await User.findById(user._id).select('-password -refreshToken');
-        console.log(createdUser)
+        console.log(createdUser);
         return res.status(201).json(new apiResponse(201, createdUser, 'admin create succesfully'));
     }
 
