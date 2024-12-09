@@ -22,4 +22,4 @@ const filestorgage=multer.diskStorage({
     },
 
 })
-export const uploadFile=multer({storage,limits:{fieldSize:5*1024*1024}})
+export const uploadFile=multer({filestorgage,limits:{fieldSize:5*1024*1024}})
