@@ -7,11 +7,11 @@ const assignment = new Schema(
             required: [true, 'title is required'],
         },
         class_name:{
-            type:Schema.Types.ObjectId,
+            type:String,
             required:[true,'class is required']
         },
         due_date: {
-            type: Date,
+            type: String,
             required: [true, 'due date is required'],
         },
         subject: {
