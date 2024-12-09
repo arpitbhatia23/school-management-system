@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import { apiError } from "../utils/apiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { apiResponse } from "../utils/apiResponse.js";
+import { Exam } from "../models/exam.js";
 
 
 
@@ -48,7 +49,28 @@ if(!(assignment)){
 return res.status(200).json(new apiResponse(200,assignment,"added successfully"))
 })
 
-export {addAssignment,getallAssignment}
+// add exam 
+const addExam = asyncHandler(async(req,res)=>{
+    const {exam_title,exam_discription,exam_date,class_name}=req.body
+    const file = req.file?.path;
+    if(!(exam_title,exam_discription,exam_date,class_name,file)){
+         throw new apiError(400,"all fields are required")
+    }
+    const exam =await Exam.create({
+        exam_title,
+        exam_discription,
+        exam_date,
+        class_name,
+        file
+    })
+    if(!exam){
+        throw new apiError(400,"something went wrong")
+    }
+    return res.status(200).json(new apiResponse(200,exam,"added successfully"))
+})
+
+
+export {addAssignment,getallAssignment,addExam}
 
 
 
