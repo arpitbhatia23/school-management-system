@@ -11,10 +11,10 @@ const exam = new Schema(
             required: [true, 'exam discription is required'],
         },
         exam_date: {
-            type: Date,
+            type: String,
             required: [true, 'exam date is required'],
         },
-        class: {
+        class_name: {
             type: String,
             required: [true, 'class is required'],
         },
