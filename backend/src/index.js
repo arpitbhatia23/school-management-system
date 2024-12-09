@@ -4,6 +4,7 @@ import dbconnect from './db/index.js';
 import app from './app.js';
 
 const numcpus = os.cpus().length;
+
 if (cluster.isPrimary) {
     console.log(`masterprocessor is runnig.forking ${numcpus}`);
     for (let i = 0; i < numcpus; i++) {
@@ -14,6 +15,8 @@ if (cluster.isPrimary) {
         });
     }
 } else {
+    console.time()
+
     dbconnect()
         .then(() => {
             const port = process.env.PORT || 8080;
@@ -24,4 +27,6 @@ if (cluster.isPrimary) {
         .catch((error) => {
             console.error(`fail to connect database ${error.message}`);
         });
+        console.timeEnd()
+
 }

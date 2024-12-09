@@ -9,11 +9,12 @@ const submissionSchema = new mongoose.Schema(
         student:[ {
            student_id:{
             type : mongoose.Schema.Types.ObjectId,
-            required: [true, 'student id is required'],
+          ref:"user"
            },
            status:{
             type : String,
             required: [true, 'status is required'],
+            default:"pending"
            }
 
 
