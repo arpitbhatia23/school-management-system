@@ -52,8 +52,8 @@ return res.status(200).json(new apiResponse(200,assignment,"added successfully")
 // add exam 
 const addExam = asyncHandler(async(req,res)=>{
     const {exam_title,exam_discription,exam_date,class_name}=req.body
-    const file = req.file?.path;
-    if(!(exam_title,exam_discription,exam_date,class_name,file)){
+    const fileurl=`${req.protocol}://${req.get('host')}/files/${req.file.filename}`
+    if(!(exam_title,exam_discription,exam_date,class_name,fileurl)){
          throw new apiError(400,"all fields are required")
     }
     const exam =await Exam.create({
@@ -61,7 +61,7 @@ const addExam = asyncHandler(async(req,res)=>{
         exam_discription,
         exam_date,
         class_name,
-        file
+        file:fileurl
     })
     if(!exam){
         throw new apiError(400,"something went wrong")

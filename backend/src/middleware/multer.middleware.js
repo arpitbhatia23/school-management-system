@@ -16,10 +16,13 @@ export const upload = multer({
 const filestorgage=multer.diskStorage({
     destination:function (req,file,cb) {
         cb(null,`./public/files`)
+
     },
     filename:function (req,file,cb) {
+
         cb(null,file.originalname) 
+
     },
 
 })
-export const uploadFile=multer({filestorgage,limits:{fieldSize:5*1024*1024}})
+export const uploadFile=multer({storage:filestorgage,limits:{fieldSize:5*1024*1024}})
