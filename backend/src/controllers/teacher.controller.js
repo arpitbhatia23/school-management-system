@@ -4,6 +4,9 @@ import { apiError } from '../utils/apiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { apiResponse } from '../utils/apiResponse.js';
 import { Exam } from '../models/exam.js';
+import { Attendance } from '../models/attendance.js';
+import { Student } from '../models/studentprofile.js';
+import { isValidObjectId } from 'mongoose';
 
 const getallAssignment = asyncHandler(async (req, res) => {
     const teacher_id = req.user._id;
@@ -60,4 +63,36 @@ const addExam = asyncHandler(async (req, res) => {
     return res.status(200).json(new apiResponse(200, exam, 'added successfully'));
 });
 
-export { addAssignment, getallAssignment, addExam };
+const  addAttendance=asyncHandler(async(req,res)=>{
+
+const {date,status,student_id}=req.body
+if(!isValidObjectId(student_id)){
+    throw new apiError(400,"invalid id")
+}
+if(!(date&&status&&student_id)){
+    throw new apiError(400,"all felids required")
+}
+
+const attendance=await  Attendance.create({
+    date,
+    status
+})
+if(!attendance){
+    throw new apiError(500,"something went wrong while creating attendance")
+}
+console.log(attendance)
+
+const student = await User.findByIdAndUpdate(student_id,{
+    $push:{"profile.attendance":attendance._id}
+} , { new: true })
+console.log(student_id)
+console.log(student)
+if(!student){
+    throw new apiError(500,"sone thing went wrong while updating student")
+}
+
+return res.status(200).json(new apiResponse(200,student,"atendence sucessfully added"))
+
+})
+
+export { addAssignment, getallAssignment, addExam ,addAttendance};
