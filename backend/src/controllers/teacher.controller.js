@@ -5,8 +5,8 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { apiResponse } from '../utils/apiResponse.js';
 import { Exam } from '../models/exam.js';
 import { Attendance } from '../models/attendance.js';
-import { Student } from '../models/studentprofile.js';
 import { isValidObjectId } from 'mongoose';
+import { Result } from '../models/result.js';
 
 const getallAssignment = asyncHandler(async (req, res) => {
     const teacher_id = req.user._id;
@@ -60,9 +60,9 @@ const addExam = asyncHandler(async (req, res) => {
     if (!exam) {
         throw new apiError(400, 'something went wrong');
     }
-    return res.status(200).json(new apiResponse(200, exam, 'added successfully'));
-});
-
+    return res.status(200).json(new apiResponse(200,exam,"added successfully"))
+})
+// add attendance
 const  addAttendance=asyncHandler(async(req,res)=>{
 
 const {date,status,student_id}=req.body
@@ -95,4 +95,27 @@ return res.status(200).json(new apiResponse(200,student,"atendence sucessfully a
 
 })
 
-export { addAssignment, getallAssignment, addExam ,addAttendance};
+
+// add result
+const addResult = asyncHandler(async(req,res)=>{
+    const {student_id,name,examtype} = req.body
+
+    const pdfurl =`${req.protocol}://${req.get('host')}/files/${req.file.filename}`;
+    if(!(student_id,name,examtype,pdfurl)){
+        throw new apiError(400,"all field are required")
+    }
+    const result = await Result.create({
+        student_id,
+        name,
+        examtype,
+        pdf:pdfurl
+    });
+    if(!result){
+        throw new apiError(400,"kuch toh gadbad hai daya 🧐🧐")
+    }
+    return res.status(200).json(new apiResponse(200,result," tusa re karname hoyi gye upload"))
+
+   
+})
+
+export { addAssignment, getallAssignment, addExam,addResult,addAssignment };
