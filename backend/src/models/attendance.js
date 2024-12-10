@@ -2,7 +2,6 @@ import { model, Schema } from 'mongoose';
 
 const attendance = new Schema(
     {
-        
         date: {
             type: date,
             required: [true, 'date is required'],
