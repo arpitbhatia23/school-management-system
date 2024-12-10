@@ -10,10 +10,10 @@ const result = new Schema(
             type: String,
             required: [true, 'name is required'],
         },
-        roll_no: {
-            type: Number,
-            required: [true, 'roll no is required'],
-        },
+        // roll_no: {
+        //     type: Number,
+        //     required: [true, 'roll no is required'],
+        // },
         examtype: {
             type: String,
             required: [true, 'examtype is required'],

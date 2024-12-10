@@ -4,6 +4,7 @@ import { apiError } from '../utils/apiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { apiResponse } from '../utils/apiResponse.js';
 import { Exam } from '../models/exam.js';
+import { Result } from '../models/result.js';
 
 const getallAssignment = asyncHandler(async (req, res) => {
     const teacher_id = req.user._id;
@@ -57,26 +58,29 @@ const addExam = asyncHandler(async (req, res) => {
     if (!exam) {
         throw new apiError(400, 'something went wrong');
     }
-<<<<<<< HEAD
     return res.status(200).json(new apiResponse(200,exam,"added successfully"))
 })
 
 // add result
-const result = asyncHandler(async(req,res)=>{
-    const {student_id,name,roll_no,examtype} = req.body
-    const {pdf} = req.file?.path
+const addResult = asyncHandler(async(req,res)=>{
+    const {student_id,name,examtype} = req.body
+
+    const pdfurl =`${req.protocol}://${req.get('host')}/files/${req.file.filename}`;
+    if(!(student_id,name,examtype,pdfurl)){
+        throw new apiError(400,"all field are required")
+    }
+    const result = await Result.create({
+        student_id,
+        name,
+        examtype,
+        pdf:pdfurl
+    });
+    if(!result){
+        throw new apiError(400,"kuch toh gadbad hai daya 🧐🧐")
+    }
+    return res.status(200).json(new apiResponse(200,result," tusa re karname hoyi gye upload"))
+
+   
 })
 
-
-export {addAssignment,getallAssignment,addExam}
-
-
-
-
-
-=======
-    return res.status(200).json(new apiResponse(200, exam, 'added successfully'));
-});
->>>>>>> b53e658d72f450b0f41c81532f47a5de26cc343c
-
-export { addAssignment, getallAssignment, addExam };
+export { addAssignment, getallAssignment, addExam,addResult };
