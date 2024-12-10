@@ -69,6 +69,12 @@ const addExam = asyncHandler(async(req,res)=>{
     return res.status(200).json(new apiResponse(200,exam,"added successfully"))
 })
 
+// add result
+const result = asyncHandler(async(req,res)=>{
+    const {student_id,name,roll_no,examtype} = req.body
+    const {pdf} = req.file?.path
+})
+
 
 export {addAssignment,getallAssignment,addExam}
 
