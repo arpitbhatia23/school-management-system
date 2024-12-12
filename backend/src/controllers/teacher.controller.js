@@ -85,8 +85,6 @@ console.log(attendance)
 const student = await User.findByIdAndUpdate(student_id,{
     $push:{"profile.attendance":attendance._id}
 } , { new: true })
-console.log(student_id)
-console.log(student)
 if(!student){
     throw new apiError(500,"sone thing went wrong while updating student")
 }
@@ -118,4 +116,29 @@ const addResult = asyncHandler(async(req,res)=>{
    
 })
 
-export { addAssignment, getallAssignment, addExam,addResult,addAssignment };
+const getStudents = asyncHandler(async(req,res)=>{
+    const _id = req.user._id
+    const teacher = await User.findById(_id)
+    if(!teacher){
+        throw new apiError(400,"teacher not found")
+    }
+    const students = await User.aggregate([
+        {$match:{'profile.className':teacher?.profile?.class_incharge}},
+        {$project:{name:1,
+            className : '$profile.className',
+            roll_no:'$profile.roll_no',
+            phone_no:1
+        }}
+
+    ])
+
+
+    console.log(teacher.profile?.class_incharge)
+    if(students.length==0){
+        throw new apiError(400,"student not found")
+    }
+    console.log(students)
+    return res.status(200).json(new apiResponse(200,students,"students found"))
+})
+
+export { addAssignment, getallAssignment, addExam,addResult,addAttendance,getStudents };
