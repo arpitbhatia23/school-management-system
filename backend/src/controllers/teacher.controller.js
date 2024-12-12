@@ -118,4 +118,4 @@ const addResult = asyncHandler(async(req,res)=>{
    
 })
 
-export { addAssignment, getallAssignment, addExam,addResult,addAssignment };
+export { addAssignment, getallAssignment, addExam,addResult,addAttendance };
