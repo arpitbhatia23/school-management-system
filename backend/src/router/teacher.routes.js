@@ -8,4 +8,5 @@ router.route('/getallAssignment').get(verifyJwt, getallAssignment);
 router.route('/addExam').post(uploadFile.single('file'), verifyJwt, addExam);
 router.route("/addAttendance").post(verifyJwt,addAttendance)
 router.route('/addResult').post(uploadFile.single('file'),verifyJwt,addResult);
+
 export default router;

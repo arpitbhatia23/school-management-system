@@ -15,7 +15,6 @@ if (cluster.isPrimary) {
         });
     }
 } else {
-    console.time();
 
     dbconnect()
         .then(() => {
@@ -27,5 +26,4 @@ if (cluster.isPrimary) {
         .catch((error) => {
             console.error(`fail to connect database ${error.message}`);
         });
-    console.timeEnd();
 }
