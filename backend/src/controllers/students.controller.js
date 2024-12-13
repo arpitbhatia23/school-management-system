@@ -70,26 +70,8 @@ const genIdCard = asyncHandler(async (req, res) => {
       .fillColor("#000080")
       .text("HOLY BLUE ANGELS PREPARATORY SCHOOL", 80, 40, { align: "left", width: 200 });
 
-    // Vertical "STUDENT" label
-    doc
-      // .rotate(90, { origin: [30, 300] })
-      .fontSize(28)
-      .fillColor("#000080")
-      .text("S",15,70)
-      .text("T")
-      .text("U")
-      .text("D")
-      .text("E")
-      .text("N")
-      .text("T")
 
-
-
-
-      // .rotate(-90, { origin: [30, 300] });
-
-    // Add student photo
-    doc.image(jpegPath, 80, 80, { width: 120, height: 100,  align:"center"});
+    doc.image(jpegPath, 85, 80, { width: 120, height: 100,  align:"center"});
 
     // Add student details
     doc
