@@ -5,7 +5,10 @@ import fs from "fs";
 import path from "path";
 import { User } from "../models/user.model.js";
 import { apiError } from "../utils/apiError.js";
-import {apiResponse} from "../utils/apiResponse.js"
+
+import { apiResponse} from  '../utils/apiResponse.js';
+import { mongoose } from "mongoose";
+
 const genIdCard = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 
@@ -113,4 +116,52 @@ console.log(jpegPath)
   }
 });
 
-export { genIdCard };
+// attendance
+const getMonthlyAttendance= asyncHandler(async(req,res)=>{
+  const  _id = req.user._id
+const result = await User.aggregate([
+  {
+    $match: { _id }, // Match student by ID
+  },
+  {
+    $lookup: {
+      from: 'attendances', // Collection name for Attendance schema
+      localField: 'attendance', // Field in Student schema
+      foreignField: '_id', // Field in Attendance schema
+      as: 'attendanceRecords', // Alias for joined data
+    },
+  },
+  {
+    $unwind: '$attendanceRecords', // Flatten attendance array
+  },
+  {
+    $match: {
+      'attendanceRecords.date': {
+        $gte: '1/12/2024',
+        $lte:'31/12/2024',
+      }, // Filter by date
+    },
+  },
+  {
+    $group: {
+      _id: '$attendanceRecords.status', // Group by status
+      count: { $sum: 1 }, // Count occurrences
+    },
+  },
+]);
+// Format the result
+const attendanceSummary = {
+  present: 0,
+  absent: 0,
+  leave: 0,
+};
+
+result.forEach((record) => {
+  attendanceSummary[record._id] = record.count;
+});
+
+return res.status(200).json(new  apiResponse(200, attendanceSummary,"attendance fetch successfully"));
+}) 
+
+
+export { genIdCard , getMonthlyAttendance};
