@@ -3,10 +3,9 @@ import PDFDocument from "pdfkit";
 import https from "https";
 import fs from "fs";
 import path from "path";
-import sharp from "sharp"; // For image conversion
 import { User } from "../models/user.model.js";
 import { apiError } from "../utils/apiError.js";
-
+import {apiResponse} from "../utils/apiResponse.js"
 const genIdCard = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 
@@ -18,7 +17,6 @@ const genIdCard = asyncHandler(async (req, res) => {
 
   const imageDir = "./public/images";
   const idCardDir = "./public/idCards";
-  const webpPath = path.join(imageDir, `${student._id}_profile_image.webp`);
   const jpegPath = path.join(imageDir, `${student._id}_profile_image.jpg`);
   const pdfPath = path.join(idCardDir, `${student._id}_idCard.pdf`);
 
@@ -32,37 +30,36 @@ const genIdCard = asyncHandler(async (req, res) => {
   // Function to download an image
   const downloadImage = (url, dest) => {
     return new Promise((resolve, reject) => {
-      const file = fs.createWriteStream(dest);
-      https
-        .get(url, (response) => {
-          if (response.statusCode !== 200) {
-            return reject(new Error(`Failed to download image: ${response.statusCode}`));
-          }
-          response.pipe(file).on("finish", resolve).on("error", reject);
-        })
-        .on("error", reject);
+        const file = fs.createWriteStream(dest);
+        https
+            .get(url, (response) => {
+                if (response.statusCode !== 200) {
+                    return reject(new Error(`Failed to download image: ${response.statusCode}`));
+                }
+                response.pipe(file);
+            })
+            .on("error", reject);
+
+        file.on("finish", () => {
+            file.close();
+             resolve(); // Ensure stream is closed
+        }).on("error", reject);
     });
-  };
+};
+
 
   try {
     // Download and process the image
-    await downloadImage(student.profile_image.url, webpPath);
-    await sharp(webpPath).toFormat("jpeg").toFile(jpegPath);
-
-    await sharp(webpPath).toBuffer(); // Ensures file processing is fully done
-    // Add a small delay to ensure file lock is released
-    setTimeout(async () => {
-      try {
-        await fs.promises.unlink(path.basename(webpPath));
-      } catch (err) {
-        console.warn(`Failed to delete WebP file: ${err.message}`);
-      }
-    }, 100);     // Create the PDF document
+    await downloadImage(student.profile_image.url, jpegPath);
+    
+console.log(jpegPath)
+   
+   // Create the PDF document
     const doc = new PDFDocument({ size: "A6", margin: 20 });
     doc.pipe(fs.createWriteStream(pdfPath));
     const margin = 10; 
 
-    doc.rect(margin, margin, 300 - 2 * margin, 420 - 2 * margin).stroke("#000").fillColor("#000000").fill()
+    doc.rect(margin, margin, 300 - 2 * margin, 420 - 2 * margin).stroke("#000").fill("black")
     // Add school logo and name
     doc.image("./public/files/image.png", 40, 30, { width: 40, height: 40 });
     doc
@@ -78,9 +75,9 @@ const genIdCard = asyncHandler(async (req, res) => {
       .fontSize(14)
       .fillColor("#000080")
       .text(`Name : ${student.name}`, 70, 190)
-      .text(`class : ${student.profile.className}`)
-      .text(`roll_no : ${student.profile.roll_no}`)
-      .text(`Phone_no : ${student.phone_no}`).text(`DOB : ${student.profile.DOB}`)
+      .text(`CLASS : ${student.profile.className}`)
+      .text(`ROLL_NO : ${student.profile.roll_no}`)
+      .text(`PHONE_NO : ${student.phone_no}`).text(`DOB : ${student.profile.DOB}`)
 
 
     // Add signature area
@@ -106,16 +103,11 @@ const genIdCard = asyncHandler(async (req, res) => {
 
     console.log(`ID Card saved at ${pdfPath}`);
     fs.unlinkSync(jpegPath)
-
-   return res.status(200).json({
-      success: true,
-      message: "ID card generated successfully",
-      path: pdfPath,
-    });
+  const pdfurl=`${req.protocol}://${req.get("host")}/idcards/${student._id}_idCard.pdf`
+   return res.status(200).json(new apiResponse(200,pdfurl,"id generate successfully"));
 
   } catch (error) {
     console.error("Error generating ID card:", error);
-  if (fs.existsSync(webpPath)) await fs.promises.unlink(webpPath).catch(() => {});
   if (fs.existsSync(jpegPath)) await fs.promises.unlink(jpegPath).catch(() => {});
     throw new apiError(500, "Failed to generate ID card");
   }

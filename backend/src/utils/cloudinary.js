@@ -12,7 +12,7 @@ const uploadonCloudinary = async (localfilepath) => {
         const response = await cloudinary.uploader.upload(localfilepath, {
             resource_type: 'auto',
             folder: 'school_management_system',
-            format: 'webp',
+            format: 'jpeg',
             transformation: [
                 {
                     aspect_ratio: '1:1',
