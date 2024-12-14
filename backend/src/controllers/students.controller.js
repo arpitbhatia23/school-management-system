@@ -64,20 +64,20 @@ console.log(jpegPath)
 
     doc.rect(margin, margin, 300 - 2 * margin, 420 - 2 * margin).stroke("#000").fill("black")
     // Add school logo and name
-    doc.image("./public/files/image.png", 40, 30, { width: 40, height: 40 });
+    doc.image("./public/files/image.png", 20, 40, { width: 50, height: 50, align:"center" });
     doc
       .fontSize(14)
       .fillColor("#000080")
-      .text("HOLY BLUE ANGELS PREPARATORY SCHOOL", 80, 40, { align: "left", width: 200 });
+      .text("TAMANNA PUBLIC SCHOOL", 70, 60, { align: "center", width: 200 });
 
 
-    doc.image(jpegPath, 85, 80, { width: 120, height: 100,  align:"center"});
+    doc.image(jpegPath, 85, 100, { width: 120, height: 100,  align:"center"});
 
     // Add student details
     doc
       .fontSize(14)
       .fillColor("#000080")
-      .text(`Name : ${student.name}`, 70, 190)
+      .text(`Name : ${student.name}`, 70, 230)
       .text(`CLASS : ${student.profile.className}`)
       .text(`ROLL_NO : ${student.profile.roll_no}`)
       .text(`PHONE_NO : ${student.phone_no}`).text(`DOB : ${student.profile.DOB}`)
