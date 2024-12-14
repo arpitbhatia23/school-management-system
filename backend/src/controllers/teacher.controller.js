@@ -72,15 +72,13 @@ if(!isValidObjectId(student_id)){
 if(!(date&&status&&student_id)){
     throw new apiError(400,"all felids required")
 }
-
 const attendance=await  Attendance.create({
-    date,
+    date:new Date(date),
     status
 })
 if(!attendance){
     throw new apiError(500,"something went wrong while creating attendance")
 }
-console.log(attendance)
 
 const student = await User.findByIdAndUpdate(student_id,{
     $push:{"profile.attendance":attendance._id}

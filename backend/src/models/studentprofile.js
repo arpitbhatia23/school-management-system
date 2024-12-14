@@ -44,7 +44,7 @@ const studentProfile = new Schema(
         attendance: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Attendance',
+                ref: 'attendances',
             },
         ],
         roll_no: {

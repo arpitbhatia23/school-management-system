@@ -126,7 +126,7 @@ const result = await User.aggregate([
   {
     $lookup: {
       from: 'attendances', // Collection name for Attendance schema
-      localField: 'attendance', // Field in Student schema
+      localField: 'profile.attendance', // Field in Student schema
       foreignField: '_id', // Field in Attendance schema
       as: 'attendanceRecords', // Alias for joined data
     },
@@ -137,17 +137,19 @@ const result = await User.aggregate([
   {
     $match: {
       'attendanceRecords.date': {
-        $gte: '1/12/2024',
-        $lte:'31/12/2024',
+        $gte: new Date('2003-12-11'),
+      $lte: new Date('2003-12-31')
       }, // Filter by date
     },
   },
-  {
-    $group: {
-      _id: '$attendanceRecords.status', // Group by status
-      count: { $sum: 1 }, // Count occurrences
-    },
-  },
+  {$group:{
+    _id: "$attendanceRecords.status",
+    count:{
+      $sum:1
+    }
+   
+  }}
+ 
 ]);
 // Format the result
 const attendanceSummary = {
