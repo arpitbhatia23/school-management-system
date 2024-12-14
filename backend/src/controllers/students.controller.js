@@ -119,7 +119,11 @@ console.log(jpegPath)
 // attendance
 const getMonthlyAttendance= asyncHandler(async(req,res)=>{
   const  _id = req.user._id
-const result = await User.aggregate([
+  const { startDate , endDate} = req.body
+  if(!(startDate,endDate)){
+    throw new apiError(400,"enter Date")
+  }
+const result = await User.aggregate([ 
   {
     $match: { _id }, // Match student by ID
   },
@@ -137,8 +141,8 @@ const result = await User.aggregate([
   {
     $match: {
       'attendanceRecords.date': {
-        $gte: new Date('2003-12-11'),
-      $lte: new Date('2003-12-31')
+        $gte: new Date(startDate),
+      $lte: new Date(endDate)
       }, // Filter by date
     },
   },
