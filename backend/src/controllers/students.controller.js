@@ -9,8 +9,10 @@ import { apiError } from "../utils/apiError.js";
 import { apiResponse} from  '../utils/apiResponse.js';
 import { drawRoundImage } from "../utils/pdf.js";
 import { qrcodegen } from "../utils/qr.js";
-import { Exam } from "../models/exam.js";
+import { Student } from "../models/studentprofile.js";
 
+import {Exam} from "../models/exam.js"
+import {Result} from "../models/result.js"
 
 
 const genIdCard = asyncHandler(async (req, res) => {
@@ -222,6 +224,21 @@ result.forEach((record) => {
 return res.status(200).json(new  apiResponse(200, attendanceSummary,"attendance fetch successfully"));
 }) 
 
+// get result by id
+const getResult = asyncHandler(async(req,res)=>{
+
+const _id = req.user._id
+
+const result = await Result.find({student_id:_id})
+console.log(result)
+if(result.length==0){
+  throw new apiError(400,"result not found")
+}
+console.log(result)
+return res.status(200).json(new apiResponse(200, result,"result found successfully"))
+
+})
+
 
 const getexam=asyncHandler(async(req,res)=>{
   const {_id}=req.user
@@ -245,4 +262,9 @@ throw new apiError(404,"exan not found ")
 return res.status(200).json(new apiResponse(200,exam,"exam found sucessfully"))
 })
 
-export { genIdCard , getMonthlyAttendance,getexam};
+
+
+
+
+
+export { genIdCard , getMonthlyAttendance,getResult,getexam};
