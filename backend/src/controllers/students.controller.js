@@ -10,6 +10,7 @@ import { apiResponse} from  '../utils/apiResponse.js';
 import { drawRoundImage } from "../utils/pdf.js";
 import { qrcodegen } from "../utils/qr.js";
 import { Student } from "../models/studentprofile.js";
+import {Result} from "../models/result.js"
 
 
 
@@ -223,5 +224,24 @@ result.forEach((record) => {
 return res.status(200).json(new  apiResponse(200, attendanceSummary,"attendance fetch successfully"));
 }) 
 
+// get result by id
+const getResult = asyncHandler(async(req,res)=>{
 
-export { genIdCard , getMonthlyAttendance};
+const _id = req.user._id
+
+const result = await Result.find({student_id:_id})
+console.log(result)
+if(result.length==0){
+  throw new apiError(400,"result not found")
+}
+console.log(result)
+return res.status(200).json(new apiResponse(200, result,"result found successfully"))
+
+})
+
+
+
+
+
+
+export { genIdCard , getMonthlyAttendance,getResult};
