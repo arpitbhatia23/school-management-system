@@ -148,7 +148,7 @@ const genIdCard = asyncHandler(async (req, res) => {
     const userId = req.user._id;
   
     // Fetch student data
-    const teacher = await User.findById(userId);
+    const teacher = await User.findById(userId).select("-password -profile.attendence -profile_image.public_id -profile.admission_Date -refreshToken -createdAt -updatedAt -profile_image._id");
     if (!teacher) {
       throw new apiError(400, "teacher not found");
     }
@@ -217,10 +217,10 @@ const genIdCard = asyncHandler(async (req, res) => {
       doc
         .fontSize(14)
         .fillColor("white")
-        .text(`Name : ${teacher.name}`, 70, 230)
-        .text(`CLASS_INCHARGE : ${teacher.profile.class_incharge}`)
-        .text(`DOB : ${teacher.profile.DOB}`)
-        .text(`PHONE_NO : ${teacher.phone_no}`).text(`QUALIFICATION : ${teacher.profile.qualification}`)
+        .text(`NAME : ${String(teacher.name).toUpperCase()}`, 0, 230,{width:doc.page.width,align:"center"})
+        .text(`CLASS_INCHARGE : ${String(teacher.profile.class_incharge).toUpperCase()}`,{width:doc.page.width,align:"center"})
+        .text(`DOB : ${String(teacher.profile.DOB).toUpperCase()}`,{width:doc.page.width,align:"center"})
+        .text(`PHONE_NO : ${String(teacher.phone_no).toUpperCase()}`,{width:doc.page.width,align:"center"}).text(`QUALIFICATION : ${String(teacher.profile.qualification.toUpperCase()).toUpperCase()}`,{width:doc.page.width,align:"center"})
   
   
       // Add signature area

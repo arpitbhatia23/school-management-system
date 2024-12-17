@@ -9,6 +9,7 @@ import { apiError } from "../utils/apiError.js";
 import { apiResponse} from  '../utils/apiResponse.js';
 import { drawRoundImage } from "../utils/pdf.js";
 import { qrcodegen } from "../utils/qr.js";
+import { Student } from "../models/studentprofile.js";
 
 
 
@@ -53,12 +54,25 @@ const genIdCard = asyncHandler(async (req, res) => {
         }).on("error", reject);
     });
 };
-
+const qrdata={
+  _id:student._id,
+  name:student.name,
+  phone_no:student.phone_no,
+  email:student.email,
+  address:student.profile.address,
+  profile_image:student.profile_image.url,
+  dob:student.profile.DOB,
+  blood_group:student.profile.blood_group,
+  religion:student.profile.religion,
+  nationality:student.profile.nationality,
+  className:student.profile.className,
+  catageroy:student.profile.catageroy
+}
 
   try {
     // Download and process the image
     await downloadImage(student.profile_image.url, jpegPath);
-    await qrcodegen(student,qrpath)
+    await qrcodegen(qrdata,qrpath)
    
    // Create the PDF document
     const doc = new PDFDocument({ size: "A6", margin: 20,font:"Times-Roman" });
@@ -84,10 +98,10 @@ gradientone.stop(1, 'red');
     doc
       .fontSize(14)
       .fillColor("#ffffff")
-      .text(`Name : ${student.name}`, 85, 230)
-      .text(`CLASS : ${student.profile.className}`)
-      .text(`ROLL_NO : ${student.profile.roll_no}`)
-      .text(`PHONE_NO : ${student.phone_no}`).text(`DOB : ${student.profile.DOB}`)
+      .text(`NAME : ${String(student.name).toUpperCase()}`, 0, 230,{width:doc.page.width,align:"center"})
+      .text(`CLASS : ${String(student.profile.className).toUpperCase()}`,{width:doc.page.width,align:"center"})
+      .text(`ROLL_NO : ${String(student.profile.roll_no).toUpperCase()}`,{width:doc.page.width,align:"center"})
+      .text(`PHONE_NO : ${String(student.phone_no).toUpperCase()}`,{width:doc.page.width,align:"center"}).text(`DOB : ${String(student.profile.DOB).toUpperCase()}`,{width:doc.page.width,align:"center"})
 
 
     // Add signature area
@@ -144,7 +158,6 @@ doc.fillColor("white").fontSize(12)  // Set text color to white
     // End the document
     doc.end();
 
-    console.log(`ID Card saved at ${pdfPath}`);
     fs.unlinkSync(jpegPath)
     fs.unlinkSync(qrpath)
   const pdfurl=`${req.protocol}://${req.get("host")}/idcards/${student._id}_idCard.pdf`
