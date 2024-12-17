@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import { Subject } from '../models/subject.js';
 import { add_expense } from '../models/add_Expense.js';
 import { parents_Detail } from '../models/parentsschema.js';
+import { Fees } from '../models/fees.js';
 
 // Get student
 const getStudent = asyncHandler(async (req, res) => {
@@ -436,6 +437,39 @@ const updateParentsById = asyncHandler(async (req, res) => {
         .status(200)
         .json(new apiResponse(200, updatedParents, 'parents updated successfully'));
 });
+// add fees
+const addFees = asyncHandler(async (req, res) => {
+    const {className,roll_no,name,amount,status,payment_method}=req.body
+    const student = await User.aggregate([{
+        $match: {
+            "profile.className": className,
+            "profile.roll_no":roll_no,
+            name}
+         },{
+            
+            $project:{
+                _id:1,email:1,
+                phone_no:1,
+                name:1,
+            }
+         }])
+         console.log(student)
+         const fee = await Fees.create({
+            student_id:student[0]._id,
+            amount,
+            name:student[0].name,
+            status:status,
+            payment_method:payment_method,
+            amount:amount
+         })
+         if(!fee){
+            throw new apiError(404,'some thing went wrong while adding fees')
+            }
+            return res.status(200).json(new apiResponse(200,fee,'fees added successfully'));
+
+    })
+       
+
 
 export {
     getStudent,
@@ -451,4 +485,5 @@ export {
     addNewExpense,
     updateSubject,
     updateParentsById,
+    addFees
 };
