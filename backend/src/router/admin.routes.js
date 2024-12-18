@@ -15,6 +15,7 @@ import {
     updateParentsById,
     updateSubject,
     addFees,
+    getfees,
 } from '../controllers/admin.controller.js';
 const router = Router();
 router.route('/getstudent').get(verifyJwt, verifyAdmin, getStudent);
@@ -31,4 +32,6 @@ router.route('/getAllExpense').get(verifyJwt, getAllExpense);
 router.route('/updateParentsById').patch(verifyJwt, verifyAdmin, updateParentsById);
 router.route('/updateSubject').patch(verifyJwt, verifyAdmin, updateSubject);
 router.route('/addfees').post(verifyJwt, verifyAdmin, addFees);
+router.route("/getfees").get(verifyJwt,verifyAdmin,getfees)
+
 export default router;

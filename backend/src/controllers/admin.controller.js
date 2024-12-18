@@ -469,11 +469,75 @@ const addFees = asyncHandler(async (req, res) => {
         payment_method: payment_method,
         amount: amount,
     });
+
+    // to do send fees
     if (!fee) {
         throw new apiError(404, 'some thing went wrong while adding fees');
     }
     return res.status(200).json(new apiResponse(200, fee, 'fees added successfully'));
 });
+
+// get fess 
+const getfees = asyncHandler(async (req, res) => {
+    const { className, name, roll_no } = req.body;
+  
+    // Dynamically build the match conditions
+    const matchConditions = [];
+    if (className) {
+      matchConditions.push({ className });
+    }
+    if (roll_no) {
+      matchConditions.push({ roll_no });
+    }
+    if (name) {
+      matchConditions.push({ name: { $regex: name, $options: "i" } }); // Case-insensitive partial match
+    }
+  
+    const fees = await Fees.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "student_id",
+          foreignField: "_id",
+          as: "students",
+        },
+      },
+      {
+        $unwind: {
+          path: "$students",
+        },
+      },
+      {
+        $project: {
+          name: 1,
+          className: "$students.profile.className",
+          roll_no: "$students.profile.roll_no",
+          status: 1,
+          amount: 1,
+          payment_method: 1,
+          phone_no: "$students.phone_no",
+          email: "$students.email",
+          payment_date: { $toDate: "$payment_date" },
+        },
+      },
+      ...(matchConditions.length > 0
+        ? [{ $match: { $and: matchConditions } }]
+        : []), // Include $match only if there are conditions
+    ]);
+  
+    if (fees.length === 0) {
+      throw new apiError(404, "Fees not found");
+    }
+  
+    return res
+      .status(200)
+      .json(new apiResponse(200, fees, "Fees fetched successfully"));
+  });
+  
+
+
+
+
 
 export {
     getStudent,
@@ -490,4 +554,5 @@ export {
     updateSubject,
     updateParentsById,
     addFees,
+    getfees
 };
