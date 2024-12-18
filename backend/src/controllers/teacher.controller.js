@@ -13,6 +13,7 @@ import fs from 'fs';
 import PDFDocument from 'pdfkit';
 import { drawRoundImage } from '../utils/pdf.js';
 import { qrcodegen } from '../utils/qr.js';
+import { Syllabus } from '../models/syllabus.js';
 const getallAssignment = asyncHandler(async (req, res) => {
     const teacher_id = req.user._id;
     const teacher = await User.findById(teacher_id);
@@ -305,6 +306,25 @@ const genIdCard = asyncHandler(async (req, res) => {
         throw new apiError(500, 'Failed to generate ID card');
     }
 });
+// add syllabus
+const addSyllabus= asyncHandler(async(req,res)=>{
+    const {title,subject,className }= req.body
+    const fileurl = `${req.protocol}://${req.get('host')}/files/${req.file.filename}`;
+    if(!(title,subject,className,fileurl)){
+        throw new apiError(400,"all fields are required")
+ }
+
+ const syllabus = await Syllabus.create({
+    title,
+    subject,
+    className,
+    file:fileurl,
+ }) 
+ if(!syllabus){
+    throw new apiError(400,"something went wrong")
+ }
+ return res.status(200).json(new apiResponse(200,syllabus,"syllabus added successfully"))
+})
 
 export {
     addAssignment,
@@ -314,4 +334,5 @@ export {
     addAttendance,
     getStudents,
     genIdCard,
+    addSyllabus
 };
