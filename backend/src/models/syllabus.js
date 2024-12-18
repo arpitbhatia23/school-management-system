@@ -10,7 +10,7 @@ const syllabus = new Schema(
             type: Schema.Types.ObjectId,
             required: [true, 'subject is required'],
         },
-        class: {
+        className: {
             type: String,
             required: [true, 'class is required'],
         },
