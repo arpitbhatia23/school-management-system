@@ -30,5 +30,5 @@ router.route('/addNewExpense').post(verifyJwt, addNewExpense);
 router.route('/getAllExpense').get(verifyJwt, getAllExpense);
 router.route('/updateParentsById').patch(verifyJwt, verifyAdmin, updateParentsById);
 router.route('/updateSubject').patch(verifyJwt, verifyAdmin, updateSubject);
-router.route("/addfees").post(verifyJwt,verifyAdmin,addFees)
+router.route('/addfees').post(verifyJwt, verifyAdmin, addFees);
 export default router;

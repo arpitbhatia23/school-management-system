@@ -439,37 +439,41 @@ const updateParentsById = asyncHandler(async (req, res) => {
 });
 // add fees
 const addFees = asyncHandler(async (req, res) => {
-    const {className,roll_no,name,amount,status,payment_method}=req.body
-    const student = await User.aggregate([{
-        $match: {
-            "profile.className": className,
-            "profile.roll_no":roll_no,
-            name}
-         },{
-            
-            $project:{
-                _id:1,email:1,
-                phone_no:1,
-                name:1,
-            }
-         }])
-         console.log(student)
-         const fee = await Fees.create({
-            student_id:student[0]._id,
-            amount,
-            name:student[0].name,
-            status:status,
-            payment_method:payment_method,
-            amount:amount
-         })
-         if(!fee){
-            throw new apiError(404,'some thing went wrong while adding fees')
-            }
-            return res.status(200).json(new apiResponse(200,fee,'fees added successfully'));
-
-    })
-       
-
+    const { className, roll_no, name, amount, status, payment_method } = req.body;
+    const student = await User.aggregate([
+        {
+            $match: {
+                'profile.className': className,
+                'profile.roll_no': roll_no,
+                name,
+            },
+        },
+        {
+            $project: {
+                _id: 1,
+                email: 1,
+                phone_no: 1,
+                name: 1,
+            },
+        },
+    ]);
+    if(student.length==0){
+        throw new apiError(404,"student not found")
+    }
+    console.log(student);
+    const fee = await Fees.create({
+        student_id: student[0]._id,
+        amount,
+        name: student[0].name,
+        status: status,
+        payment_method: payment_method,
+        amount: amount,
+    });
+    if (!fee) {
+        throw new apiError(404, 'some thing went wrong while adding fees');
+    }
+    return res.status(200).json(new apiResponse(200, fee, 'fees added successfully'));
+});
 
 export {
     getStudent,
@@ -485,5 +489,5 @@ export {
     addNewExpense,
     updateSubject,
     updateParentsById,
-    addFees
+    addFees,
 };

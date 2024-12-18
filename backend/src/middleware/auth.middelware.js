@@ -37,7 +37,7 @@ export const verifyAdmin = asyncHandler(async (req, res, next) => {
     next();
 });
 
-export const verifyTeacher=asyncHandler(async(req,res,next)=>{
+export const verifyTeacher = asyncHandler(async (req, res, next) => {
     const token = req.cookies?.acessToken || req.header('Authorization')?.replace('Bearer ', '');
     if (!token) {
         throw new apiError(401, 'unauthorized request');
@@ -47,17 +47,17 @@ export const verifyTeacher=asyncHandler(async(req,res,next)=>{
         throw new apiError(401, 'unauthorized request only teacher can access');
     }
 
-    
-    next();})
+    next();
+});
 
-    export const verifystudent=asyncHandler(async(req,res,next)=>{
-        const token = req.cookies?.acessToken || req.header('Authorization')?.replace('Bearer ', '');
-        if (!token) {
-            throw new apiError(401, 'unauthorized request');
-        }
-        const decodetokeninfo = jwt.verify(token, process.env.ACCESSTOKENSECRET);
-        if (decodetokeninfo?.role !== 'student') {
-            throw new apiError(401, 'unauthorized request only student can access');
-        }
-    next()
-    })
+export const verifystudent = asyncHandler(async (req, res, next) => {
+    const token = req.cookies?.acessToken || req.header('Authorization')?.replace('Bearer ', '');
+    if (!token) {
+        throw new apiError(401, 'unauthorized request');
+    }
+    const decodetokeninfo = jwt.verify(token, process.env.ACCESSTOKENSECRET);
+    if (decodetokeninfo?.role !== 'student') {
+        throw new apiError(401, 'unauthorized request only student can access');
+    }
+    next();
+});

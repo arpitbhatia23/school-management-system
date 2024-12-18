@@ -10,12 +10,13 @@ import { model, Schema } from "mongoose";
         required:true,
     },
     status:{
-enum: ['pending','paid'],
-// default: 'pending',
-required:true
+        type:String,
+     enum: ['pending','paid'],
+       default: 'pending',
+      required:true
     },
     amount:{
-        type:Number,
+        type:String,
         required:true
         },
         payment_date:{

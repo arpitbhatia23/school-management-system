@@ -15,7 +15,6 @@ if (cluster.isPrimary) {
         });
     }
 } else {
-
     dbconnect()
         .then(() => {
             const port = process.env.PORT || 8080;
