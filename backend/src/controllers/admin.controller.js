@@ -478,7 +478,7 @@ const addFees = asyncHandler(async (req, res) => {
     const authToken = process.env.AuthToken;
     const client = twilio(accountSid, authToken);
 
-    const message = await client.messages.create({
+     await client.messages.create({
         body: ` Fees of ₹${fee.amount} submitted successfully on ${new Date(fee.createdAt).toLocaleDateString()} at ${new Date(fee.createdAt).toLocaleTimeString()}.`,
         from: process.env.TwilioPhoneNumber,
         to: `+91${student[0].phone_no}`,
