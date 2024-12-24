@@ -471,7 +471,7 @@ const addFees = asyncHandler(async (req, res) => {
 
     // to do send fees
     if (!fee) {
-        throw new apiError(404, 'some thing went wrong while adding fees');
+        throw new apiError(404, 'something went wrong while adding fees');
     }
 
     const accountSid = process.env.AccountSid;
