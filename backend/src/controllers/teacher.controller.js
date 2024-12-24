@@ -307,24 +307,24 @@ const genIdCard = asyncHandler(async (req, res) => {
     }
 });
 // add syllabus
-const addSyllabus= asyncHandler(async(req,res)=>{
-    const {title,subject,className }= req.body
+const addSyllabus = asyncHandler(async (req, res) => {
+    const { title, subject, className } = req.body;
     const fileurl = `${req.protocol}://${req.get('host')}/files/${req.file.filename}`;
-    if(!(title,subject,className,fileurl)){
-        throw new apiError(400,"all fields are required")
- }
+    if (!(title, subject, className, fileurl)) {
+        throw new apiError(400, 'all fields are required');
+    }
 
- const syllabus = await Syllabus.create({
-    title,
-    subject,
-    className,
-    file:fileurl,
- }) 
- if(!syllabus){
-    throw new apiError(400,"something went wrong")
- }
- return res.status(200).json(new apiResponse(200,syllabus,"syllabus added successfully"))
-})
+    const syllabus = await Syllabus.create({
+        title,
+        subject,
+        className,
+        file: fileurl,
+    });
+    if (!syllabus) {
+        throw new apiError(400, 'something went wrong');
+    }
+    return res.status(200).json(new apiResponse(200, syllabus, 'syllabus added successfully'));
+});
 
 export {
     addAssignment,
@@ -334,5 +334,5 @@ export {
     addAttendance,
     getStudents,
     genIdCard,
-    addSyllabus
+    addSyllabus,
 };

@@ -276,16 +276,16 @@ const register = asyncHandler(async (req, res) => {
 // login
 
 const login = asyncHandler(async (req, res) => {
-    const { email, password, phone_no,role } = req.body;
+    const { email, password, phone_no, role } = req.body;
     if (!(email || phone_no)) {
         throw new apiError(400, 'email and phone_no is required');
     }
 
-    if (!(password&&role)) {
+    if (!(password && role)) {
         throw new apiError(400, 'password and role are required');
     }
 
-    const user = await User.findOne({ $or: [{ email }, { phone_no }], role});
+    const user = await User.findOne({ $or: [{ email }, { phone_no }], role });
     if (!user) {
         throw new apiError(400, 'user not find');
     }
@@ -317,7 +317,6 @@ const login = asyncHandler(async (req, res) => {
             ),
         );
 });
-
 
 // update profile image
 const updateProfileImage = asyncHandler(async (req, res) => {

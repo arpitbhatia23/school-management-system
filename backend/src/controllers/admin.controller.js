@@ -457,8 +457,8 @@ const addFees = asyncHandler(async (req, res) => {
             },
         },
     ]);
-    if(student.length==0){
-        throw new apiError(404,"student not found")
+    if (student.length == 0) {
+        throw new apiError(404, 'student not found');
     }
     const fee = await Fees.create({
         student_id: student[0]._id,
@@ -473,82 +473,72 @@ const addFees = asyncHandler(async (req, res) => {
     if (!fee) {
         throw new apiError(404, 'some thing went wrong while adding fees');
     }
-   
-    const accountSid = process.env.AccountSid 
-    const authToken = process.env.AuthToken
-    const client=twilio(accountSid,authToken)
 
-   const message=   await client.messages.create({
-        body:` Fees of ₹${fee.amount} submitted successfully on ${new Date(fee.createdAt).toLocaleDateString()} at ${new Date(fee.createdAt).toLocaleTimeString()}.`,
-        from:process.env.TwilioPhoneNumber,
-        to:`+91${student[0].phone_no}`
-    })
+    const accountSid = process.env.AccountSid;
+    const authToken = process.env.AuthToken;
+    const client = twilio(accountSid, authToken);
 
+    const message = await client.messages.create({
+        body: ` Fees of ₹${fee.amount} submitted successfully on ${new Date(fee.createdAt).toLocaleDateString()} at ${new Date(fee.createdAt).toLocaleTimeString()}.`,
+        from: process.env.TwilioPhoneNumber,
+        to: `+91${student[0].phone_no}`,
+    });
 
     return res.status(200).json(new apiResponse(200, fee, 'fees added successfully'));
 });
 
-// get fess 
+// get fess
 const getfees = asyncHandler(async (req, res) => {
     const { className, name, roll_no } = req.body;
-  
+
     // Dynamically build the match conditions
     const matchConditions = [];
     if (className) {
-      matchConditions.push({ className });
+        matchConditions.push({ className });
     }
     if (roll_no) {
-      matchConditions.push({ roll_no });
+        matchConditions.push({ roll_no });
     }
     if (name) {
-      matchConditions.push({ name: { $regex: name, $options: "i" } }); // Case-insensitive partial match
+        matchConditions.push({ name: { $regex: name, $options: 'i' } }); // Case-insensitive partial match
     }
-  
+
     const fees = await Fees.aggregate([
-      {
-        $lookup: {
-          from: "users",
-          localField: "student_id",
-          foreignField: "_id",
-          as: "students",
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'student_id',
+                foreignField: '_id',
+                as: 'students',
+            },
         },
-      },
-      {
-        $unwind: {
-          path: "$students",
+        {
+            $unwind: {
+                path: '$students',
+            },
         },
-      },
-      {
-        $project: {
-          name: 1,
-          className: "$students.profile.className",
-          roll_no: "$students.profile.roll_no",
-          status: 1,
-          amount: 1,
-          payment_method: 1,
-          phone_no: "$students.phone_no",
-          email: "$students.email",
-          payment_date: { $toDate: "$payment_date" },
+        {
+            $project: {
+                name: 1,
+                className: '$students.profile.className',
+                roll_no: '$students.profile.roll_no',
+                status: 1,
+                amount: 1,
+                payment_method: 1,
+                phone_no: '$students.phone_no',
+                email: '$students.email',
+                payment_date: { $toDate: '$payment_date' },
+            },
         },
-      },
-      ...(matchConditions.length > 0
-        ? [{ $match: { $and: matchConditions } }]
-        : []), // Include $match only if there are conditions
+        ...(matchConditions.length > 0 ? [{ $match: { $and: matchConditions } }] : []), // Include $match only if there are conditions
     ]);
-  
+
     if (fees.length === 0) {
-      throw new apiError(404, "Fees not found");
+        throw new apiError(404, 'Fees not found');
     }
-  
-    return res
-      .status(200)
-      .json(new apiResponse(200, fees, "Fees fetched successfully"));
-  });
-  
 
-
-
-
+    return res.status(200).json(new apiResponse(200, fees, 'Fees fetched successfully'));
+});
 
 export {
     getStudent,
@@ -565,5 +555,5 @@ export {
     updateSubject,
     updateParentsById,
     addFees,
-    getfees
+    getfees,
 };

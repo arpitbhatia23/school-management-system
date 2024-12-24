@@ -19,5 +19,5 @@ router.route('/addAttendance').post(verifyJwt, verifyTeacher, addAttendance);
 router.route('/addResult').post(uploadFile.single('file'), verifyJwt, verifyTeacher, addResult);
 router.route('/getStudent').get(verifyJwt, verifyTeacher, getStudents);
 router.route('/genidcard').get(verifyJwt, verifyTeacher, genIdCard);
-router.route('/addSyllabus').post(uploadFile.single('file'),verifyJwt,verifyTeacher,addSyllabus)
+router.route('/addSyllabus').post(uploadFile.single('file'), verifyJwt, verifyTeacher, addSyllabus);
 export default router;

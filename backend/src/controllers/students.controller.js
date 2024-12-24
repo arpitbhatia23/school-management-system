@@ -281,18 +281,17 @@ const getexam = asyncHandler(async (req, res) => {
     return res.status(200).json(new apiResponse(200, exam, 'exam found sucessfully'));
 });
 // get syllabus
-const getSyllabus = asyncHandler(async(req,res)=>{
-    const {_id}= req.user._id
+const getSyllabus = asyncHandler(async (req, res) => {
+    const { _id } = req.user._id;
     const student = await User.findById(_id);
-if(!student){
-    throw new apiError(404,'student not found') 
-}
-const syllabus = await Syllabus.find({className:student.profile.className})
-if(!syllabus){
-    throw new apiError(400,"something went wrong")
-}
-return res.status(200).json(new apiResponse(200,syllabus,"syllabus found"))
+    if (!student) {
+        throw new apiError(404, 'student not found');
+    }
+    const syllabus = await Syllabus.find({ className: student.profile.className });
+    if (!syllabus) {
+        throw new apiError(400, 'something went wrong');
+    }
+    return res.status(200).json(new apiResponse(200, syllabus, 'syllabus found'));
+});
 
-})
-
-export { genIdCard, getMonthlyAttendance, getResult, getexam ,getSyllabus};
+export { genIdCard, getMonthlyAttendance, getResult, getexam, getSyllabus };
