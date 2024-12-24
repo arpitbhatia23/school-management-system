@@ -24,7 +24,8 @@
         "pdfkit": "^0.15.1",
         "prettier": "^3.3.3",
         "qrcode": "^1.5.4",
-        "sharp": "^0.33.5"
+        "sharp": "^0.33.5",
+        "twilio": "^5.4.0"
     },
     "keywords": [
         "backend",

@@ -8,7 +8,7 @@ import { Subject } from '../models/subject.js';
 import { add_expense } from '../models/add_Expense.js';
 import { parents_Detail } from '../models/parentsschema.js';
 import { Fees } from '../models/fees.js';
-
+import twilio from 'twilio';
 // Get student
 const getStudent = asyncHandler(async (req, res) => {
     const { className, name } = req.body;
@@ -460,7 +460,6 @@ const addFees = asyncHandler(async (req, res) => {
     if(student.length==0){
         throw new apiError(404,"student not found")
     }
-    console.log(student);
     const fee = await Fees.create({
         student_id: student[0]._id,
         amount,
@@ -474,6 +473,18 @@ const addFees = asyncHandler(async (req, res) => {
     if (!fee) {
         throw new apiError(404, 'some thing went wrong while adding fees');
     }
+   
+    const accountSid = process.env.AccountSid 
+    const authToken = process.env.AuthToken
+    const client=twilio(accountSid,authToken)
+
+   const message=   await client.messages.create({
+        body:` Fees of ₹${fee.amount} submitted successfully on ${new Date(fee.createdAt).toLocaleDateString()} at ${new Date(fee.createdAt).toLocaleTimeString()}.`,
+        from:process.env.TwilioPhoneNumber,
+        to:`+91${student[0].phone_no}`
+    })
+
+
     return res.status(200).json(new apiResponse(200, fee, 'fees added successfully'));
 });
 

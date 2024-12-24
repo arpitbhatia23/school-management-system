@@ -276,29 +276,24 @@ const register = asyncHandler(async (req, res) => {
 // login
 
 const login = asyncHandler(async (req, res) => {
-    const { email, password, phone_no } = req.body;
-    console.log('check 1');
+    const { email, password, phone_no,role } = req.body;
     if (!(email || phone_no)) {
         throw new apiError(400, 'email and phone_no is required');
     }
-    console.log('check 2');
 
-    if (!password) {
-        throw new apiError(400, 'password is required');
+    if (!(password&&role)) {
+        throw new apiError(400, 'password and role are required');
     }
-    console.log('check 3');
 
-    const user = await User.findOne({ $or: [{ email }, { phone_no }] });
+    const user = await User.findOne({ $or: [{ email }, { phone_no }], role});
     if (!user) {
         throw new apiError(400, 'user not find');
     }
-    console.log('check 4');
 
     const isValidPassword = await user.isPasswordcorrect(password);
     if (!isValidPassword) {
         throw new apiError(401, ' invalid password');
     }
-    console.log('check 5');
 
     const { accessToken, refreshToken } = await generateAccessTokenAndRefreshToken(user._id);
     const loggedInUser = await User.findById(user._id).select('-password -refreshToken');
@@ -322,6 +317,7 @@ const login = asyncHandler(async (req, res) => {
             ),
         );
 });
+
 
 // update profile image
 const updateProfileImage = asyncHandler(async (req, res) => {
