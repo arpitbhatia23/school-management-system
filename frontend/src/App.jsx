@@ -1,17 +1,15 @@
 import './App.css';
 import Navbar from '@/components/Navbar';
-import Login from '@/components/Login';
-
+import LoginPage from './pages/LoginPage';
 function App() {
   return (
     <>
- <div className=' flex justify-center items-center w-screen  h-screen'>
-
-      {/* <Navbar /> */}
-      <Login/>
+      <div className=" flex justify-center items-center w-screen  h-screen">
+        {/* <Navbar /> */}
+        <LoginPage />
       </div>
-      </>
-        );
+    </>
+  );
 }
 
 export default App;

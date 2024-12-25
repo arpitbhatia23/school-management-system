@@ -115,15 +115,12 @@ export default function Appsidebar() {
 
   return (
     <SidebarProvider>
-
       <SidebarTrigger />
       <Sidebar collapsible={'icon'}>
-
         <SidebarContent>
-
           <SidebarGroup className="px-0 py-0">
             <SidebarGroupLabel className="text-sm text-black font-bold rounded-none bg-orange-600 py-8 flex-row justify-center items-center">
-              School Management System      
+              School Management System
             </SidebarGroupLabel>
             <SidebarGroupContent className="px-0 py-4">
               <SidebarMenu>
