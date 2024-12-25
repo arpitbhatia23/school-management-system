@@ -573,20 +573,17 @@ const getNotification = asyncHandler(async(req,res)=>{
 // delete notification
 const deleteNotification = asyncHandler(async(req,res)=>{
     const {id}=req.body
-    const notification = await Notification.findById(id)
-    if(!notification){
-        throw new apiError(404,"Notification not found")
-        }
-        const deleteNotification = await notification.deleteOne()
-        if(!deleteNotification){
-            throw new apiError(400,"Failed to delete notification")
-        }
+    if(!id){
+        throw new apiError(404,"id is required ")
+    }
+    const notification = await Notification.findByIdAndDelete(id)
+    
         return res.status(200).json(new apiResponse(200,"Notification deleted successfully"))
         })
 
 
 
-
+        
 export {
     getStudent,
     getStudentById,
