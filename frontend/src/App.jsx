@@ -5,8 +5,11 @@ import Login from '@/components/Login';
 function App() {
   return (
     <>
-      <Navbar />
+ <div className=' flex justify-center items-center w-screen  h-screen'>
+
+      {/* <Navbar /> */}
       <Login/>
+      </div>
       </>
         );
 }

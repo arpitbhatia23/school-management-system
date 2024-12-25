@@ -4,8 +4,8 @@ const Login = () => {
   return (
     <div>
 
-        <div className='bg-orange-500  text-4xl flex justify-center items-center h-40 w-20 '>
-        <img src={img} alt="" />
+        <div className='bg-orange-500   flex justify-start  rounded-[10px] h-[80vh] w-[60vw]'>
+        <img src={img}  />
         </div>
       
     </div>

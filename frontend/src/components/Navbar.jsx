@@ -6,9 +6,7 @@ import React from 'react';
 const Navbar = () => {
   return (
     <SidebarProvider>
-  
-
-      <Appsidebar />
+        <Appsidebar />
     </SidebarProvider>
   );
 };
