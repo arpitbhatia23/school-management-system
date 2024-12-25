@@ -6,6 +6,7 @@ import {
     getResult,
     getSyllabus,
     getexam,
+    getnotification,
 } from '../controllers/students.controller.js';
 const router = Router();
 router.route('/genidcard').get(verifyJwt, verifystudent, genIdCard);
@@ -13,4 +14,5 @@ router.route('/getMonthlyAttendance').get(verifyJwt, verifystudent, getMonthlyAt
 router.route('/getResult').get(verifyJwt, verifystudent, getResult);
 router.route('/getexam').get(verifyJwt, verifystudent, getexam);
 router.route('/getSyllabus').get(verifyJwt, verifystudent, getSyllabus);
+router.route('/getnotification').get(verifyJwt,verifystudent,getnotification)
 export default router;

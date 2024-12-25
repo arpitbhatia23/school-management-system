@@ -16,6 +16,9 @@ import {
     updateSubject,
     addFees,
     getfees,
+    addNotification,
+    getNotification,
+    deleteNotification,
 } from '../controllers/admin.controller.js';
 const router = Router();
 router.route('/getstudent').get(verifyJwt, verifyAdmin, getStudent);
@@ -33,5 +36,7 @@ router.route('/updateParentsById').patch(verifyJwt, verifyAdmin, updateParentsBy
 router.route('/updateSubject').patch(verifyJwt, verifyAdmin, updateSubject);
 router.route('/addfees').post(verifyJwt, verifyAdmin, addFees);
 router.route('/getfees').get(verifyJwt, verifyAdmin, getfees);
-
+router.route('/addnotification').post(verifyJwt,verifyAdmin,addNotification)
+router.route("/getnotification").get(verifyJwt,verifyAdmin,getNotification)
+router.route("/deleteNotification").delete(verifyJwt,verifyAdmin,deleteNotification)
 export default router;

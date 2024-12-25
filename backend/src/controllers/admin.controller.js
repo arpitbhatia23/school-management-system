@@ -9,6 +9,7 @@ import { add_expense } from '../models/add_Expense.js';
 import { parents_Detail } from '../models/parentsschema.js';
 import { Fees } from '../models/fees.js';
 import twilio from 'twilio';
+import { Notification } from '../models/notification.js';
 // Get student
 const getStudent = asyncHandler(async (req, res) => {
     const { className, name } = req.body;
@@ -471,7 +472,7 @@ const addFees = asyncHandler(async (req, res) => {
 
     // to do send fees
     if (!fee) {
-        throw new apiError(404, 'some thing went wrong while adding fees');
+        throw new apiError(404, 'something went wrong while adding fees');
     }
 
     const accountSid = process.env.AccountSid;
@@ -539,6 +540,52 @@ const getfees = asyncHandler(async (req, res) => {
 
     return res.status(200).json(new apiResponse(200, fees, 'Fees fetched successfully'));
 });
+// add notification
+const addNotification = asyncHandler(async(req,res)=>{
+    const {title,message}= req.body
+    if(!(title||message)){
+                     throw new apiError(400,"all fields are required")
+    }
+    const notification = await Notification.create({
+        title,message
+    })
+    if(!notification){
+        throw new apiError(400,"Failed to add notification")
+    }
+
+    return res.status(200).json (new apiResponse(200,"notification sent successfully"))
+    
+
+})
+// get notification
+const getNotification = asyncHandler(async(req,res)=>{
+    const {_id}=req.user._id
+    const admin = await User.findById(_id)
+    if(!admin){
+        throw new apiError(404,"Admin not found")
+        }
+        const notifications = await Notification.find({})
+        if(!notifications){
+            throw new apiError(404,"Notifications not found")
+        }
+        return res.status(200).json(new apiResponse(200,notifications,"Notifications fetched successfully"))
+})
+// delete notification
+const deleteNotification = asyncHandler(async(req,res)=>{
+    const {id}=req.body
+    const notification = await Notification.findById(id)
+    if(!notification){
+        throw new apiError(404,"Notification not found")
+        }
+        const deleteNotification = await notification.deleteOne()
+        if(!deleteNotification){
+            throw new apiError(400,"Failed to delete notification")
+        }
+        return res.status(200).json(new apiResponse(200,"Notification deleted successfully"))
+        })
+
+
+
 
 export {
     getStudent,
@@ -556,4 +603,7 @@ export {
     updateParentsById,
     addFees,
     getfees,
+    addNotification,
+    getNotification,
+    deleteNotification
 };
