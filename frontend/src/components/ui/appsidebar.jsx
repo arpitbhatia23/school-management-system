@@ -114,21 +114,19 @@ export default function Appsidebar() {
   };
 
   return (
-    <SidebarProvider>
-      <SidebarTrigger />
-      <Sidebar collapsible={'icon'}>
-        <SidebarContent>
+      <Sidebar >
+      <SidebarContent>
           <SidebarGroup className="px-0 py-0">
             <SidebarGroupLabel className="text-sm text-black font-bold rounded-none bg-orange-600 py-8 flex-row justify-center items-center">
-              School Management System
+              School Management System 
             </SidebarGroupLabel>
             <SidebarGroupContent className="px-0 py-4">
               <SidebarMenu>
                 {items.map((item) => (
                   <SidebarMenuItem
-                    key={item.title}
+                    key={item.title} 
                     className="px-0 py-1 border-b border-black"
-                  >
+                  > 
                     <SidebarMenuButton
                       asChild
                       className="peer-data-[active=true]/menu-button:opacity-100"
@@ -177,6 +175,5 @@ export default function Appsidebar() {
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
-    </SidebarProvider>
   );
 }

@@ -16,7 +16,6 @@ const generateStudentRollNo = async (className) => {
         'profile.className': className,
     });
 
-    console.log(studentCount);
     const rollNo = `${studentCount + 1}`.padStart(3, '0'); // Ensure 3 digits
     return rollNo;
 };
@@ -47,7 +46,6 @@ const register = asyncHandler(async (req, res) => {
         qualification,
     } = req.body;
     // Validate required fields
-    console.log('check 1');
     if ([name, gender, role].some((field) => field?.trim() === '')) {
         throw new apiError(400, 'All user fields are required');
     }
@@ -59,7 +57,6 @@ const register = asyncHandler(async (req, res) => {
             throw new apiError(500, 'some thing went wrong while gentating date');
         }
         // Destructure and validate `parents` details
-        console.log('check 2');
         if (
             [father_name, mother_name, father_occupation, parents_email].some(
                 (field) => field?.trim() === '',
@@ -67,11 +64,9 @@ const register = asyncHandler(async (req, res) => {
         ) {
             throw new apiError(400, 'All parent fields are required');
         }
-        console.log('check 3');
         if (!parents_phone) {
             throw new apiError(400, 'parents phone no required');
         }
-        console.log('check 4');
         console.log(
             className,
             DOB,
@@ -115,7 +110,6 @@ const register = asyncHandler(async (req, res) => {
             phone: parents_phone,
             email: parents_email,
         });
-        console.log('check 5');
 
         if (!parentsDetailRecord) {
             throw new apiError(500, 'Error registering parent details');
@@ -127,6 +121,7 @@ const register = asyncHandler(async (req, res) => {
 
         // upload profile image on cloudnary
         const avtar = req.file?.path;
+       
         if (!avtar) {
             throw new apiError(400, 'Profile image is required');
         }
@@ -136,7 +131,6 @@ const register = asyncHandler(async (req, res) => {
             throw new apiError(400, 'something went wrong in cloudnary');
         }
 
-        console.log('hi', profile_image);
         // Create user record with profile data
         const user = await User.create({
             name,
@@ -149,7 +143,6 @@ const register = asyncHandler(async (req, res) => {
             phone_no,
             profile_image: { url: profile_image?.secure_url, public_id: profile_image?.public_id },
         });
-        console.log('check 6');
 
         if (!user) {
             throw new apiError(500, 'Error registering user');

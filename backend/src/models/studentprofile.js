@@ -34,7 +34,7 @@ const studentProfile = new Schema(
         },
         category: {
             type: String,
-            enum: ['general', 'OBC', 'SC', 'ST'],
+            enum: ['GENERAL', 'OBC', 'SC', 'ST'],
             required: [true, 'Category is required'],
         },
         admission_Date: {
