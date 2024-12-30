@@ -1,14 +1,14 @@
 import './App.css';
-import LoginPage from './pages/LoginPage';
-import Dashboard from './pages/Dashboard';
+
 import { Toaster } from './components/ui/toaster';
+import { Outlet } from 'react-router-dom';
 function App() {
   return (
     <>
     <div className=' flex justify-center   w-screen min-h-screen'>
       <Toaster/>
-    <LoginPage/>
-    {/* <Dashboard/> */}
+   
+      <Outlet/>
 
     </div>
     </>

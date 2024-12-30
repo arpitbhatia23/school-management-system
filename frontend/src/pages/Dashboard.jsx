@@ -2,10 +2,15 @@ import Addstudent from '@/components/Addstudent'
 import Appsidebar from '@/components/ui/appsidebar'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { Separator } from '@/components/ui/separator';
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { Outlet, useLocation,Link } from 'react-router-dom';
 
 const Dashboard = () => {
+ const location=useLocation()
+ console.log(location.pathname)
+ const pathSegments = location.pathname.split('/').filter((segment) => segment);
+ console.log(pathSegments)
   return (
     <>
 <SidebarProvider>
@@ -17,23 +22,32 @@ const Dashboard = () => {
       <Separator className="h-4 mr-2 " orientation="vertical " />
 
       <Breadcrumb>
-      <BreadcrumbList>
-      <BreadcrumbItem className="hidden md:block">
-      home
-      </BreadcrumbItem>
-      <BreadcrumbSeparator className="hidden md:block"/>
-      <BreadcrumbItem className="hidden md:block">
-      <BreadcrumbPage>
-      Add student
-
-      </BreadcrumbPage>
-      </BreadcrumbItem>
-      </BreadcrumbList>
-      </Breadcrumb>
+                <BreadcrumbList>
+                  {pathSegments.map((segment, index) => {
+                    const isLast = index === pathSegments.length - 1;
+                    const formattedSegment =
+                      segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
+                    return (
+                      < Fragment key={index} >
+                        <BreadcrumbItem  className={isLast ? 'font-semibold' : ''}>
+                          {isLast ? (
+                            <BreadcrumbPage>{formattedSegment}</BreadcrumbPage>
+                          ) : (
+                            <Link to={`/${pathSegments.slice(0, index + 1).join('/')}`}>
+                              {formattedSegment}
+                            </Link>
+                          )}
+                        </BreadcrumbItem>
+                        {!isLast && <BreadcrumbSeparator />}
+                      </Fragment>
+                    );
+                  })}
+                </BreadcrumbList>
+              </Breadcrumb>
       </div>
    </header>
    
-          <Addstudent/>
+          <Outlet/>
   </SidebarInset>
 </SidebarProvider>
        
