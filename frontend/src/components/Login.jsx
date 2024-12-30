@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
@@ -19,7 +19,7 @@ const Login = ({ className },props) => {
     },
   });
   const {login}=useAuthApi()
-
+const [loading ,setloading]=useState(false)
   const items=[
     "admin",
     "teacher",
@@ -27,7 +27,9 @@ const Login = ({ className },props) => {
   ]
   const onSubmit = async(data) => {
     console.log(data)
+    setloading(true)
     const res=await  login(data)
+    setloading(false)
     console.log(res?.data)
   };
 
@@ -102,7 +104,7 @@ const Login = ({ className },props) => {
         />
 
         {/* Submit Button */}
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{loading?"Submiting...": "submit"}</Button>
       </form>
     </Form>
     
