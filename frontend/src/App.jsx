@@ -7,8 +7,8 @@ function App() {
     <>
     <div className=' flex justify-center   w-screen min-h-screen'>
       <Toaster/>
-    <LoginPage/>
-    {/* <Dashboard/> */}
+    {/* <LoginPage/> */}
+    <Dashboard/>
 
     </div>
     </>
