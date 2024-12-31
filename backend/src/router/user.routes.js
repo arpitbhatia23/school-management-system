@@ -15,7 +15,9 @@ import { verifyJwt } from '../middleware/auth.middelware.js';
 import { loginRateLimit } from '../middleware/loginratelimit.js';
 const router = Router();
 router.route('/register').post(upload.single('profile_image'), validate, register);
-router.route('/login').post(loginRateLimit, validate, login);
+router.route('/login').post(
+    // loginRateLimit,
+     validate, login);
 router.route('/update_image').patch(verifyJwt, upload.single('profile_image'), updateProfileImage);
 router.route('/change_password').patch(verifyJwt, change_password);
 router.route('/updateprofile').patch(verifyJwt, update_profile_detail);

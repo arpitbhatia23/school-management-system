@@ -114,66 +114,61 @@ export default function Appsidebar() {
   };
 
   return (
-      <Sidebar >
+    <Sidebar>
       <SidebarContent>
-          <SidebarGroup className="px-0 py-0">
-            <SidebarGroupLabel className="text-sm text-black font-bold rounded-none bg-orange-600 py-8 flex-row justify-center items-center">
-              School Management System 
-            </SidebarGroupLabel>
-            <SidebarGroupContent className="px-0 py-4">
-              <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem
-                    key={item.title} 
-                    className="px-0 py-1 border-b border-black"
-                  > 
-                    <SidebarMenuButton
-                      asChild
-                      className="peer-data-[active=true]/menu-button:opacity-100"
+        <SidebarGroup className="px-0 py-0">
+          <SidebarGroupLabel className="text-sm text-black font-bold rounded-none bg-orange-600 py-8 flex-row justify-center items-center">
+            School Management System
+          </SidebarGroupLabel>
+          <SidebarGroupContent className="px-0 py-4">
+            <SidebarMenu>
+              {items.map((item) => (
+                <SidebarMenuItem
+                  key={item.title}
+                  className="px-0 py-1 border-b border-black"
+                >
+                  <SidebarMenuButton
+                    asChild
+                    className="peer-data-[active=true]/menu-button:opacity-100"
+                  >
+                    <div
+                      onClick={() => item.submenu && toggleSubmenu(item.title)}
+                      className="flex items-center justify-between w-full cursor-pointer"
                     >
-                      <div
-                        onClick={() =>
-                          item.submenu && toggleSubmenu(item.title)
-                        }
-                        className="flex items-center justify-between w-full cursor-pointer"
-                      >
-                        <div className="flex items-center">
-                          <item.icon className="mr-2" />
-                          <span>{item.title}</span>
-                        </div>
-                        {item.submenu &&
-                          (expandedSubmenu === item.title ? (
-                            <ChevronUp />
-                          ) : (
-                            <ChevronDown />
-                          ))}
+                      <div className="flex items-center">
+                        <item.icon className="mr-2" />
+                        <span>{item.title}</span>
                       </div>
-                    </SidebarMenuButton>
-
-                    {/* Submenu items */}
-                    {item.submenu && expandedSubmenu === item.title && (
-                      <div className="ml-6 mt-2">
-                        {item.submenu.map((subItem) => (
-                          <SidebarMenuItem key={subItem.title}>
-                            <SidebarMenuButton asChild>
-                              <a
-                                href={subItem.url}
-                                className="flex items-center"
-                              >
-                                <subItem.icon className="mr-2" />
-                                <span>{subItem.title}</span>
-                              </a>
-                            </SidebarMenuButton>
-                          </SidebarMenuItem>
+                      {item.submenu &&
+                        (expandedSubmenu === item.title ? (
+                          <ChevronUp />
+                        ) : (
+                          <ChevronDown />
                         ))}
-                      </div>
-                    )}
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
+                    </div>
+                  </SidebarMenuButton>
+
+                  {/* Submenu items */}
+                  {item.submenu && expandedSubmenu === item.title && (
+                    <div className="ml-6 mt-2">
+                      {item.submenu.map((subItem) => (
+                        <SidebarMenuItem key={subItem.title}>
+                          <SidebarMenuButton asChild>
+                            <a href={subItem.url} className="flex items-center">
+                              <subItem.icon className="mr-2" />
+                              <span>{subItem.title}</span>
+                            </a>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </div>
+                  )}
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
   );
 }

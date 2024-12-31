@@ -553,7 +553,7 @@ const addNotification = asyncHandler(async(req,res)=>{
         throw new apiError(400,"Failed to add notification")
     }
 
-    return res.status(200).json (new apiResponse(200,"notification sent successfully"))
+    return res.status(200).json (new apiResponse(200,notification,"notification sent successfully"))
     
 
 })
