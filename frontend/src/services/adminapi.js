@@ -1,5 +1,6 @@
-const { api } = require("@/utils/api");
-const { data } = require("autoprefixer");
+import { api } from "@/utils/api";
+import { data } from "autoprefixer";
+import { allowedNodeEnvironmentFlags } from "process";
 export const adminApi=()=>{
     const students = async(data)=>{
         try{
@@ -10,7 +11,7 @@ export const adminApi=()=>{
         // get student by id
         const studentsById = async(data)=>{
             try{
-                return await api.get('admin/getstudentbyid/:students_id',data)
+                return await api.get(`admin/getstudentbyid/:${data}`)
             }catch(error){
                 return error.response
             }
@@ -79,6 +80,71 @@ try{
     return error.response
 }
 }
-    return{students,studentsById,promoteStudent,getParents,getTeachers,getTeacherById,getParentsById,addSubject,getSubject}
+// get Expenses
+const  getExpenses = async(data)=>{
+    try{ 
+        return await api.get('admin/getAllExpense',data)
+    }catch(error){
+        return error.response
+    }
+}
+// update parents by Id
+const updateParentsById = async(data)=>{
+    try{
+        return await api.patch('admin/updateParentsById',data)
+    }catch(error){
+        return error.response
+    }
+}
+// update subject 
+const updateSubject = async(data)=>{
+    try{
+        return await api.patch('admin/updatesubject',data)
+    }catch(error){
+        return error.response
+    }
+}
+// add notification
+const notification = async(data)=>{
+    try{
+        return await api.post('admin/addnotification',data)
+    }catch(error){
+        return error.response
+    }
+}
+// get notification
+const getNotification = async(data)=>{
+    try{
+        return await api.get('admin/getnotification',data)
+    }catch(error){
+        return error.response
+    }
+}
+// del notification 
+const delNoification =async(data)=>{
+    try{
+        return await api.delete('admin/deleteNotification',data)
+    }catch(error){
+        return error.response
+    }
+}
+// add fees 
+const fees =async(data)=>{
+    try{
+        return await api.post('admin/addfees',data)
+    }catch(error){
+        return error.response
+    }
+}
+// get fees
+const getFees =async(data)=>{
+    try{
+        return await api.get('admin/addfees',data)
+    }catch(error){
+        return error.response
+    }
+}
+return{students,studentsById,promoteStudent,getParents,getTeachers,getTeacherById,getParentsById,addSubject,getSubject,addExpense,getExpenses,notification,updateSubject,updateParentsById,getNotification,delNoification,fees,getFees
+    }
 
 }

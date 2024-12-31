@@ -1,4 +1,5 @@
 import { api } from "@/utils/api"
+import { error } from "console"
 
 export const useAuthApi=()=>{
 
@@ -73,8 +74,32 @@ const update_profile_detail = async(data)=>{
     return error.response
   }
 }
-// 
+// logout
+const logout =async(data)=>{
+  try{
+    return await api.delete('users/logout',data)
+  }catch(error){
+    return error.response
+  }
+}
+
+// refreshtoken
+const refresh_token =async(data)=>{
+  try{
+    return await api.get("users/refresh_token",data)
+  }catch(erro){
+    return error.response
+  }
+}
 
 
-return{login,register,updateImage,currentUser,changePassword}
+// updateprofile
+const updateProfile= async(data)=>{
+  try{
+    return await api.patch("users/updateprofile",data)
+  }catch(error){
+  return error.response}
+}
+
+return{login,register,updateImage,currentUser,changePassword,logout,refresh_token,updateProfile}
 }
