@@ -7,11 +7,11 @@ export default defineConfig(({ mode }) => {
   // Load the environment variables based on the mode
   const env = loadEnv(mode, process.cwd(), '');
 
-  console.log(env.VITE_BASE_URL)
+  console.log(env.VITE_BASE_URL);
   return {
     server: {
       proxy: {
-        '/api/v1': env.VITE_BASE_URL 
+        '/api/v1': env.VITE_BASE_URL,
       },
     },
     plugins: [react()],

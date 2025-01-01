@@ -564,7 +564,8 @@ const getNotification = asyncHandler(async(req,res)=>{
     if(!admin){
         throw new apiError(404,"Admin not found")
         }
-        const notifications = await Notification.find({})
+        const notifications = await Notification.find().sort({ createdAt: -1 })
+        .limit(5)
         if(!notifications){
             throw new apiError(404,"Notifications not found")
         }
@@ -581,6 +582,7 @@ const deleteNotification = asyncHandler(async(req,res)=>{
         return res.status(200).json(new apiResponse(200,"Notification deleted successfully"))
         })
 
+// 
 
 
         
@@ -602,5 +604,5 @@ export {
     getfees,
     addNotification,
     getNotification,
-    deleteNotification
+    deleteNotification,
 };
