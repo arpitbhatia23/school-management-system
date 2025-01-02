@@ -32,7 +32,7 @@ const StudentsChart = ({ students }) => {
             config={chartConfig}
             className="mx-auto aspect-square  max-h-[251px]"
           >
-            <ResponsiveContainer >
+            <ResponsiveContainer>
               <PieChart>
                 <ChartTooltip
                   cursor={false}

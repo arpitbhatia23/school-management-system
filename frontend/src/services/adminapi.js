@@ -160,6 +160,24 @@ export const adminApi = () => {
       return error.response;
     }
   };
+
+  const totalexpense = async () => {
+    try {
+      return await api.get('admin/totalexpense');
+    } catch (error) {
+      return error.response;
+    }
+  };
+
+  const totalteacher = async () => {
+    try {
+      return await api.get('admin/totalteacher');
+    } catch (error) {
+      return error.response;
+    }
+  };
+
+
   return {
     students,
     studentsById,
@@ -181,5 +199,7 @@ export const adminApi = () => {
     getFees,
     totalstudent,
     totalfees,
+    totalexpense,
+    totalteacher
   };
 };

@@ -6,7 +6,7 @@ import App from './App';
 import Dashboard from './pages/Dashboard'; // Assuming AddStudent page
 import AddStudent from './components/Addstudent';
 import LoginPage from './pages/LoginPage';
-import AdminDashbaord from './components/AdminDashbaord';
+import AdminDashbaord from './pages/AdminDashbaord';
 
 const router = createBrowserRouter([
   {

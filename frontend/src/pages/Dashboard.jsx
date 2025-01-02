@@ -15,6 +15,9 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { Outlet, useLocation, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Avatar } from '@radix-ui/react-avatar';
+import { AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const Dashboard = () => {
   const location = useLocation();
@@ -23,6 +26,9 @@ const Dashboard = () => {
     .split('/')
     .filter((segment) => segment);
   console.log(pathSegments);
+
+  const userData=useSelector(state=>state.auth.userData)
+  console.log(userData)
   return (
     <>
       <SidebarProvider>
@@ -62,6 +68,11 @@ const Dashboard = () => {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
+
+            <Avatar className=' fixed right-4 border-2 border-gray-500 h-8 w-8 rounded-full '>
+              <AvatarImage src={userData?.profile_image?.url} className="rounded-full"/>
+              <AvatarFallback>cn</AvatarFallback>
+            </Avatar>
           </header>
 
           <Outlet />

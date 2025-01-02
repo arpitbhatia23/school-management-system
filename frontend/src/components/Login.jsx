@@ -38,9 +38,8 @@ const Login = ({ className }, props) => {
     setloading(true);
     const res = await login(data);
     setloading(false);
-    console.log(res);
     if (res.data.success === true) {
-      dispatch(AuthLogin(res.data));
+      dispatch(AuthLogin(res.data.data.user));
       if (res.data?.data?.user.role === 'admin') {
         nav('/');
         toast({

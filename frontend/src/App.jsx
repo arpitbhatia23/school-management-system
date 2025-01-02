@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import './App.css';
-
+import { login } from './store/slice';
 import { Toaster } from './components/ui/toaster';
 import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -10,9 +10,9 @@ function App() {
   const currentuser = async () => {
     const { currentUser } = useAuthApi();
     const res = await currentUser();
-    console.log(res.data);
     if (res.data.success === true) {
-      dispatch(res.data);
+      const userData=res.data.data
+      dispatch(login(userData));
     }
   };
   useEffect(() => {
