@@ -53,7 +53,7 @@ const getStudent = asyncHandler(async (req, res) => {
                     category: '$profile.category',
                     DOB: '$profile.DOB',
                     bloodGroup: '$profile.blood_group',
-                    class: '$profile.className',
+                    className: '$profile.className',
                     religion: '$profile.religion',
                     nationality: '$profile.nationality',
                     address: '$profile.address',

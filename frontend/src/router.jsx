@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard'; // Assuming AddStudent page
 import AddStudent from './components/Addstudent';
 import LoginPage from './pages/LoginPage';
 import AdminDashbaord from './pages/AdminDashbaord';
+import Getstudent from './components/Getstudent';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             path: '/addstudent',
             element: <AddStudent />,
           },
+          {
+            path:"/getstudents",
+            element:<Getstudent/>
+          }
         ],
       },
       {

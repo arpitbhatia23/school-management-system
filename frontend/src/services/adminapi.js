@@ -2,8 +2,9 @@ import { api } from '@/utils/api';
 
 export const adminApi = () => {
   const students = async (data) => {
+    console.log(data)
     try {
-      return await api.get('admin/getStudent', data);
+      return await api.post('admin/getStudent', data);
     } catch (error) {
       return error.response;
     }
