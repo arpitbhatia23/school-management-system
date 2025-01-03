@@ -22,10 +22,10 @@ const {students}=adminApi()
     }
 console.log(data)
  const newdata = data?.map((item) => {
-     const {name,gender}=item
+     const {name,gender,_id}=item
      const {roll_no,className,address,nationality}=item.profile
      const{father_name,parents_contact,parents_email}=item.parents_Detail
-     return {name,gender,roll_no,className,parents_email,father_name,parents_contact,address,nationality}
+     return {_id,name,gender,roll_no,className,parents_email,father_name,parents_contact,address,nationality}
  });
   return (
     <div>
