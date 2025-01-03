@@ -6,10 +6,10 @@ import { useAuthApi } from '@/services/authapi';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Input } from './ui/input';
 import Selectcomp from './Select';
+import { toast } from '@/hooks/use-toast';
 const Setting = () => {
   const {image}= useState();
   const form = useForm({
-    mode: "onChange",
     defaultValues:{
       name:"",
       gender:"",
@@ -20,15 +20,34 @@ const Setting = () => {
     const {update} = useAuthApi();
     
     const onSubmit = async (data) => {
-      const response = await update(data);
-      console.log(response);
-      }
+      const formData = new FormData();
+      console.log(data)
+      // 
+      Object.keys(data).forEach((key)=>{
+        formData.append(key,data[key]);
+      })
+      const res = await update(data);
+
+      console.log(response?.data);
+      if(res?.data?.statusCode ===201){
+        toast({
+          title:'update successfully',
+          description:res?.data?.message
+        })
+      }else{
+        toast({
+          variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: res.data.message,
+      });
+        
+      }};
     
   return (
     <>
     <Card className="m-20 ">
-      <Card className="bg-blue-600 h-44 w-full py-10">
-          <Card className="rounded-full bg-red-100 h-32 w-32  my-12 py-10"></Card>
+      <Card className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
+          <Card className="rounded-full bg-red-100 h-32 w-32 m-4 my-12 py-10"></Card>
       </Card>
       <CardContent>
         {/* <CardTitle className="py-4">
@@ -110,10 +129,12 @@ onSubmit={form.handleSubmit(onSubmit)}
         <FormMessage/>
       </FormItem>    )}
     />
+    <div className='flex  justify-center'>
     <button
                       type="submit"
-                      className="bg-orange-500 p-2 text-white  w-28"
+                      className="bg-orange-500 p-2 text-white  m-4 w-28 "
                     >Update</button>
+    </div>
 </CardContent>
 
 </form>
