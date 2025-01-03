@@ -5,6 +5,7 @@ import { Toaster } from './components/ui/toaster';
 import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useAuthApi } from './services/authapi';
+import Setting from './components/Setting';
 function App() {
   const dispatch = useDispatch();
   const currentuser = async () => {
@@ -22,7 +23,6 @@ function App() {
     <>
       <div className=" flex justify-center   w-screen min-h-screen">
         <Toaster />
-
         <Outlet />
       </div>
     </>

@@ -59,17 +59,17 @@ export const useAuthApi = () => {
     }
   };
   // update profile detail
-  const update_profile_detail = async (data) => {
-    try {
-      return await api.patch('user/updateprofile', data, {
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-    } catch (error) {
-      return error.response;
-    }
-  };
+  // const update_profile_detail = async (data) => {
+  //   try {
+  //     return await api.patch('user/updateprofile', data, {
+  //       headers: {
+  //         Accept: 'application/json',
+  //       },
+  //     });
+  //   } catch (error) {
+  //     return error.response;
+  //   }
+  // };
   // logout
   const logout = async (data) => {
     try {
