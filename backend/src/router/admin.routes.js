@@ -22,7 +22,7 @@ import {
 } from '../controllers/admin.controller.js';
 import { totalExpense, totalfee, totalstudentGender, totalteacher } from '../controllers/adminDashboard.js';
 const router = Router();
-router.route('/getstudent').get(verifyJwt, verifyAdmin, getStudent);
+router.route('/getstudent').post(verifyJwt, verifyAdmin, getStudent);
 router.route('/getstudentbyid/:student_id').get(verifyJwt, verifyAdmin, getStudentById);
 router.route('/promoteStudent').post(verifyJwt, verifyAdmin, verifyAdmin, promoteStudents);
 router.route('/getallparetns').get(verifyJwt, verifyAdmin, getAllParents);
