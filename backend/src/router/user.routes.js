@@ -24,4 +24,5 @@ router.route('/updateprofile').patch(verifyJwt, update_profile_detail);
 router.route('/logout').delete(verifyJwt, logout);
 router.route('/refresh_token').get(verifyJwt, refreshAccessToken);
 router.route('/current_user').get(verifyJwt, currentUser);
+
 export default router;

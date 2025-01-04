@@ -28,7 +28,9 @@ const Setting = () => {
     <>
     <Card className="m-20 ">
       <Card className="bg-blue-600 h-44 w-full py-10">
-          <Card className="rounded-full bg-red-100 h-32 w-32  my-12 py-10"></Card>
+          <Card className="rounded-full bg-red-100 h-32 w-32  my-12 py-10">
+            
+          </Card>
       </Card>
       <CardContent>
         {/* <CardTitle className="py-4">

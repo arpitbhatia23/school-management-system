@@ -134,6 +134,7 @@ const getStudentById = asyncHandler(async (req, res) => {
                     address: '$profile.address',
                 },
                 parents_Detail: {
+                    _id:"$parents_Detail._id",
                     father_name: '$parents_Detail.father_name',
                     mother_name: '$parents_Detail.mother_name',
                     parents_contact: '$parents_Detail.phone',
@@ -185,7 +186,24 @@ const promoteStudents = asyncHandler(async (req, res) => {
         .status(200)
         .json(new apiResponse(200, updatedStudent, 'student promoted successfully'));
 });
+//delete student by  id
+const deleteStudentbyID=asyncHandler(async(req,res)=>{
+    const {id}=req.body
+    if(!id){
+        throw new apiError(400,"id is required")
+    }
+    const user=await User.findById(id)
+    if(user.profile.parents_Detail){
+        await parents_Detail.findByIdAndDelete(user.profile.parents_Detail)
+    }
+    
+await User.findByIdAndDelete(id)
 
+return res.status(200).json(new apiResponse(200,{},"student delete sucessfully"))
+
+
+
+})
 // get all parents
 
 const getAllParents = asyncHandler(async (req, res) => {
@@ -605,4 +623,5 @@ export {
     addNotification,
     getNotification,
     deleteNotification,
+    deleteStudentbyID
 };

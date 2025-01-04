@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardDescription, CardTitle } from '../components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from '../components/ui/card';
 import { User } from 'lucide-react';
 import { Separator } from '../components/ui/separator';
 
@@ -15,7 +20,7 @@ const AdminDashboard = () => {
   const [fees, setFees] = useState([]);
   const [totalTeacher, setTotalTeacher] = useState([]);
 
-  const { totalstudent, totalexpense ,totalteacher,totalfees} = adminApi();
+  const { totalstudent, totalexpense, totalteacher, totalfees } = adminApi();
 
   const fetchFees = async () => {
     const res = await totalfees();
@@ -32,31 +37,52 @@ const AdminDashboard = () => {
     setsexpense(res?.data?.data);
   };
   // Fetch chart colors from CSS variables
-  const fetchtotalteacher=async()=>{
-    const res=await totalteacher();
+  const fetchtotalteacher = async () => {
+    const res = await totalteacher();
     setTotalTeacher(res?.data?.data);
-  }
+  };
   useEffect(() => {
     fetchtotalstudent();
     fetchexpense();
     fetchFees();
     fetchtotalteacher();
-
   }, []);
 
-  
   const totalexpensestats = expense?.reduce(
     (acc, cur) => acc + cur.totalAmount,
     0,
   );
   const totalearningstat = fees?.reduce((acc, cur) => acc + cur.totalAmount, 0);
   const totalstudentsstat = student?.reduce((acc, cur) => acc + cur.count, 0);
-  const totalteacherstat = totalTeacher?.reduce((acc, cur) => acc + cur.count, 0);
+  const totalteacherstat = totalTeacher?.reduce(
+    (acc, cur) => acc + cur.count,
+    0,
+  );
   const stats = [
-    { label: 'Students', value: totalstudentsstat,bgcolor:"bg-orange-500" ,icon:User },
-    { label: 'Teacher', value: totalteacherstat,bgcolor:"bg-green-500" ,icon:User },
-    { label: 'Earning', value: totalearningstat ,bgcolor:"bg-blue-500",icon:DollarSign},
-    { label: 'Expnese', value: totalexpensestats ,bgcolor:"bg-red-500",icon:DollarSign},
+    {
+      label: 'Students',
+      value: totalstudentsstat,
+      bgcolor: 'bg-orange-500',
+      icon: User,
+    },
+    {
+      label: 'Teacher',
+      value: totalteacherstat,
+      bgcolor: 'bg-green-500',
+      icon: User,
+    },
+    {
+      label: 'Earning',
+      value: totalearningstat,
+      bgcolor: 'bg-blue-500',
+      icon: DollarSign,
+    },
+    {
+      label: 'Expnese',
+      value: totalexpensestats,
+      bgcolor: 'bg-red-500',
+      icon: DollarSign,
+    },
   ];
 
   return (
@@ -75,7 +101,9 @@ const AdminDashboard = () => {
               <div className="flex flex-col items-center">
                 <CardTitle>{stat.label}</CardTitle>
                 <Separator />
-                <CardDescription className="font-semibold text-white">{stat.value}</CardDescription>
+                <CardDescription className="font-semibold text-white">
+                  {stat.value}
+                </CardDescription>
               </div>
             </CardContent>
           ))}

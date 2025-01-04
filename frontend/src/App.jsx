@@ -12,7 +12,7 @@ function App() {
     const { currentUser } = useAuthApi();
     const res = await currentUser();
     if (res.data.success === true) {
-      const userData=res.data.data
+      const userData = res.data.data;
       dispatch(login(userData));
     }
   };
