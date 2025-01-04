@@ -26,7 +26,7 @@ const router = Router();
 router.route('/getstudent').post(verifyJwt, verifyAdmin, getStudent);
 router.route('/getstudentbyid/:student_id').post(verifyJwt, verifyAdmin, getStudentById);
 router.route('/promoteStudent').post(verifyJwt, verifyAdmin, verifyAdmin, promoteStudents);
-router.route('/getallparetns').get(verifyJwt, verifyAdmin, getAllParents);
+router.route('/getallparents').post(verifyJwt, verifyAdmin, getAllParents);
 router.route('/getTeacher').get(verifyJwt, verifyAdmin, getAllTeacher);
 router.route('/getTeacherById').get(verifyJwt, verifyAdmin, getTeacherById);
 router.route('/addSubject').post(verifyJwt, verifyAdmin, addsuject);

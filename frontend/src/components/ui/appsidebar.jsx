@@ -62,7 +62,7 @@ const items = [
   },
   {
     title: 'parents',
-    url: '#',
+    url: '/getparents',
     icon: Search,
   },
   {
@@ -101,7 +101,7 @@ const items = [
   },
   {
     title: 'Settings',
-    url: '#',
+    url: '/setting',
     icon: Settings,
   },
 ];

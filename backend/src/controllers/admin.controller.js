@@ -208,7 +208,7 @@ return res.status(200).json(new apiResponse(200,{},"student delete sucessfully")
 
 const getAllParents = asyncHandler(async (req, res) => {
     const { name, className } = req.body;
-    if (!(name || className)) {
+    if (!(name ||    className)) {
         throw new apiError(400, 'name and class is required');
     }
 

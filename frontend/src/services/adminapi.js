@@ -39,7 +39,7 @@ const deleteuser=async(data)=>{
   // get parents
   const getParents = async (data) => {
     try {
-      return await api.get('admin/getallparents', data);
+      return await api.post('admin/getallparents', data);
     } catch (error) {
       return error.response;
     }

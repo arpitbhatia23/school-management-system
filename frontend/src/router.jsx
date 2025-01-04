@@ -10,6 +10,7 @@ import AdminDashbaord from './pages/AdminDashbaord';
 import Setting from './components/Setting';
 import Getstudent from './components/Getstudent';
 import PromoteStudent from './components/PromoteStudent';
+import GetParents from './components/GetParents';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
           {
             path:"/promoteStudent",
             element:<PromoteStudent/>
+          },
+          {
+            path:"/getparents",
+            element:<GetParents/>
           }
         ],
       },
