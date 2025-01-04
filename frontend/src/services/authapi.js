@@ -13,7 +13,7 @@ export const useAuthApi = () => {
 
   const register = async (data) => {
     try {
-      return await pi.post('/users/register', data, {
+      return await api.post('/users/register', data, {
         headers: {
           Accept: 'multipart/form-data',
         },
@@ -27,7 +27,7 @@ export const useAuthApi = () => {
     try {
       return await api.patch('users/update_image', data, {
         headers: {
-          Accept: 'multipart/form-data',
+          "Content-Type": 'multipart/form-data',
         },
       });
     } catch (error) {

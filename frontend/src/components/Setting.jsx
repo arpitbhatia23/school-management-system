@@ -7,8 +7,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from './ui/input';
 import Selectcomp from './Select';
 import { toast } from '@/hooks/use-toast';
+import { useSelector } from 'react-redux';
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 const Setting = () => {
   const {image}= useState();
+  const userData = useSelector(state=>
+    state.auth.userData
+  )
+  console.log(userData)
   const form = useForm({
     defaultValues:{
       name:"",
@@ -18,6 +24,7 @@ const Setting = () => {
       }
     });
     const {update} = useAuthApi();
+    
     
     const onSubmit = async (data) => {
       const formData = new FormData();
@@ -47,7 +54,14 @@ const Setting = () => {
     <>
     <Card className="m-20 ">
       <Card className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
-          <Card className="rounded-full bg-red-100 h-32 w-32 m-4 my-12 py-10"></Card>
+         <Avatar className='rounded-full bg-red-300'>
+          <AvatarImage
+          src={userData?.profile_image?.url}
+          className='rounded-full'
+          />
+          <AvatarFallback>cn</AvatarFallback>
+
+         </Avatar>
       </Card>
       <CardContent>
         {/* <CardTitle className="py-4">

@@ -10,9 +10,10 @@ export const adminApi = () => {
     }
   };
   // get student by id
-  const studentsById = async (data) => {
+  const studentsById = async (student_id) => {
+    console.log(student_id)
     try {
-      return await api.get(`admin/getstudentbyid/:${data}`);
+      return await api.post(`admin/getstudentbyid/${student_id}`);
     } catch (error) {
       return error.response;
     }
