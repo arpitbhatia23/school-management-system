@@ -47,17 +47,17 @@ const AddStudent = ({ className }) => {
     setloading(true);
     const formData = new FormData();
     data.profile_image = imageform;
-    console.log(data);
-    console.log(imageform);
     // Append all fields to FormData
     Object.keys(data).forEach((key) => {
       formData.append(key, data[key]); // File field
     });
 
+    
+
     const res = await register(formData);
     setloading(false);
 
-    console.log(res?.data);
+    console.log(res);
     if (res?.data?.statusCode === 201) {
       toast({ title: 'student registration', description: res.data?.message });
     } else {

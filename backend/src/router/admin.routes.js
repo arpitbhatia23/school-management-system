@@ -19,6 +19,7 @@ import {
     addNotification,
     getNotification,
     deleteNotification,
+    deleteStudentbyID,
 } from '../controllers/admin.controller.js';
 import { totalExpense, totalfee, totalstudentGender, totalteacher } from '../controllers/adminDashboard.js';
 const router = Router();
@@ -44,5 +45,6 @@ router.route("/totalstudent").get(verifyJwt,verifyAdmin,totalstudentGender)
 router.route("/totalfees").get(verifyJwt,verifyAdmin,totalfee)
 router.route("/totalexpense").get(verifyJwt,verifyAdmin,totalExpense)
 router.route("/totalteacher").get(verifyJwt,verifyAdmin,totalteacher)
+router.route('/deletestudentbyid').post(verifyJwt, verifyAdmin,deleteStudentbyID);
 
 export default router;

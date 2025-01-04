@@ -121,7 +121,7 @@ const register = asyncHandler(async (req, res) => {
 
         // upload profile image on cloudnary
         const avtar = req.file?.path;
-       
+       console.log(avtar)
         if (!avtar) {
             throw new apiError(400, 'Profile image is required');
         }

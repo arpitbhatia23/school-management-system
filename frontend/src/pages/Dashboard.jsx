@@ -18,31 +18,35 @@ import { Outlet, useLocation, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from '@radix-ui/react-avatar';
 import { AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import { useAuthApi } from '@/services/authapi';
 import { logout as authlogout } from '@/store/slice';
 const Dashboard = () => {
-  const {logout}=useAuthApi()
+  const { logout } = useAuthApi();
   const location = useLocation();
   console.log(location.pathname);
-  const dispatch=useDispatch()
-  const navigate=useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const pathSegments = location.pathname
     .split('/')
     .filter((segment) => segment);
   console.log(pathSegments);
 
-  const userData=useSelector(state=>state.auth.userData)
-  console.log(userData)
-  const handelLogout=async()=>{
-     const res= await logout()
-     console.log(res)
-     if(res.data.success===true){
-       dispatch(authlogout(null))
-       navigate('/login')
-     } 
-  }
+  const userData = useSelector((state) => state.auth.userData);
+  console.log(userData);
+  const handelLogout = async () => {
+    const res = await logout();
+    console.log(res);
+    if (res.data.success === true) {
+      dispatch(authlogout(null));
+      navigate('/login');
+    }
+  };
   return (
     <>
       <SidebarProvider>
@@ -83,15 +87,20 @@ const Dashboard = () => {
               </Breadcrumb>
             </div>
 
-            <Avatar className=' fixed right-4 border-2 border-gray-500 h-8 w-8 rounded-full '>
+            <Avatar className=" fixed right-4 border-2 border-gray-500 h-8 w-8 rounded-full ">
               <Popover>
                 <PopoverTrigger asChild>
-              <AvatarImage src={userData?.profile_image?.url} className="rounded-full"/>
-              </PopoverTrigger>
-              <AvatarFallback>cn</AvatarFallback>
-              <PopoverContent className=" flex justify-center  items-center p-4 bg-white shadow-md rounded-md mx-2">
-                <Button className="w-52" onClick={handelLogout}>logout</Button>
-              </PopoverContent>
+                  <AvatarImage
+                    src={userData?.profile_image?.url}
+                    className="rounded-full"
+                  />
+                </PopoverTrigger>
+                <AvatarFallback>cn</AvatarFallback>
+                <PopoverContent className=" flex justify-center  items-center p-4 bg-white shadow-md rounded-md mx-2">
+                  <Button className="w-52" onClick={handelLogout}>
+                    logout
+                  </Button>
+                </PopoverContent>
               </Popover>
             </Avatar>
           </header>

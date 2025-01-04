@@ -2,7 +2,7 @@ import { api } from '@/utils/api';
 
 export const adminApi = () => {
   const students = async (data) => {
-    console.log(data)
+    console.log(data);
     try {
       return await api.post('admin/getStudent', data);
     } catch (error) {
@@ -11,13 +11,23 @@ export const adminApi = () => {
   };
   // get student by id
   const studentsById = async (student_id) => {
-    console.log(student_id)
+    console.log(student_id);
     try {
       return await api.post(`admin/getstudentbyid/${student_id}`);
     } catch (error) {
       return error.response;
     }
   };
+
+  // delete student by id
+const deleteuser=async(data)=>{
+  try {
+    return await api.post("admin/deletestudentbyid",data)
+  } catch (error) {
+    return error.response
+  }
+}
+
   // promote student
   const promoteStudent = async (data) => {
     try {
@@ -179,7 +189,6 @@ export const adminApi = () => {
     }
   };
 
-
   return {
     students,
     studentsById,
@@ -202,6 +211,7 @@ export const adminApi = () => {
     totalstudent,
     totalfees,
     totalexpense,
-    totalteacher
+    totalteacher,
+    deleteuser
   };
 };

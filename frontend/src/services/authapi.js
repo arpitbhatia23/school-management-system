@@ -15,7 +15,7 @@ export const useAuthApi = () => {
     try {
       return await api.post('/users/register', data, {
         headers: {
-          Accept: 'multipart/form-data',
+          "Content-Type": 'multipart/form-data',
         },
       });
     } catch (error) {
@@ -37,11 +37,7 @@ export const useAuthApi = () => {
   // current user
   const currentUser = async () => {
     try {
-      return await api.get('users/current_user', {
-        headers: {
-          Accept: 'application/json',
-        },
-      });
+      return await api.get('users/current_user');
     } catch (error) {
       return error.response;
     }
@@ -51,7 +47,7 @@ export const useAuthApi = () => {
     try {
       return await api.patch('user/change_password', data, {
         headers: {
-          Accept: 'application/json',
+          "Content-Type": 'application/json',
         },
       });
     } catch (error) {
@@ -63,7 +59,7 @@ export const useAuthApi = () => {
   //   try {
   //     return await api.patch('user/updateprofile', data, {
   //       headers: {
-  //         Accept: 'application/json',
+  //         "Content-Type": 'application/json',
   //       },
   //     });
   //   } catch (error) {
@@ -83,7 +79,7 @@ export const useAuthApi = () => {
   const refresh_token = async (data) => {
     try {
       return await api.get('users/refresh_token', data);
-    } catch (erro) {
+    } catch (error) {
       return error.response;
     }
   };
