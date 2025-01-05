@@ -52,8 +52,6 @@ const AddStudent = ({ className }) => {
       formData.append(key, data[key]); // File field
     });
 
-    
-
     const res = await register(formData);
     setloading(false);
 

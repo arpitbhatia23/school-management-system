@@ -40,7 +40,7 @@ router.route('/addfees').post(verifyJwt, verifyAdmin, addFees);
 router.route('/getfees').get(verifyJwt, verifyAdmin, getfees);
 router.route('/addnotification').post(verifyJwt,verifyAdmin,addNotification)
 router.route("/getnotification").get(verifyJwt,verifyAdmin,getNotification)
-router.route("/deleteNotification").delete(verifyJwt,verifyAdmin,deleteNotification)
+router.route("/deleteNotification/:id").delete(verifyJwt,verifyAdmin,deleteNotification)
 router.route("/totalstudent").get(verifyJwt,verifyAdmin,totalstudentGender)
 router.route("/totalfees").get(verifyJwt,verifyAdmin,totalfee)
 router.route("/totalexpense").get(verifyJwt,verifyAdmin,totalExpense)

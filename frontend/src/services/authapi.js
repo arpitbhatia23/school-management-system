@@ -15,7 +15,7 @@ export const useAuthApi = () => {
     try {
       return await api.post('/users/register', data, {
         headers: {
-          "Content-Type": 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
         },
       });
     } catch (error) {
@@ -27,7 +27,7 @@ export const useAuthApi = () => {
     try {
       return await api.patch('users/update_image', data, {
         headers: {
-          "Content-Type": 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
         },
       });
     } catch (error) {
@@ -45,9 +45,9 @@ export const useAuthApi = () => {
   // change password
   const changePassword = async (data) => {
     try {
-      return await api.patch('user/change_password', data, {
+      return await api.patch('users/change_password', data, {
         headers: {
-          "Content-Type": 'application/json',
+          'Content-Type': 'application/json',
         },
       });
     } catch (error) {

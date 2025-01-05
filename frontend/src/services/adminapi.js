@@ -20,13 +20,13 @@ export const adminApi = () => {
   };
 
   // delete student by id
-const deleteuser=async(data)=>{
-  try {
-    return await api.post("admin/deletestudentbyid",data)
-  } catch (error) {
-    return error.response
-  }
-}
+  const deleteuser = async (data) => {
+    try {
+      return await api.post('admin/deletestudentbyid', data);
+    } catch (error) {
+      return error.response;
+    }
+  };
 
   // promote student
   const promoteStudent = async (data) => {
@@ -117,7 +117,7 @@ const deleteuser=async(data)=>{
     }
   };
   // add notification
-  const notification = async (data) => {
+  const addnotification = async (data) => {
     try {
       return await api.post('admin/addnotification', data);
     } catch (error) {
@@ -134,8 +134,9 @@ const deleteuser=async(data)=>{
   };
   // del notification
   const delNoification = async (data) => {
+    console.log(data)
     try {
-      return await api.delete('admin/deleteNotification', data);
+      return await api.delete(`admin/deleteNotification/${data}`);
     } catch (error) {
       return error.response;
     }
@@ -201,7 +202,7 @@ const deleteuser=async(data)=>{
     getSubject,
     addExpense,
     getExpenses,
-    notification,
+    addnotification,
     updateSubject,
     updateParentsById,
     getNotification,
@@ -212,6 +213,6 @@ const deleteuser=async(data)=>{
     totalfees,
     totalexpense,
     totalteacher,
-    deleteuser
+    deleteuser,
   };
 };

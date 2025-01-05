@@ -20,12 +20,12 @@ const Getstudent = () => {
   const onsumbit = async (data) => {
     console.log(data);
     const res = await students(data);
-    if(res?.data?.success){
-
-      const newdata =res?.data?.data?.map((item) => {
+    if (res?.data?.success) {
+      const newdata = res?.data?.data?.map((item) => {
         const { name, gender, _id } = item;
         const { roll_no, className, address, nationality } = item.profile;
-        const { father_name, parents_contact, parents_email } = item.parents_Detail;
+        const { father_name, parents_contact, parents_email } =
+          item.parents_Detail;
         return {
           _id,
           name,
@@ -38,28 +38,22 @@ const Getstudent = () => {
           address,
           nationality,
         };
+      });
 
-      });  
-      
-      setdata(newdata)
+      setdata(newdata);
 
       toast({
-      title:"successfull ",
-      description:"student fecth sucessfully"
-    })
-
-  }else{
-    toast({
-      title:"failed ",
-      description:res.data.message
-    })
-  }
-    
-    
+        title: 'successfull ',
+        description: 'student fecth sucessfully',
+      });
+    } else {
+      toast({
+        title: 'failed ',
+        description: res.data.message,
+      });
+    }
   };
-  
 
-  
   return (
     <div>
       <Card className="m-2 sm:m-20 py-10 min-h-screen">
@@ -105,7 +99,15 @@ const Getstudent = () => {
           </form>
         </Form>
         <CardContent>
-          {data?.length>0?<DataTable data={data} tablecaption="Students data"  onUpdateData={setdata}/>:<CardTitle className ="text-center">data not found</CardTitle>}
+          {data?.length > 0 ? (
+            <DataTable
+              data={data}
+              tablecaption="Students data"
+              onUpdateData={setdata}
+            />
+          ) : (
+            <CardTitle className="text-center">data not found</CardTitle>
+          )}
         </CardContent>
       </Card>
     </div>

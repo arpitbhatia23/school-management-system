@@ -591,7 +591,8 @@ const getNotification = asyncHandler(async(req,res)=>{
 })
 // delete notification
 const deleteNotification = asyncHandler(async(req,res)=>{
-    const {id}=req.body
+    const {id}=req.params
+    console.log(id)
     if(!id){
         throw new apiError(404,"id is required ")
     }

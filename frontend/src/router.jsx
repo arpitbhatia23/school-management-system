@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import AdminDashbaord from './pages/AdminDashbaord';
 import Setting from './components/Setting';
 import Getstudent from './components/Getstudent';
+
 import PromoteStudent from './components/PromoteStudent';
 import GetParents from './components/GetParents';
 
@@ -30,29 +31,27 @@ const router = createBrowserRouter([
             element: <AddStudent />,
           },
           {
-            path:'/setting',
-            element:<Setting/>
+            path: '/setting',
+            element: <Setting />,
           },
           {
-            path:"/getstudents",
-            element:<Getstudent/>
+            path: '/getstudents',
+            element: <Getstudent />,
           },
           {
-            path:"/promoteStudent",
-            element:<PromoteStudent/>
+            path: '/promoteStudent',
+            element: <PromoteStudent />,
           },
           {
-            path:"/getparents",
-            element:<GetParents/>
-          }
+            path: '/getparents',
+            element: <GetParents />,
+          },
         ],
       },
       {
         path: '/login',
         element: <LoginPage />,
       },
-     
-     
     ],
   },
 ]);

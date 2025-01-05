@@ -6,7 +6,14 @@ import { Input } from './ui/input';
 import { adminApi } from '@/services/adminapi';
 import { Button } from './ui/button';
 import { toast } from '@/hooks/use-toast';
-import { Table,TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './ui/table';
 
 const GetParents = () => {
   const form = useForm({
@@ -20,25 +27,22 @@ const GetParents = () => {
   const onsumbit = async (data) => {
     console.log(data);
     const res = await getParents(data);
-    if(res?.data?.success){
-      setdata(res.data.data)
+    if (res?.data?.success) {
+      setdata(res.data.data);
       toast({
-      title:"successfull ",
-      description:"parents fecth sucessfully"
-    })
-
-  }else{
-    toast({
-      title:"failed ",
-      description:res.data.message
-    })
-  }
-    
-    
+        title: 'successfull ',
+        description: 'parents fecth sucessfully',
+      });
+    } else {
+      toast({
+        title: 'failed ',
+        description: res.data.message,
+      });
+    }
   };
-  
-console.log(data)
-  
+
+  console.log(data);
+
   return (
     <div>
       <Card className="m-2 sm:m-20 py-10 min-h-screen">
@@ -84,34 +88,28 @@ console.log(data)
           </form>
         </Form>
         <CardContent>
-            
-              
-                    <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>FATHER NAME</TableHead>
-                            <TableHead>MOTHER NAME</TableHead>
-                            <TableHead>FATHER OCUUPATION</TableHead>
-                            <TableHead>PARENTS EMAIL</TableHead>
-                            <TableHead>PARENTS CONTACT</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                   { data?.map((data)=>(
-                    <TableBody>
-                       <TableRow>
-                        <TableCell>{data?.father_name}</TableCell>
-                        <TableCell>{data?.mother_name}</TableCell>
-                        <TableCell>{data?.father_occupation}</TableCell>
-                        <TableCell>{data?.parents_email}</TableCell>
-                        <TableCell>{data?.parents_phone}</TableCell>
-                       </TableRow>
-                    </TableBody>
-                ))}
-                </Table>
-             
-              
-               
-            
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>FATHER NAME</TableHead>
+                <TableHead>MOTHER NAME</TableHead>
+                <TableHead>FATHER OCUUPATION</TableHead>
+                <TableHead>PARENTS EMAIL</TableHead>
+                <TableHead>PARENTS CONTACT</TableHead>
+              </TableRow>
+            </TableHeader>
+            {data?.map((data) => (
+              <TableBody>
+                <TableRow>
+                  <TableCell>{data?.father_name}</TableCell>
+                  <TableCell>{data?.mother_name}</TableCell>
+                  <TableCell>{data?.father_occupation}</TableCell>
+                  <TableCell>{data?.parents_email}</TableCell>
+                  <TableCell>{data?.parents_phone}</TableCell>
+                </TableRow>
+              </TableBody>
+            ))}
+          </Table>
         </CardContent>
       </Card>
     </div>

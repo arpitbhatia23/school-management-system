@@ -135,11 +135,11 @@ export default function Appsidebar() {
                       onClick={() => item.submenu && toggleSubmenu(item.title)}
                       className="flex items-center justify-between w-full cursor-pointer"
                     >
-                      <Link to={item.url} >
-                      <div className="flex items-center">
-                        <item.icon className="mr-2" />
-                        <span>{item.title}</span>
-                      </div>
+                      <Link to={item.url}>
+                        <div className="flex items-center">
+                          <item.icon className="mr-2" />
+                          <span>{item.title}</span>
+                        </div>
                       </Link>
                       {item.submenu &&
                         (expandedSubmenu === item.title ? (
@@ -156,7 +156,10 @@ export default function Appsidebar() {
                       {item.submenu.map((subItem) => (
                         <SidebarMenuItem key={subItem.title}>
                           <SidebarMenuButton asChild>
-                            <Link to={subItem.url} className="flex items-center">
+                            <Link
+                              to={subItem.url}
+                              className="flex items-center"
+                            >
                               <subItem.icon className="mr-2" />
                               <span>{subItem.title}</span>
                             </Link>
