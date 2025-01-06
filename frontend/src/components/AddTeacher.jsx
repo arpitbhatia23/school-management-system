@@ -55,7 +55,7 @@ const AddTeacher = ({ class_incharge }) => {
     setloading(false);
 
     console.log(res);
-    if (res?.data?.statusCode === 201) {
+    if (res?.data?.success) {
       toast({ title: 'teacher added', description: res.data?.message });
     } else {
       toast({

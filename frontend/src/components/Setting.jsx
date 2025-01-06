@@ -21,7 +21,6 @@ const Setting = () => {
   const userData = useSelector((state) => state.auth.userData);
   console.log(userData);
   const form = useForm({
-<<<<<<< HEAD
     defaultValues:{
       name:"",
       gender:"",
@@ -29,39 +28,21 @@ const Setting = () => {
       mobile:""
       }
     });
-    const {update_profile_detail} = useAuthApi();
+    const {updateProfile} = useAuthApi();
     
     
     const onSubmit = async (data) => {
-      const formData = new FormData();
       console.log(data)
       // 
-      Object.keys(data).forEach((key)=>{
-        formData.append(key,data[key]);
-      })
-      const res = await update_profile_detail(data);
-=======
-    defaultValues: {
-      name: '',
-      gender: '',
-      email: '',
-      mobile: '',
-    },
-  });
-  const { update } = useAuthApi();
->>>>>>> 7ec871d07254084cb407769ae8f78069a245480d
+     
+      
+      const res = await updateProfile(data);
+    
+  
+  
 
-  const onSubmit = async (data) => {
-    const formData = new FormData();
-    console.log(data);
-    //
-    Object.keys(data).forEach((key) => {
-      formData.append(key, data[key]);
-    });
-    const res = await update(data);
-
-    console.log(response?.data);
-    if (res?.data?.statusCode === 201) {
+    console.log(res?.data);
+    if (res?.data?.success) {
       toast({
         title: 'update successfully',
         description: res?.data?.message,
@@ -77,18 +58,18 @@ const Setting = () => {
 
   return (
     <>
-<<<<<<< HEAD
     <Card className="m-20 ">
-      <Card className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
+      <CardContent
+       className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
          <Avatar className='rounded-full bg-red-300 '>
           <AvatarImage
           src={userData?.profile_image?.url}
-          className='rounded-full h-32 w-32 mx-4  ' 
+          className='rounded-full h-32 w-32 mx-4 transform translate-y-12 ' 
           />
           <AvatarFallback>cn</AvatarFallback>
 
          </Avatar>
-      </Card>
+      </CardContent>
       <CardContent>
         {/* <CardTitle className="py-4">
 =======
@@ -202,5 +183,6 @@ const Setting = () => {
     </>
   );
 };
+
 
 export default Setting;

@@ -56,8 +56,9 @@ const AddStudent = ({ className }) => {
     setloading(false);
 
     console.log(res);
-    if (res?.data?.statusCode === 201) {
-      toast({ title: 'student registration', description: res.data?.message });
+    if (res?.data?.success) {
+      toast({ title: 'student registration',
+         description: res.data?.message });
     } else {
       toast({
         variant: 'destructive',
