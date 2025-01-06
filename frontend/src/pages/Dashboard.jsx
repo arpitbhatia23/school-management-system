@@ -149,35 +149,37 @@ const Dashboard = () => {
                 <DropdownMenuLabel>MY ACCOUNT</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                   <Dialog>
+                  <Dialog>
                     <DialogTrigger asChild>
-                  <DropdownMenuItem onSelect={(e)=>e.preventDefault()}>profile</DropdownMenuItem>
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        profile
+                      </DropdownMenuItem>
                     </DialogTrigger>
-                 <DialogContent>
-                  <DialogTitle>
-                    PROFILE
-                  </DialogTitle>
-                  <DialogDescription className='flex justify-center items-center'>
-                    <img src={userData?.profile_image?.url} alt="" className='h-52 w-52'/>
-                  </DialogDescription>
-                  <DialogDescription className='flex  flex-col items-center gap-2'>
-                  <DialogDescription>
-                    NAME:{userData?.name}
-                  </DialogDescription>
-                  <DialogDescription>
-                    GENDER:{userData?.gender}
-                  </DialogDescription>
-                  <DialogDescription>
-                    EMAIL:{userData?.email}
-                  </DialogDescription>
-                  <DialogDescription>
-                    PHONE NO :{userData?.phone_no}
-                  </DialogDescription>
-                  </DialogDescription>
-
-                 </DialogContent>
-
-                   </Dialog>
+                    <DialogContent>
+                      <DialogTitle>PROFILE</DialogTitle>
+                      <DialogDescription className="flex justify-center items-center">
+                        <img
+                          src={userData?.profile_image?.url}
+                          alt=""
+                          className="h-52 w-52"
+                        />
+                      </DialogDescription>
+                      <DialogDescription className="flex  flex-col items-center gap-2">
+                        <DialogDescription>
+                          NAME:{userData?.name}
+                        </DialogDescription>
+                        <DialogDescription>
+                          GENDER:{userData?.gender}
+                        </DialogDescription>
+                        <DialogDescription>
+                          EMAIL:{userData?.email}
+                        </DialogDescription>
+                        <DialogDescription>
+                          PHONE NO :{userData?.phone_no}
+                        </DialogDescription>
+                      </DialogDescription>
+                    </DialogContent>
+                  </Dialog>
 
                   <Dialog>
                     <DialogTrigger asChild>
@@ -220,7 +222,7 @@ const Dashboard = () => {
                                     {...field}
                                   />
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage />
                               </FormItem>
                             )}
                           />

@@ -48,9 +48,9 @@ const router = createBrowserRouter([
             element: <GetParents />,
           },
           {
-            path:'/getteacher',
-            element:<Getteacher/>
-          }
+            path: '/getteacher',
+            element: <Getteacher />,
+          },
         ],
       },
       {

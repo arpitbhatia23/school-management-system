@@ -16,8 +16,10 @@ import Selectcomp from './Select';
 import { toast } from '@/hooks/use-toast';
 import { useSelector } from 'react-redux';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
+import { Dialog } from '@radix-ui/react-dialog';
+import { DialogContent, DialogDescription, DialogTrigger } from './ui/dialog';
+import { Button } from './ui/button';
 const Setting = () => {
-  const { image } = useState();
   const userData = useSelector((state) => state.auth.userData);
   console.log(userData);
   const form = useForm({
@@ -28,7 +30,7 @@ const Setting = () => {
       mobile: '',
     },
   });
-  const { update } = useAuthApi();
+  const { updateProfile, updateImage } = useAuthApi();
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -54,22 +56,63 @@ const Setting = () => {
     }
   };
 
+  const imageform = useForm({
+    defaultValues: {
+      profile_image: '',
+    },
+  });
+
+  const handelupdateimage = async (data) => {
+    console.log(data);
+  };
   return (
     <>
       <Card className="m-20 ">
         <CardContent className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
-          <Avatar className="rounded-full bg-red-300  ">
-            <AvatarImage
-              src={userData?.profile_image?.url}
-              className="rounded-full h-32 w-32 mx-4 transform translate-y-12"
-            />
-            <AvatarFallback>cn</AvatarFallback>
-          </Avatar>
+          <Dialog>
+            <DialogTrigger>
+              <Avatar className="rounded-full bg-red-300  ">
+                <AvatarImage
+                  src={userData?.profile_image?.url}
+                  className="rounded-full h-32 w-32 mx-4 transform translate-y-12"
+                />
+                <AvatarFallback className="rounded-full h-32 w-32 mx-4 transform translate-y-12">
+                  cn
+                </AvatarFallback>
+              </Avatar>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogDescription>
+                <Form {...imageform}>
+                  <form
+                    onSubmit={imageform.handleSubmit(handelupdateimage)}
+                    className="flex flex-col gap-2 py-8"
+                  >
+                    <FormField
+                      name="profile_image"
+                      control={imageform.control}
+                      rules={{ required: 'image is required' }}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input type="file" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <Button type="submit">update image</Button>
+                  </form>
+                </Form>
+              </DialogDescription>
+            </DialogContent>
+          </Dialog>
         </CardContent>
         <CardContent>
           {/* <CardTitle className="py-4">
           update profile
-        </CardTitle> */}
+          </CardTitle> */}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="py-10">
               <CardContent className="flex flex-col item-center">
