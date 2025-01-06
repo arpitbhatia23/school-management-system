@@ -23,26 +23,26 @@ const Setting = () => {
   const userData = useSelector((state) => state.auth.userData);
   console.log(userData);
   const form = useForm({
-    defaultValues: {
-      name: '',
-      gender: '',
-      email: '',
-      mobile: '',
-    },
-  });
+    defaultValues:{
+      name:"",
+      gender:"",
+      email:"",
+      mobile:""
+      }
+    });
+    
+    
+    
+  
+ 
   const { updateProfile, updateImage } = useAuthApi();
 
   const onSubmit = async (data) => {
-    const formData = new FormData();
-    console.log(data);
-    //
-    Object.keys(data).forEach((key) => {
-      formData.append(key, data[key]);
-    });
+   
     const res = await update(data);
 
-    console.log(response?.data);
-    if (res?.data?.statusCode === 201) {
+    console.log(res?.data);
+    if (res?.data?.success) {
       toast({
         title: 'update successfully',
         description: res?.data?.message,
@@ -110,9 +110,7 @@ const Setting = () => {
           </Dialog>
         </CardContent>
         <CardContent>
-          {/* <CardTitle className="py-4">
-          update profile
-          </CardTitle> */}
+         
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="py-10">
               <CardContent className="flex flex-col item-center">
@@ -208,5 +206,6 @@ const Setting = () => {
     </>
   );
 };
+
 
 export default Setting;

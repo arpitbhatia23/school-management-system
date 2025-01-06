@@ -13,9 +13,9 @@ import { Input } from './ui/input';
 import profileimg from '../assets/image.png';
 import { useAuthApi } from '@/services/authapi';
 import { toast } from '@/hooks/use-toast';
-import { ToastAction } from '@/components/ui/toast';
+// import { ToastAction } from '@/components/ui/toast';
 import Selectcomp from './Select';
-const AddStudent = ({ className }) => {
+const AddTeacher = ({ class_incharge }) => {
   const [image, setimage] = useState(profileimg);
   const [imageform, setimageform] = useState();
   const [loading, setloading] = useState(false);
@@ -24,21 +24,18 @@ const AddStudent = ({ className }) => {
       name: '',
       gender: '',
       DOB: '',
-      className: '',
+      class_incharge: '',
       blood_group: '',
       religion: '',
       nationality: '',
+      qualification:'',
+      subject:'',
       category: '',
       address: '',
-      father_name: '',
-      mother_name: '',
-      father_occupation: '',
-      parents_email: '',
-      parents_phone: '',
       email: '',
       phone_no: '',
       profile_image: '',
-      role: 'student',
+      role: 'teacher',
     },
   });
   const { register } = useAuthApi();
@@ -52,13 +49,14 @@ const AddStudent = ({ className }) => {
       formData.append(key, data[key]); // File field
     });
 
+    
+
     const res = await register(formData);
     setloading(false);
 
     console.log(res);
     if (res?.data?.success) {
-      toast({ title: 'student registration',
-         description: res.data?.message });
+      toast({ title: 'teacher added', description: res.data?.message });
     } else {
       toast({
         variant: 'destructive',
@@ -89,13 +87,13 @@ const AddStudent = ({ className }) => {
     <>
       <Card className=" m-2 sm:m-20 py-10">
         <CardContent>
-          <CardTitle className="p-4">Add New Student</CardTitle>
+          <CardTitle className="p-4">Add New Teacher</CardTitle>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className={`${className} `}
+              class_incharge={`${class_incharge} `}
             >
-              {/* add student */}
+              {/* add teacher */}
               <CardContent className="grid  grid-cols-2 sm:grid-cols-4 gap-4">
                 <FormField
                   name="name"
@@ -107,7 +105,7 @@ const AddStudent = ({ className }) => {
                       <FormControl>
                         <Input
                           type="text"
-                          placeholder="Enter student name"
+                          placeholder="Enter teacher name"
                           {...field}
                         />
                       </FormControl>
@@ -145,7 +143,7 @@ const AddStudent = ({ className }) => {
                     <FormItem>
                       <FormLabel>Gender</FormLabel>
                       <FormControl>
-                        {/* <Input type="text" placeholder="Enter gender" {...field} /> */}
+                      
                         <Selectcomp
                           selectLable="select your gender"
                           selectvalue="Gender"
@@ -191,16 +189,16 @@ const AddStudent = ({ className }) => {
                   )}
                 />
                 <FormField
-                  name="className"
-                  rules={{ required: 'class is required' }}
+                  name="class_incharge"
+                  rules={{ required: 'class incharge is required' }}
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>class</FormLabel>
+                      <FormLabel>Class Incharge</FormLabel>
                       <FormControl>
                         <Input
                           type="text"
-                          placeholder="Enter class"
+                          placeholder="Enter class incharge"
                           {...field}
                         />
                       </FormControl>
@@ -208,6 +206,39 @@ const AddStudent = ({ className }) => {
                     </FormItem>
                   )}
                 />
+                <FormField
+                name='subject'
+                rule={{required:'subject is required'}}
+                control={form.control}
+                render={({field})=>(
+                  <FormItem>
+                    <FormLabel>Subject</FormLabel>
+                    <FormControl>
+                      <Input
+                      type='text'
+                      placeholder="enter subject"
+                      {...field}/>
+                    </FormControl>
+                    <FormMessage/>
+                  </FormItem>
+                )}/>
+
+<FormField
+                name='qualification'
+                rule={{required:'qualification is required'}}
+                control={form.control}
+                render={({field})=>(
+                  <FormItem>
+                    <FormLabel>Qualification</FormLabel>
+                    <FormControl>
+                      <Input
+                      type='text'
+                      placeholder="enter Qualification"
+                      {...field}/>
+                    </FormControl>
+                    <FormMessage/>
+                  </FormItem>
+                )}/>
 
                 <FormField
                   name="blood_group"
@@ -315,102 +346,7 @@ const AddStudent = ({ className }) => {
                   )}
                 />
               </CardContent>
-              {/* add parents */}
-              <CardTitle className="p-4">Add parents</CardTitle>
 
-              <CardContent className=" grid  grid-cols-2 sm:grid-cols-4 gap-4">
-                <FormField
-                  name="parents_phone"
-                  rules={{ required: 'parents phone is required' }}
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>parents_phone</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="tel"
-                          placeholder="Enter  parents phone no."
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="parents_email"
-                  rules={{ required: 'parents email is required' }}
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>parents_email</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="Enter parents email"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  name="father_name"
-                  rules={{ required: 'father name is required' }}
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>father name</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Enter  father name"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="mother_name"
-                  rules={{ required: 'mother name is required' }}
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>mother name</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Enter mother name"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="father_occupation"
-                  rules={{ required: 'father occupation is required' }}
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Father occupation</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Enter father occupation"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
               {/*upload image  */}
               <CardContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 items-center sm:items-start  justify-items-center p-2">
                 <img src={image} alt="" className="rounded-full h-60 w-60" />
@@ -468,4 +404,4 @@ const AddStudent = ({ className }) => {
   );
 };
 
-export default AddStudent;
+export default AddTeacher;

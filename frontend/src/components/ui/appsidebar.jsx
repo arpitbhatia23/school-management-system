@@ -67,7 +67,6 @@ const items = [
   },
   {
     title: 'Teachers',
-    url: '#',
     icon: Users,
     submenu: [
       {
@@ -77,7 +76,7 @@ const items = [
       },
       {
         title: 'Add Teachers',
-        url: '#',
+        url: 'addteacher',
         icon: UserPlus, // Represents adding a new parent
       },
     ],

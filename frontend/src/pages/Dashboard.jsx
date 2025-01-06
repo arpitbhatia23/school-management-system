@@ -1,4 +1,3 @@
-import Addstudent from '@/components/Addstudent';
 import Appsidebar from '@/components/ui/appsidebar';
 import {
   SidebarInset,
