@@ -9,8 +9,15 @@ import LoginPage from './pages/LoginPage';
 import AdminDashbaord from './pages/AdminDashbaord';
 import Setting from './components/Setting';
 import Getstudent from './components/Getstudent';
+<<<<<<< HEAD
 import PromoteStudent from './components/PromoteStudent';
 import AddTeacher from './components/AddTeacher';
+=======
+
+import PromoteStudent from './components/PromoteStudent';
+import GetParents from './components/GetParents';
+import Getteacher from './components/GetTeacher';
+>>>>>>> 7ec871d07254084cb407769ae8f78069a245480d
 
 const router = createBrowserRouter([
   {
@@ -33,6 +40,7 @@ const router = createBrowserRouter([
             element:<AddTeacher/>
           },
           {
+<<<<<<< HEAD
             path:'/setting',
             element:<Setting/>},
             {
@@ -43,6 +51,26 @@ const router = createBrowserRouter([
           {
             path:"/promoteStudent",
             element:<PromoteStudent/>
+=======
+            path: '/setting',
+            element: <Setting />,
+          },
+          {
+            path: '/getstudents',
+            element: <Getstudent />,
+          },
+          {
+            path: '/promoteStudent',
+            element: <PromoteStudent />,
+          },
+          {
+            path: '/getparents',
+            element: <GetParents />,
+          },
+          {
+            path:'/getteacher',
+            element:<Getteacher/>
+>>>>>>> 7ec871d07254084cb407769ae8f78069a245480d
           }
         ],
       },
@@ -50,8 +78,6 @@ const router = createBrowserRouter([
         path: '/login',
         element: <LoginPage />,
       },
-     
-     
     ],
   },
 ]);

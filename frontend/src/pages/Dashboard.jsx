@@ -18,14 +18,38 @@ import { Outlet, useLocation, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from '@radix-ui/react-avatar';
 import { AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
+
 import { useAuthApi } from '@/services/authapi';
 import { logout as authlogout } from '@/store/slice';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { LogOut } from 'lucide-react';
+import {
+  Dialog,
+  DialogTitle,
+  DialogTrigger,
+  DialogContent,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
+import { useForm } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
+import { DialogDescription } from '@radix-ui/react-dialog';
 const Dashboard = () => {
   const { logout } = useAuthApi();
   const location = useLocation();
@@ -45,6 +69,30 @@ const Dashboard = () => {
     if (res.data.success === true) {
       dispatch(authlogout(null));
       navigate('/login');
+    }
+  };
+
+  const form = useForm({
+    defaultValues: {
+      newPassword: '',
+      oldPassword: '',
+    },
+  });
+  const handelchangepassword = async (data) => {
+    const { changePassword } = useAuthApi();
+    const res = await changePassword(data);
+    console.log(res.data);
+    if (res.data.success) {
+      toast({
+        title: 'success',
+        description: 'password change sucessfully',
+      });
+    } else {
+      toast({
+        title: 'failed',
+        description: res.data.message,
+        variant: 'destructive',
+      });
     }
   };
   return (
@@ -87,22 +135,113 @@ const Dashboard = () => {
               </Breadcrumb>
             </div>
 
-            <Avatar className=" fixed right-4 border-2 border-gray-500 h-8 w-8 rounded-full ">
-              <Popover>
-                <PopoverTrigger asChild>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className=" fixed right-4 border-2 border-gray-500 h-8 w-8 rounded-full ">
                   <AvatarImage
                     src={userData?.profile_image?.url}
                     className="rounded-full"
                   />
-                </PopoverTrigger>
-                <AvatarFallback>cn</AvatarFallback>
-                <PopoverContent className=" flex justify-center  items-center p-4 bg-white shadow-md rounded-md mx-2">
-                  <Button className="w-52" onClick={handelLogout}>
-                    logout
-                  </Button>
-                </PopoverContent>
-              </Popover>
-            </Avatar>
+                  <AvatarFallback>cn</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className=" w-52 flex flex-col  mx-6">
+                <DropdownMenuLabel>MY ACCOUNT</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                   <Dialog>
+                    <DialogTrigger asChild>
+                  <DropdownMenuItem onSelect={(e)=>e.preventDefault()}>profile</DropdownMenuItem>
+                    </DialogTrigger>
+                 <DialogContent>
+                  <DialogTitle>
+                    PROFILE
+                  </DialogTitle>
+                  <DialogDescription className='flex justify-center items-center'>
+                    <img src={userData?.profile_image?.url} alt="" className='h-52 w-52'/>
+                  </DialogDescription>
+                  <DialogDescription className='flex  flex-col items-center gap-2'>
+                  <DialogDescription>
+                    NAME:{userData?.name}
+                  </DialogDescription>
+                  <DialogDescription>
+                    GENDER:{userData?.gender}
+                  </DialogDescription>
+                  <DialogDescription>
+                    EMAIL:{userData?.email}
+                  </DialogDescription>
+                  <DialogDescription>
+                    PHONE NO :{userData?.phone_no}
+                  </DialogDescription>
+                  </DialogDescription>
+
+                 </DialogContent>
+
+                   </Dialog>
+
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        Change Password
+                      </DropdownMenuItem>
+                    </DialogTrigger>
+                    <Form {...form}>
+                      <DialogContent>
+                        <DialogTitle>Change Password</DialogTitle>
+                        <form
+                          onSubmit={form.handleSubmit(handelchangepassword)}
+                          className="flex flex-col gap-6"
+                        >
+                          <FormField
+                            control={form.control}
+                            name="newPassword"
+                            rules={{ required: 'New password is required' }}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Input
+                                    placeholder="Enter new password"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="oldPassword"
+                            rules={{ required: 'old password is required' }}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Input
+                                    placeholder="Enter new password"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage/>
+                              </FormItem>
+                            )}
+                          />
+                          <Button
+                            type="submit"
+                            onClick={() => console.log('click')}
+                          >
+                            submit
+                          </Button>
+                        </form>
+                      </DialogContent>
+                    </Form>
+                  </Dialog>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handelLogout}>
+                  <LogOut />
+                  logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </header>
 
           <Outlet />

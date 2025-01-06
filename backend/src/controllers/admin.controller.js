@@ -208,7 +208,7 @@ return res.status(200).json(new apiResponse(200,{},"student delete sucessfully")
 
 const getAllParents = asyncHandler(async (req, res) => {
     const { name, className } = req.body;
-    if (!(name || className)) {
+    if (!(name ||    className)) {
         throw new apiError(400, 'name and class is required');
     }
 
@@ -276,7 +276,7 @@ const getTeacherById = asyncHandler(async (req, res) => {
     if (!id) {
         throw new apiError(400, 'id tere pape pani ki mmiya 🤦‍♂️😖😡 ');
     }
-    const teacher = await User.findById(_id);
+    const teacher = await User.findById(id);
     if (!teacher) {
         throw new apiError(404, 'guru ji ni mile 😒 koi or id pava....');
     }
@@ -591,7 +591,8 @@ const getNotification = asyncHandler(async(req,res)=>{
 })
 // delete notification
 const deleteNotification = asyncHandler(async(req,res)=>{
-    const {id}=req.body
+    const {id}=req.params
+    console.log(id)
     if(!id){
         throw new apiError(404,"id is required ")
     }

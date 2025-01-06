@@ -20,13 +20,13 @@ export const adminApi = () => {
   };
 
   // delete student by id
-const deleteuser=async(data)=>{
-  try {
-    return await api.post("admin/deletestudentbyid",data)
-  } catch (error) {
-    return error.response
-  }
-}
+  const deleteuser = async (data) => {
+    try {
+      return await api.post('admin/deletestudentbyid', data);
+    } catch (error) {
+      return error.response;
+    }
+  };
 
   // promote student
   const promoteStudent = async (data) => {
@@ -39,7 +39,7 @@ const deleteuser=async(data)=>{
   // get parents
   const getParents = async (data) => {
     try {
-      return await api.get('admin/getallparents', data);
+      return await api.post('admin/getallparents', data);
     } catch (error) {
       return error.response;
     }
@@ -47,7 +47,7 @@ const deleteuser=async(data)=>{
   // get teachers
   const getTeachers = async (data) => {
     try {
-      return await api.get('admin/getTeacher', data);
+      return await api.post('admin/getTeacher', data);
     } catch (error) {
       return error.response;
     }
@@ -55,7 +55,7 @@ const deleteuser=async(data)=>{
   // get TeacherById
   const getTeacherById = async (data) => {
     try {
-      return await api.get('admin/getTeacherById', data);
+      return await api.post('admin/getTeacherById', data);
     } catch (error) {
       return error.response;
     }
@@ -117,7 +117,7 @@ const deleteuser=async(data)=>{
     }
   };
   // add notification
-  const notification = async (data) => {
+  const addnotification = async (data) => {
     try {
       return await api.post('admin/addnotification', data);
     } catch (error) {
@@ -125,17 +125,18 @@ const deleteuser=async(data)=>{
     }
   };
   // get notification
-  const getNotification = async (data) => {
+  const getNotification = async () => {
     try {
-      return await api.get('admin/getnotification', data);
+      return await api.get('admin/getnotification', );
     } catch (error) {
       return error.response;
     }
   };
   // del notification
   const delNoification = async (data) => {
+    console.log(data)
     try {
-      return await api.delete('admin/deleteNotification', data);
+      return await api.delete(`admin/deleteNotification/${data}`);
     } catch (error) {
       return error.response;
     }
@@ -201,7 +202,7 @@ const deleteuser=async(data)=>{
     getSubject,
     addExpense,
     getExpenses,
-    notification,
+    addnotification,
     updateSubject,
     updateParentsById,
     getNotification,
@@ -212,6 +213,6 @@ const deleteuser=async(data)=>{
     totalfees,
     totalexpense,
     totalteacher,
-    deleteuser
+    deleteuser,
   };
 };

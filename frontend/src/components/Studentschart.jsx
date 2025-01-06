@@ -8,12 +8,12 @@ const StudentsChart = ({ students }) => {
   const chartData = [
     {
       gender: students?.[0]?._id,
-      count: students?.[0]?.count || 20,
+      count: students?.[0]?.count || 0,
       fill: 'var(--color-male)',
     },
     {
       gender: students?.[1]?._id,
-      count: students?.[1]?.count || 10,
+      count: students?.[1]?.count || 0,
       fill: 'var(--color-female)',
     },
   ];

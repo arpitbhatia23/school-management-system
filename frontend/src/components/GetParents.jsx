@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardTitle } from './ui/card';
+import { Card, CardContent, CardDescription, CardTitle } from './ui/card';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form';
 import { Input } from './ui/input';
 import { adminApi } from '@/services/adminapi';
 import { Button } from './ui/button';
-import DataTable from './DataTable';
 import { toast } from '@/hooks/use-toast';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './ui/table';
 
-const Getstudent = () => {
+const GetParents = () => {
   const form = useForm({
     defaultValues: {
       className: '',
@@ -16,35 +23,15 @@ const Getstudent = () => {
     },
   });
   const [data, setdata] = useState([]);
-  const { students } = adminApi();
+  const { getParents } = adminApi();
   const onsumbit = async (data) => {
     console.log(data);
-    const res = await students(data);
+    const res = await getParents(data);
     if (res?.data?.success) {
-      const newdata = res?.data?.data?.map((item) => {
-        const { name, gender, _id } = item;
-        const { roll_no, className, address, nationality } = item.profile;
-        const { father_name, parents_contact, parents_email } =
-          item.parents_Detail;
-        return {
-          _id,
-          name,
-          gender,
-          roll_no,
-          className,
-          parents_email,
-          father_name,
-          parents_contact,
-          address,
-          nationality,
-        };
-      });
-
-      setdata(newdata);
-
+      setdata(res.data.data);
       toast({
         title: 'successfull ',
-        description: 'student fecth sucessfully',
+        description: 'parents fecth sucessfully',
       });
     } else {
       toast({
@@ -53,6 +40,8 @@ const Getstudent = () => {
       });
     }
   };
+
+  console.log(data);
 
   return (
     <div>
@@ -99,19 +88,32 @@ const Getstudent = () => {
           </form>
         </Form>
         <CardContent>
-          {data?.length > 0 ? (
-            <DataTable
-              data={data}
-              tablecaption="Students data"
-              onUpdateData={setdata}
-            />
-          ) : (
-            <CardTitle className="text-center">data not found</CardTitle>
-          )}
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>FATHER NAME</TableHead>
+                <TableHead>MOTHER NAME</TableHead>
+                <TableHead>FATHER OCUUPATION</TableHead>
+                <TableHead>PARENTS EMAIL</TableHead>
+                <TableHead>PARENTS CONTACT</TableHead>
+              </TableRow>
+            </TableHeader>
+            {data?.map((data) => (
+              <TableBody>
+                <TableRow>
+                  <TableCell>{data?.father_name}</TableCell>
+                  <TableCell>{data?.mother_name}</TableCell>
+                  <TableCell>{data?.father_occupation}</TableCell>
+                  <TableCell>{data?.parents_email}</TableCell>
+                  <TableCell>{data?.parents_phone}</TableCell>
+                </TableRow>
+              </TableBody>
+            ))}
+          </Table>
         </CardContent>
       </Card>
     </div>
   );
 };
 
-export default Getstudent;
+export default GetParents;

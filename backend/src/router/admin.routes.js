@@ -26,9 +26,9 @@ const router = Router();
 router.route('/getstudent').post(verifyJwt, verifyAdmin, getStudent);
 router.route('/getstudentbyid/:student_id').post(verifyJwt, verifyAdmin, getStudentById);
 router.route('/promoteStudent').post(verifyJwt, verifyAdmin, verifyAdmin, promoteStudents);
-router.route('/getallparetns').get(verifyJwt, verifyAdmin, getAllParents);
-router.route('/getTeacher').get(verifyJwt, verifyAdmin, getAllTeacher);
-router.route('/getTeacherById').get(verifyJwt, verifyAdmin, getTeacherById);
+router.route('/getallparents').post(verifyJwt, verifyAdmin, getAllParents);
+router.route('/getTeacher').post(verifyJwt, verifyAdmin, getAllTeacher);
+router.route('/getTeacherById').post(verifyJwt, verifyAdmin, getTeacherById);
 router.route('/addSubject').post(verifyJwt, verifyAdmin, addsuject);
 router.route('/getallsubject').get(verifyJwt, verifyAdmin, getallsubject);
 router.route('/getparentsById').get(verifyJwt, getParentsById);
@@ -40,7 +40,7 @@ router.route('/addfees').post(verifyJwt, verifyAdmin, addFees);
 router.route('/getfees').get(verifyJwt, verifyAdmin, getfees);
 router.route('/addnotification').post(verifyJwt,verifyAdmin,addNotification)
 router.route("/getnotification").get(verifyJwt,verifyAdmin,getNotification)
-router.route("/deleteNotification").delete(verifyJwt,verifyAdmin,deleteNotification)
+router.route("/deleteNotification/:id").delete(verifyJwt,verifyAdmin,deleteNotification)
 router.route("/totalstudent").get(verifyJwt,verifyAdmin,totalstudentGender)
 router.route("/totalfees").get(verifyJwt,verifyAdmin,totalfee)
 router.route("/totalexpense").get(verifyJwt,verifyAdmin,totalExpense)
