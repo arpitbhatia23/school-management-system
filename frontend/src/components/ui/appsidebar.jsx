@@ -72,7 +72,7 @@ const items = [
     submenu: [
       {
         title: 'Teachers',
-        url: '#',
+        url: '/getteacher',
         icon: Users, // Represents a group of parents
       },
       {

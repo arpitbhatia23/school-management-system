@@ -276,7 +276,7 @@ const getTeacherById = asyncHandler(async (req, res) => {
     if (!id) {
         throw new apiError(400, 'id tere pape pani ki mmiya 🤦‍♂️😖😡 ');
     }
-    const teacher = await User.findById(_id);
+    const teacher = await User.findById(id);
     if (!teacher) {
         throw new apiError(404, 'guru ji ni mile 😒 koi or id pava....');
     }

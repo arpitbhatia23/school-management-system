@@ -12,6 +12,7 @@ import Getstudent from './components/Getstudent';
 
 import PromoteStudent from './components/PromoteStudent';
 import GetParents from './components/GetParents';
+import Getteacher from './components/GetTeacher';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             path: '/getparents',
             element: <GetParents />,
           },
+          {
+            path:'/getteacher',
+            element:<Getteacher/>
+          }
         ],
       },
       {

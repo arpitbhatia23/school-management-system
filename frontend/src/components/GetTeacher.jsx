@@ -8,35 +8,34 @@ import { Button } from './ui/button';
 import DataTable from './DataTable';
 import { toast } from '@/hooks/use-toast';
 
-const Getstudent = () => {
+const Getteacher = () => {
   const form = useForm({
     defaultValues: {
-      className: '',
+      class_incharge: '',
       name: '',
     },
   });
   const [data, setdata] = useState([]);
-  const { students } = adminApi();
+  const { getTeachers } = adminApi();
   const onsumbit = async (data) => {
     console.log(data);
-    const res = await students(data);
+    const res = await getTeachers(data);
     if (res?.data?.success) {
+      console.log(res.data)
       const newdata = res?.data?.data?.map((item) => {
-        const { name, gender, _id } = item;
-        const { roll_no, className, address, nationality } = item.profile;
-        const { father_name, parents_contact, parents_email } =
-          item.parents_Detail;
+        const { name, gender, _id,email,phone_no } = item;
+        const {  class_incharge, address, nationality,DOB } = item.profile;
+      
         return {
           _id,
           name,
           gender,
-          roll_no,
-          className,
-          parents_email,
-          father_name,
-          parents_contact,
+          class_incharge,
           address,
           nationality,
+          email,
+          phone_no,
+          DOB
         };
       });
 
@@ -44,12 +43,14 @@ const Getstudent = () => {
 
       toast({
         title: 'successfull ',
-        description: 'student fecth sucessfully',
+        description: 'teacher fecth sucessfully',
       });
     } else {
       toast({
         title: 'failed ',
         description: res.data.message,
+        variant: 'destructive',
+
       });
     }
   };
@@ -77,7 +78,7 @@ const Getstudent = () => {
               />
 
               <FormField
-                name="className"
+                name="class_incharge"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
@@ -102,8 +103,9 @@ const Getstudent = () => {
           {data?.length > 0 ? (
             <DataTable
               data={data}
-              tablecaption="Students data"
+              tablecaption="teacher data"
               onUpdateData={setdata}
+              type="teacher"
             />
           ) : (
             <CardTitle className="text-center">data not found</CardTitle>
@@ -114,4 +116,4 @@ const Getstudent = () => {
   );
 };
 
-export default Getstudent;
+export default Getteacher;

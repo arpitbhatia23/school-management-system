@@ -47,7 +47,7 @@ export const adminApi = () => {
   // get teachers
   const getTeachers = async (data) => {
     try {
-      return await api.get('admin/getTeacher', data);
+      return await api.post('admin/getTeacher', data);
     } catch (error) {
       return error.response;
     }
@@ -55,7 +55,7 @@ export const adminApi = () => {
   // get TeacherById
   const getTeacherById = async (data) => {
     try {
-      return await api.get('admin/getTeacherById', data);
+      return await api.post('admin/getTeacherById', data);
     } catch (error) {
       return error.response;
     }
@@ -125,9 +125,9 @@ export const adminApi = () => {
     }
   };
   // get notification
-  const getNotification = async (data) => {
+  const getNotification = async () => {
     try {
-      return await api.get('admin/getnotification', data);
+      return await api.get('admin/getnotification', );
     } catch (error) {
       return error.response;
     }
