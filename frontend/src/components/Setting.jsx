@@ -23,7 +23,7 @@ const Setting = () => {
       mobile:""
       }
     });
-    const {update} = useAuthApi();
+    const {update_profile_detail} = useAuthApi();
     
     
     const onSubmit = async (data) => {
@@ -33,7 +33,7 @@ const Setting = () => {
       Object.keys(data).forEach((key)=>{
         formData.append(key,data[key]);
       })
-      const res = await update(data);
+      const res = await update_profile_detail(data);
 
       console.log(response?.data);
       if(res?.data?.statusCode ===201){
@@ -54,10 +54,10 @@ const Setting = () => {
     <>
     <Card className="m-20 ">
       <Card className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
-         <Avatar className='rounded-full bg-red-300'>
+         <Avatar className='rounded-full bg-red-300 '>
           <AvatarImage
           src={userData?.profile_image?.url}
-          className='rounded-full'
+          className='rounded-full h-32 w-32 mx-4  ' 
           />
           <AvatarFallback>cn</AvatarFallback>
 

@@ -9,10 +9,8 @@ import LoginPage from './pages/LoginPage';
 import AdminDashbaord from './pages/AdminDashbaord';
 import Setting from './components/Setting';
 import Getstudent from './components/Getstudent';
-<<<<<<< HEAD
-=======
 import PromoteStudent from './components/PromoteStudent';
->>>>>>> 79fa3a38b3e4f29f58752902cb5a89e447823b78
+import AddTeacher from './components/AddTeacher';
 
 const router = createBrowserRouter([
   {
@@ -30,25 +28,21 @@ const router = createBrowserRouter([
           {
             path: '/addstudent',
             element: <AddStudent />,
+          },{
+            path:'/addteacher',
+            element:<AddTeacher/>
           },
           {
             path:'/setting',
-<<<<<<< HEAD
             element:<Setting/>},
             {
             path:"/getstudents",
-            element:<Getstudent/>
-=======
-            element:<Setting/>
-          },
-          {
-            path:"/getstudents",
-            element:<Getstudent/>
-          },
+            element:<Getstudent/>},
+           
+          
           {
             path:"/promoteStudent",
             element:<PromoteStudent/>
->>>>>>> 79fa3a38b3e4f29f58752902cb5a89e447823b78
           }
         ],
       },
