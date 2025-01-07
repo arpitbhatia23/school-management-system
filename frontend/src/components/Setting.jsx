@@ -16,9 +16,7 @@ import Selectcomp from './Select';
 import { toast } from '@/hooks/use-toast';
 import { useSelector } from 'react-redux';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
-import { Dialog } from '@radix-ui/react-dialog';
-import { DialogContent, DialogDescription, DialogTrigger } from './ui/dialog';
-import { Button } from './ui/button';
+
 const Setting = () => {
   const userData = useSelector((state) => state.auth.userData);
   console.log(userData);
@@ -35,11 +33,11 @@ const Setting = () => {
     
   
  
-  const { updateProfile, updateImage } = useAuthApi();
+  const { updateProfile,  } = useAuthApi();
 
   const onSubmit = async (data) => {
    
-    const res = await update(data);
+    const res = await updateProfile(data);
 
     console.log(res?.data);
     if (res?.data?.success) {
@@ -56,21 +54,10 @@ const Setting = () => {
     }
   };
 
-  const imageform = useForm({
-    defaultValues: {
-      profile_image: '',
-    },
-  });
-
-  const handelupdateimage = async (data) => {
-    console.log(data);
-  };
   return (
     <>
       <Card className="m-20 ">
-        <CardContent className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
-          <Dialog>
-            <DialogTrigger>
+        <CardContent className="bg-blue-600 rounded-t-lg h-44 w-full py-10">     
               <Avatar className="rounded-full bg-red-300  ">
                 <AvatarImage
                   src={userData?.profile_image?.url}
@@ -80,34 +67,6 @@ const Setting = () => {
                   cn
                 </AvatarFallback>
               </Avatar>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogDescription>
-                <Form {...imageform}>
-                  <form
-                    onSubmit={imageform.handleSubmit(handelupdateimage)}
-                    className="flex flex-col gap-2 py-8"
-                  >
-                    <FormField
-                      name="profile_image"
-                      control={imageform.control}
-                      rules={{ required: 'image is required' }}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input type="file" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <Button type="submit">update image</Button>
-                  </form>
-                </Form>
-              </DialogDescription>
-            </DialogContent>
-          </Dialog>
         </CardContent>
         <CardContent>
          

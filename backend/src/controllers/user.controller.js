@@ -164,14 +164,12 @@ const register = asyncHandler(async (req, res) => {
 
         if (
             [
-                class_incharge,
                 religion,
                 blood_group,
                 nationality,
                 qualification,
                 phone_no,
                 email,
-                subject,
                 address,
                 DOB,
             ].some((field) => field?.trim() === '')
