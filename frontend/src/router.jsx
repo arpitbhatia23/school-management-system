@@ -13,6 +13,8 @@ import AddTeacher from './components/AddTeacher';
 import PromoteStudent from './components/PromoteStudent';
 import GetParents from './components/GetParents';
 import Getteacher from './components/GetTeacher';
+import AddExpenses from './components/AddExpenses';
+import AddSubject from './components/AddSubject';
 
 const router = createBrowserRouter([
   {
@@ -35,21 +37,30 @@ const router = createBrowserRouter([
             path:'/addteacher',
             element:<AddTeacher/>
           },
-          {
-            path:'/setting',
-            element:<Setting/>},
-            {
-            path:"/getstudents",
-            element:<Getstudent/>},
-           
           
           {
-            path:"/promoteStudent",
-            element:<PromoteStudent/>
-           
+            path: '/addExpenses',
+            element: <AddExpenses />,
           },
-         
-          
+          {
+            path:'/addSubject'
+            ,element:<AddSubject/>
+          },
+
+          {
+            path: '/setting',
+            element: <Setting />,
+          },
+          {
+            path: '/getstudents',
+            element: <Getstudent />,
+          },
+
+          {
+            path: '/promoteStudent',
+            element: <PromoteStudent />,
+          },
+
           {
             path: '/getparents',
             element: <GetParents />,

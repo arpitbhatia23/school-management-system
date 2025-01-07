@@ -20,6 +20,7 @@ import {
     getNotification,
     deleteNotification,
     deleteStudentbyID,
+    getteachers,
 } from '../controllers/admin.controller.js';
 import { totalExpense, totalfee, totalstudentGender, totalteacher } from '../controllers/adminDashboard.js';
 const router = Router();
@@ -29,6 +30,7 @@ router.route('/promoteStudent').post(verifyJwt, verifyAdmin, verifyAdmin, promot
 router.route('/getallparents').post(verifyJwt, verifyAdmin, getAllParents);
 router.route('/getTeacher').post(verifyJwt, verifyAdmin, getAllTeacher);
 router.route('/getTeacherById').post(verifyJwt, verifyAdmin, getTeacherById);
+router.route("/getteacher").get(verifyJwt,verifyAdmin,getteachers)
 router.route('/addSubject').post(verifyJwt, verifyAdmin, addsuject);
 router.route('/getallsubject').get(verifyJwt, verifyAdmin, getallsubject);
 router.route('/getparentsById').get(verifyJwt, getParentsById);

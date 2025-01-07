@@ -304,9 +304,17 @@ const addsuject = asyncHandler(async (req, res) => {
     return res.status(200).json(new apiResponse(200, subject, 'subject registered successfully'));
 });
 
+const getteachers=asyncHandler(async(req,res)=>{
+    const teacher=await User.find({role:"teacher"})
+    if(teacher.length===0){
+        throw new apiError(404,"teacher not found")
+    }
+    return res.status(200).json(new apiResponse(200,teacher,"teacher get sucesfully"))
+})
 // getall subject
 const getallsubject = asyncHandler(async (req, res) => {
     const { subject_name, class_name } = req.body;
+    console.log(subject_name,class_name)
     const sujects = await Subject.aggregate([
         {
             $match: {
@@ -334,6 +342,7 @@ const getallsubject = asyncHandler(async (req, res) => {
             },
         },
     ]);
+    console.log(sujects)
     if (sujects.length === 0) {
         throw new apiError(404, 'subject not found');
     }
@@ -624,5 +633,6 @@ export {
     addNotification,
     getNotification,
     deleteNotification,
+    getteachers,
     deleteStudentbyID
 };
