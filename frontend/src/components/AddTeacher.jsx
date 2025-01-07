@@ -28,8 +28,8 @@ const AddTeacher = ({ class_incharge }) => {
       blood_group: '',
       religion: '',
       nationality: '',
-      qualification:'',
-      subject:'',
+      qualification: '',
+      subject: '',
       category: '',
       address: '',
       email: '',
@@ -48,8 +48,6 @@ const AddTeacher = ({ class_incharge }) => {
     Object.keys(data).forEach((key) => {
       formData.append(key, data[key]); // File field
     });
-
-    
 
     const res = await register(formData);
     setloading(false);
@@ -143,7 +141,6 @@ const AddTeacher = ({ class_incharge }) => {
                     <FormItem>
                       <FormLabel>Gender</FormLabel>
                       <FormControl>
-                      
                         <Selectcomp
                           selectLable="select your gender"
                           selectvalue="Gender"
@@ -207,38 +204,42 @@ const AddTeacher = ({ class_incharge }) => {
                   )}
                 />
                 <FormField
-                name='subject'
-                rule={{required:'subject is required'}}
-                control={form.control}
-                render={({field})=>(
-                  <FormItem>
-                    <FormLabel>Subject</FormLabel>
-                    <FormControl>
-                      <Input
-                      type='text'
-                      placeholder="enter subject"
-                      {...field}/>
-                    </FormControl>
-                    <FormMessage/>
-                  </FormItem>
-                )}/>
+                  name="subject"
+                  rule={{ required: 'subject is required' }}
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Subject</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="enter subject"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-<FormField
-                name='qualification'
-                rule={{required:'qualification is required'}}
-                control={form.control}
-                render={({field})=>(
-                  <FormItem>
-                    <FormLabel>Qualification</FormLabel>
-                    <FormControl>
-                      <Input
-                      type='text'
-                      placeholder="enter Qualification"
-                      {...field}/>
-                    </FormControl>
-                    <FormMessage/>
-                  </FormItem>
-                )}/>
+                <FormField
+                  name="qualification"
+                  rule={{ required: 'qualification is required' }}
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Qualification</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="enter Qualification"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
                 <FormField
                   name="blood_group"

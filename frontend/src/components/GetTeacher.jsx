@@ -21,11 +21,11 @@ const Getteacher = () => {
     console.log(data);
     const res = await getTeachers(data);
     if (res?.data?.success) {
-      console.log(res.data)
+      console.log(res.data);
       const newdata = res?.data?.data?.map((item) => {
-        const { name, gender, _id,email,phone_no } = item;
-        const {  class_incharge, address, nationality,DOB } = item.profile;
-      
+        const { name, gender, _id, email, phone_no } = item;
+        const { class_incharge, address, nationality, DOB } = item.profile;
+
         return {
           _id,
           name,
@@ -35,7 +35,7 @@ const Getteacher = () => {
           nationality,
           email,
           phone_no,
-          DOB
+          DOB,
         };
       });
 
@@ -50,7 +50,6 @@ const Getteacher = () => {
         title: 'failed ',
         description: res.data.message,
         variant: 'destructive',
-
       });
     }
   };

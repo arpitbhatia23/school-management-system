@@ -57,8 +57,7 @@ const AddStudent = ({ className }) => {
 
     console.log(res);
     if (res?.data?.success) {
-      toast({ title: 'student registration',
-         description: res.data?.message });
+      toast({ title: 'student registration', description: res.data?.message });
     } else {
       toast({
         variant: 'destructive',

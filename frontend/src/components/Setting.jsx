@@ -21,25 +21,20 @@ const Setting = () => {
   const userData = useSelector((state) => state.auth.userData);
   console.log(userData);
   const form = useForm({
-    defaultValues:{
-      name:"",
-      gender:"",
-      email:"",
-      mobile:""
-      }
-    });
-    const {updateProfile} = useAuthApi();
-    
-    
-    const onSubmit = async (data) => {
-      console.log(data)
-      // 
-     
-      
-      const res = await updateProfile(data);
-    
-  
-  
+    defaultValues: {
+      name: '',
+      gender: '',
+      email: '',
+      mobile: '',
+    },
+  });
+  const { updateProfile } = useAuthApi();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    //
+
+    const res = await updateProfile(data);
 
     console.log(res?.data);
     if (res?.data?.success) {
@@ -58,20 +53,18 @@ const Setting = () => {
 
   return (
     <>
-    <Card className="m-20 ">
-      <CardContent
-       className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
-         <Avatar className='rounded-full bg-red-300 '>
-          <AvatarImage
-          src={userData?.profile_image?.url}
-          className='rounded-full h-32 w-32 mx-4 transform translate-y-12 ' 
-          />
-          <AvatarFallback>cn</AvatarFallback>
-
-         </Avatar>
-      </CardContent>
-      <CardContent>
-        {/* <CardTitle className="py-4">
+      <Card className="m-20 ">
+        <CardContent className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
+          <Avatar className="rounded-full bg-red-300 ">
+            <AvatarImage
+              src={userData?.profile_image?.url}
+              className="rounded-full h-32 w-32 mx-4 transform translate-y-12 "
+            />
+            <AvatarFallback>cn</AvatarFallback>
+          </Avatar>
+        </CardContent>
+        <CardContent>
+          {/* <CardTitle className="py-4">
 =======
       <Card className="m-20 ">
         <CardContent className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
@@ -183,6 +176,5 @@ const Setting = () => {
     </>
   );
 };
-
 
 export default Setting;

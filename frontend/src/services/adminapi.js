@@ -127,14 +127,14 @@ export const adminApi = () => {
   // get notification
   const getNotification = async () => {
     try {
-      return await api.get('admin/getnotification', );
+      return await api.get('admin/getnotification');
     } catch (error) {
       return error.response;
     }
   };
   // del notification
   const delNoification = async (data) => {
-    console.log(data)
+    console.log(data);
     try {
       return await api.delete(`admin/deleteNotification/${data}`);
     } catch (error) {

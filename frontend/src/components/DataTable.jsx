@@ -12,33 +12,41 @@ import { getHeaders } from '@/utils/getheader';
 import { adminApi } from '@/services/adminapi';
 import { Button } from './ui/button';
 import { toast } from '@/hooks/use-toast';
-import { DialogTrigger, Dialog, DialogFooter,DialogClose,
+import {
+  DialogTrigger,
+  Dialog,
+  DialogFooter,
+  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogTitle, } from './ui/dialog';
-
+  DialogTitle,
+} from './ui/dialog';
 
 const DataTable = React.memo(function ({
   data,
   tablecaption = 'table',
   onUpdateData,
-  type="student"
+  type = 'student',
 }) {
   const tableheader = getHeaders(data);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { studentsById, deleteuser,getTeacherById } = adminApi();
+  const { studentsById, deleteuser, getTeacherById } = adminApi();
 
   const handleRowClick = useCallback(async (id) => {
     try {
       setLoading(true);
       setError(null);
       setSelectedStudent(null);
-      const apical= type==="student"?studentsById:getTeacherById
-      const response = await  apical(type==="student"?id:{id});
-      console.log(response.data)
-       setSelectedStudent(type==="student"?response?.data?.data?.[0]:response?.data?.data || null);
+      const apical = type === 'student' ? studentsById : getTeacherById;
+      const response = await apical(type === 'student' ? id : { id });
+      console.log(response.data);
+      setSelectedStudent(
+        type === 'student'
+          ? response?.data?.data?.[0]
+          : response?.data?.data || null,
+      );
     } catch (err) {
       console.error('Failed to fetch student details:', err);
       setError('Unable to fetch student details. Please try again later.');
@@ -75,7 +83,7 @@ const DataTable = React.memo(function ({
       });
     }
   };
-console.log(selectedStudent)
+  console.log(selectedStudent);
   return (
     <div>
       <Table className="">
@@ -116,44 +124,57 @@ console.log(selectedStudent)
                 ) : selectedStudent ? (
                   <>
                     <DialogTitle className="font-semibold m-4 text-center">
-                       {type === 'teacher' ? 'Teacher Details' : 'Student Details'}
+                      {type === 'teacher'
+                        ? 'Teacher Details'
+                        : 'Student Details'}
                     </DialogTitle>
                     <img
-                      src={type==="student"?selectedStudent?.profile_image?.image_url : selectedStudent?.profile_image?.url}
+                      src={
+                        type === 'student'
+                          ? selectedStudent?.profile_image?.image_url
+                          : selectedStudent?.profile_image?.url
+                      }
                       alt="Profile"
                       className="rounded-full h-24 w-24 mx-auto"
                     />
-                     <DialogDescription className="grid grid-cols-2 gap-x-4 gap-y-2 items-center justify-items-start mt-4">
+                    <DialogDescription className="grid grid-cols-2 gap-x-4 gap-y-2 items-center justify-items-start mt-4">
                       {/* Render fields dynamically */}
-                      {type === "student" ? (
-    Object.entries({
-      ...selectedStudent?.profile,
-      ...selectedStudent?.parents_Detail,
-    } || {}).map(([key, value]) => (
-      <div key={key}>
-        <strong>{key}:</strong> {String(value).toUpperCase()}
-      </div>
-    ))
-  ) : 
-  Object.entries(selectedStudent?.profile || {}).map(([key, value]) => {
-    // Check if the key is "admission date" or similar
-    const isDateField = key.includes("admission_Date");
-    const formattedValue = isDateField && value
-      ? new Date(value).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }) // Format the date
-      : String(value).toUpperCase(); // Default for other fields
-  
-    return (
-      <div key={key}>
-        <strong>{key}:</strong> {formattedValue}
-      </div>
-    );
-  })
-  
-  }
+                      {type === 'student'
+                        ? Object.entries(
+                            {
+                              ...selectedStudent?.profile,
+                              ...selectedStudent?.parents_Detail,
+                            } || {},
+                          ).map(([key, value]) => (
+                            <div key={key}>
+                              <strong>{key}:</strong>{' '}
+                              {String(value).toUpperCase()}
+                            </div>
+                          ))
+                        : Object.entries(selectedStudent?.profile || {}).map(
+                            ([key, value]) => {
+                              // Check if the key is "admission date" or similar
+                              const isDateField =
+                                key.includes('admission_Date');
+                              const formattedValue =
+                                isDateField && value
+                                  ? new Date(value).toLocaleDateString(
+                                      'en-US',
+                                      {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric',
+                                      },
+                                    ) // Format the date
+                                  : String(value).toUpperCase(); // Default for other fields
+
+                              return (
+                                <div key={key}>
+                                  <strong>{key}:</strong> {formattedValue}
+                                </div>
+                              );
+                            },
+                          )}
                     </DialogDescription>
                     <DialogFooter className="mt-6 flex items-center">
                       <DialogClose className="mx-4">
@@ -170,7 +191,10 @@ console.log(selectedStudent)
                     </DialogFooter>
                   </>
                 ) : (
-                  <p>No {type==="student"?"student":"teacher"} details available.</p>
+                  <p>
+                    No {type === 'student' ? 'student' : 'teacher'} details
+                    available.
+                  </p>
                 )}
               </DialogContent>
             </Dialog>
