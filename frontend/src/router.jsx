@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import React from 'react';
 import App from './App';
 
-// Lazy loading components
 import Dashboard from './pages/Dashboard'; // Assuming AddStudent page
 import AddStudent from './components/Addstudent';
 import LoginPage from './pages/LoginPage';
@@ -16,6 +15,7 @@ import GetParents from './components/GetParents';
 import Getteacher from './components/GetTeacher';
 import AddExpenses from './components/AddExpenses';
 import AddSubject from './components/AddSubject';
+import AddFees from './components/AddFees';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +41,9 @@ const router = createBrowserRouter([
           {
             path: '/addExpenses',
             element: <AddExpenses />,
+          },{
+            path:'/addFees',
+            element:<AddFees/>
           },
           {
             path:'/addSubject'
