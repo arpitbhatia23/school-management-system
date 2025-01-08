@@ -159,7 +159,7 @@ export const adminApi = () => {
   // get fees
   const getFees = async (data) => {
     try {
-      return await api.get('admin/getfees', data);
+      return await api.post('admin/getfees', data);
     } catch (error) {
       return error.response;
     }

@@ -15,6 +15,8 @@ import Getteacher from './components/GetTeacher';
 import AddExpenses from './components/AddExpenses';
 import AddSubject from './components/AddSubject';
 import AddFees from './components/AddFees';
+import GetFees from './components/GetFees';
+
 import Authlayout from "./components/Authlayout"
 import GetExpense from './components/GetExpense';
 const router = createBrowserRouter([
@@ -57,7 +59,10 @@ const router = createBrowserRouter([
           },
           {
             path: '/getstudents',
-            element: <Authlayout><Getstudent /></Authlayout>,
+            element: <Getstudent />,
+          },{
+            path:"/getFees",
+            element: <Authlayout><GetFees /></Authlayout>,
           },
 
           {

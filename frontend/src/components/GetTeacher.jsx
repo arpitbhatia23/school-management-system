@@ -92,7 +92,7 @@ const Getteacher = () => {
                 )}
               />
 
-              <Button type="sbumit" className="my-10">
+              <Button type="submit" className="my-10">
                 submit
               </Button>
             </CardContent>

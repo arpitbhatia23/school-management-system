@@ -95,6 +95,24 @@ if(res?.data?.success){
                 </FormItem>
               )}
             />
+             <FormField
+              name="className"
+              rules={{ required: 'class is required' }}
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Class</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Enter class"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               name="status"
               rules={{ required: 'status is required' }}
