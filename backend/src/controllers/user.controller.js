@@ -202,6 +202,7 @@ const register = asyncHandler(async (req, res) => {
             admission_Date,
             address,
             DOB,
+            subject
         };
         const password = DOB;
         const user = await User.create({

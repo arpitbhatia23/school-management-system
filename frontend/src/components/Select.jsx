@@ -25,7 +25,7 @@ const Selectcomp = ({ selectLable, selectItems, selectvalue, field }) => {
               const label = typeof item === 'object' ? item.name : item;
               return (
                 <SelectItem key={value || index} value={value}>
-                  {label}
+                  {String(label).toUpperCase()}
                 </SelectItem>
               );
             })

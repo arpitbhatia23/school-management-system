@@ -15,68 +15,68 @@ import Getteacher from './components/GetTeacher';
 import AddExpenses from './components/AddExpenses';
 import AddSubject from './components/AddSubject';
 import AddFees from './components/AddFees';
-
+import Authlayout from "./components/Authlayout"
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <App /> ,
     children: [
       {
         path: '/',
-        element: <Dashboard />,
+        element: <Authlayout><Dashboard /></Authlayout>,
         children: [
           {
             path: '/',
-            element: <AdminDashbaord />,
+            element: <Authlayout><AdminDashbaord /></Authlayout>,
           },
           {
             path: '/addstudent',
-            element: <AddStudent />,
+            element: <Authlayout><AddStudent /></Authlayout>,
           },
           {
             path:'/addteacher',
-            element:<AddTeacher/>
+            element:<Authlayout><AddTeacher/></Authlayout>
           },
           
           {
             path: '/addExpenses',
-            element: <AddExpenses />,
+            element: <Authlayout><AddExpenses /></Authlayout>,
           },{
             path:'/addFees',
-            element:<AddFees/>
+            element:<Authlayout><AddFees/></Authlayout>
           },
           {
             path:'/addSubject'
-            ,element:<AddSubject/>
+            ,element:<Authlayout><AddSubject/></Authlayout>
           },
 
           {
             path: '/setting',
-            element: <Setting />,
+            element: <Authlayout><Setting /></Authlayout>
           },
           {
             path: '/getstudents',
-            element: <Getstudent />,
+            element: <Authlayout><Getstudent /></Authlayout>,
           },
 
           {
             path: '/promoteStudent',
-            element: <PromoteStudent />,
+            element: <Authlayout><PromoteStudent /></Authlayout>,
           },
 
           {
             path: '/getparents',
-            element: <GetParents />,
+            element:<Authlayout><GetParents /></Authlayout> ,
           },
           {
             path: '/getteacher',
-            element: <Getteacher />,
+            element:<Authlayout> <Getteacher /></Authlayout>,
           },
         ],
       },
       {
         path: '/login',
-        element: <LoginPage />,
+        element:<Authlayout Authentication={false}> <LoginPage /></Authlayout>,
       },
     ],
   },

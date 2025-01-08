@@ -87,15 +87,14 @@ const items = [
     url: '#',
     icon: DollarSign,
     submenu: [
-      { title: 'Fee groups', url: '#', icon: DollarSign },
-      { title: 'Students fee', url: '#', icon: DollarSign },
+      { title: 'Students fee', url: '/addFees', icon: DollarSign },
       { title: 'Expenses', url: '#', icon: DollarSign },
-      { title: 'ADD exprense', url: '#', icon: DollarSign },
+      { title: 'ADD exprense', url: '/addExpenses', icon: DollarSign },
     ],
   },
   {
     title: 'subjects',
-    url: '#',
+    url: '/addSubject',
     icon: Book,
   },
   {

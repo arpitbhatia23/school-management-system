@@ -6,6 +6,7 @@ import { Input } from './ui/input'
 import { adminApi } from '@/services/adminapi'
 import { toast } from '@/hooks/use-toast'
 import Selectcomp from './Select'
+import { Button } from './ui/button'
 
 const AddSubject = () => {
     const [loading,setloading]=useState(false);
@@ -19,20 +20,20 @@ const AddSubject = () => {
           }));
         setteacher(teachersData)    }
     useEffect(()=>{
-fetchallteachers()
+      fetchallteachers()
     },[])
   const form = useForm({
     defaultValues:{
         subject_name:'',
-        class:'',
-        days:"",
+        class_name:'',
+        day:"",
         teacher_id:""
 
     }
   })
 const {addSubject} = adminApi() 
-console.log(teacher)
 const onSubmit= async (data)=>{
+    console.log(data)
     setloading(true);
     const res = await addSubject(data)
     setloading(false)
@@ -56,10 +57,10 @@ const onSubmit= async (data)=>{
     <Card className="m-20">
         <CardContent>
             <CardTitle className="p-4">add new subject</CardTitle>
-            <Form {...form}>
+            <Form {...form} >
                 <form
                 onSubmit={form.handleSubmit(onSubmit)}>
-                    <CardContent>
+                    <CardContent className="grid grid-cols-1 sm:grid-cols-5 gap-4">
                         <FormField
                         name="subject_name"
                         rules={{required:"subject is required"}}
@@ -78,8 +79,8 @@ const onSubmit= async (data)=>{
                             </FormItem>
                         )}/>
                         <FormField
-                        name="class"
-                        rules={{required:"class is required"}}
+                        name="class_name"
+                        rules={{required:"class_name is required"}}
                         control={form.control}
                         render={({field})=>(
                             <FormItem>
@@ -95,8 +96,8 @@ const onSubmit= async (data)=>{
                             </FormItem>
                         )}/>
                         <FormField
-                       name="days"
-                       rules={{required:"days are required"}}
+                       name="day"
+                       rules={{required:"day are required"}}
                        control={form.control}
                        render={({field})=>(
                         <FormItem>
@@ -126,12 +127,12 @@ const onSubmit= async (data)=>{
                             </FormItem>
                         )}/>
 
-                        <div>
-                            <button
+                        <div >
+                            <Button
                             type="submit">
                             {loading ? 'Submitting...' : 'Submit'}{' '}
 
-                            </button>
+                            </Button>
                         </div>
                     </CardContent>
                 </form>
