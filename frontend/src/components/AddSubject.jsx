@@ -1,25 +1,39 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardTitle } from './ui/card'
 import {  Form,FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form'
 import { useForm } from 'react-hook-form'
 import { Input } from './ui/input'
 import { adminApi } from '@/services/adminapi'
 import { toast } from '@/hooks/use-toast'
+import Selectcomp from './Select'
+import { Button } from './ui/button'
 
 const AddSubject = () => {
     const [loading,setloading]=useState(false);
+    const [teacher,setteacher]=useState()
+    const {getallteacher}=adminApi()
+    const fetchallteachers=async()=>{
+        const res=await getallteacher()
+        const teachersData = res.data.data.map((teacher) => ({
+            id: teacher._id,
+            name: teacher.name,
+          }));
+        setteacher(teachersData)    }
+    useEffect(()=>{
+      fetchallteachers()
+    },[])
   const form = useForm({
     defaultValues:{
         subject_name:'',
-        class:'',
-        days:"",
+        class_name:'',
+        day:"",
         teacher_id:""
 
     }
   })
 const {addSubject} = adminApi() 
-
 const onSubmit= async (data)=>{
+    console.log(data)
     setloading(true);
     const res = await addSubject(data)
     setloading(false)
@@ -37,15 +51,16 @@ const onSubmit= async (data)=>{
     }
 }
 
+
   return (
     <>
-    <Card>
+    <Card className="m-20">
         <CardContent>
-            <CardTitle>add new subject</CardTitle>
-            <Form {...form}>
+            <CardTitle className="p-4">add new subject</CardTitle>
+            <Form {...form} >
                 <form
                 onSubmit={form.handleSubmit(onSubmit)}>
-                    <CardContent>
+                    <CardContent className="grid grid-cols-1 sm:grid-cols-5 gap-4">
                         <FormField
                         name="subject_name"
                         rules={{required:"subject is required"}}
@@ -64,8 +79,8 @@ const onSubmit= async (data)=>{
                             </FormItem>
                         )}/>
                         <FormField
-                        name="class"
-                        rules={{required:"class is required"}}
+                        name="class_name"
+                        rules={{required:"class_name is required"}}
                         control={form.control}
                         render={({field})=>(
                             <FormItem>
@@ -81,8 +96,8 @@ const onSubmit= async (data)=>{
                             </FormItem>
                         )}/>
                         <FormField
-                       name="days"
-                       rules={{required:"days are required"}}
+                       name="day"
+                       rules={{required:"day are required"}}
                        control={form.control}
                        render={({field})=>(
                         <FormItem>
@@ -106,21 +121,18 @@ const onSubmit= async (data)=>{
                             <FormItem>
                                 <FormLabel>Teacher Id</FormLabel>
                                 <FormControl>
-                                    <Input
-                                    type="text"
-                                    placeholder="Enter teacher id.."
-                                    {...field}/>
+                                   <Selectcomp selectLable={"select teacher"} selectvalue={"teachers"} field={field} selectItems={teacher}/>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
                         )}/>
 
-                        <div>
-                            <button
+                        <div >
+                            <Button
                             type="submit">
                             {loading ? 'Submitting...' : 'Submit'}{' '}
 
-                            </button>
+                            </Button>
                         </div>
                     </CardContent>
                 </form>

@@ -164,14 +164,12 @@ const register = asyncHandler(async (req, res) => {
 
         if (
             [
-                class_incharge,
                 religion,
                 blood_group,
                 nationality,
                 qualification,
                 phone_no,
                 email,
-                subject,
                 address,
                 DOB,
             ].some((field) => field?.trim() === '')
@@ -204,6 +202,7 @@ const register = asyncHandler(async (req, res) => {
             admission_Date,
             address,
             DOB,
+            subject
         };
         const password = DOB;
         const user = await User.create({

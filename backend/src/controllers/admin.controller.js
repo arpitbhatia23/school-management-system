@@ -304,9 +304,17 @@ const addsuject = asyncHandler(async (req, res) => {
     return res.status(200).json(new apiResponse(200, subject, 'subject registered successfully'));
 });
 
+const getteachers=asyncHandler(async(req,res)=>{
+    const teacher=await User.find({role:"teacher"})
+    if(teacher.length===0){
+        throw new apiError(404,"teacher not found")
+    }
+    return res.status(200).json(new apiResponse(200,teacher,"teacher get sucesfully"))
+})
 // getall subject
 const getallsubject = asyncHandler(async (req, res) => {
     const { subject_name, class_name } = req.body;
+    console.log(subject_name,class_name)
     const sujects = await Subject.aggregate([
         {
             $match: {
@@ -334,6 +342,7 @@ const getallsubject = asyncHandler(async (req, res) => {
             },
         },
     ]);
+    console.log(sujects)
     if (sujects.length === 0) {
         throw new apiError(404, 'subject not found');
     }
@@ -402,16 +411,22 @@ const addNewExpense = asyncHandler(async (req, res) => {
 // get all expense
 const getAllExpense = asyncHandler(async (req, res) => {
     const { name, status, expense_type } = req.body;
-    if (!(name || status || expense_type)) {
-        throw new apiError(400, 'all fields are required');
+    // if (!(name || status || expense_type)) {
+    //     throw new apiError(400, 'all fields are required');
+    // }
+const matchConditions=[]
+    if(name){
+matchConditions.push({name:{$regex:name,$options:"i"}})
     }
 
+    if(status){
+        matchConditions.push({status})
+    }
+    if(expense_type){
+        matchConditions.push({expense_type})
+    }
     const getExpense = await add_expense.aggregate([
-        {
-            $match: {
-                $or: [{ name: name }, { status: status }, { expense_type: expense_type }],
-            },
-        },
+        
         {
             $project: {
                 name: 1,
@@ -423,6 +438,7 @@ const getAllExpense = asyncHandler(async (req, res) => {
                 phone: 1,
             },
         },
+       ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[])
     ]);
     if (getExpense.length === 0) {
         throw new apiError(404, 'no expense found');
@@ -624,5 +640,6 @@ export {
     addNotification,
     getNotification,
     deleteNotification,
+    getteachers,
     deleteStudentbyID
 };

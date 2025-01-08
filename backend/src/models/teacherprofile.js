@@ -5,6 +5,9 @@ const teacher_profile = new Schema(
         class_incharge: {
             type: String,
         },
+        subject:{
+            type:String ,
+        },
         DOB: {
             type: String,
             required: [true, 'Date of birth is required'],

@@ -67,7 +67,6 @@ const items = [
   },
   {
     title: 'Teachers',
-    url: '#',
     icon: Users,
     submenu: [
       {
@@ -77,7 +76,7 @@ const items = [
       },
       {
         title: 'Add Teachers',
-        url: '#',
+        url: 'addteacher',
         icon: UserPlus, // Represents adding a new parent
       },
     ],
@@ -88,15 +87,14 @@ const items = [
     url: '#',
     icon: DollarSign,
     submenu: [
-      { title: 'Fee groups', url: '#', icon: DollarSign },
-      { title: 'Students fee', url: '#', icon: DollarSign },
-      { title: 'Expenses', url: '#', icon: DollarSign },
-      { title: 'ADD exprense', url: '#', icon: DollarSign },
+      { title: 'Students fee', url: '/addFees', icon: DollarSign },
+      { title: 'Expenses', url: '/getexpense', icon: DollarSign },
+      { title: 'ADD exprense', url: '/addExpenses', icon: DollarSign },
     ],
   },
   {
     title: 'subjects',
-    url: '#',
+    url: '/addSubject',
     icon: Book,
   },
   {

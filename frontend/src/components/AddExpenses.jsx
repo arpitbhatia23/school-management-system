@@ -45,14 +45,15 @@ if(res?.data?.success){
 
 }
   return (
-    <Card classname='m-40'>
-      <CardContent classname="">
-      <CardTitle classname='py-40'>add new expense</CardTitle>
+    <>
+    <Card className='m-20'>
+      <CardContent className="">
+      <CardTitle className='py-4'>add new expense</CardTitle>
 
-        <Form {...form} className="m-40">
+        <Form {...form} className="">
           <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className='m-20'>
+          className=''>
 
           <CardContent className="grid  grid-cols-2 sm:grid-cols-4 gap-4">
             <FormField
@@ -209,6 +210,7 @@ if(res?.data?.success){
         </Form>
       </CardContent>
     </Card>
+    </>
   );
 };
 

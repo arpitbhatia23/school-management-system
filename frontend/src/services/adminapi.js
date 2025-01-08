@@ -52,6 +52,13 @@ export const adminApi = () => {
       return error.response;
     }
   };
+  const getallteacher = async () => {
+    try {
+      return await api.get('admin/getteacher', );
+    } catch (error) {
+      return error.response;
+    }
+  };
   // get TeacherById
   const getTeacherById = async (data) => {
     try {
@@ -95,7 +102,7 @@ export const adminApi = () => {
   // get Expenses
   const getExpenses = async (data) => {
     try {
-      return await api.get('admin/getAllExpense', data);
+      return await api.post('admin/getAllExpense', data);
     } catch (error) {
       return error.response;
     }
@@ -214,5 +221,6 @@ export const adminApi = () => {
     totalexpense,
     totalteacher,
     deleteuser,
+    getallteacher
   };
 };
