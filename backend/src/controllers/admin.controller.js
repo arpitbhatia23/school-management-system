@@ -411,16 +411,22 @@ const addNewExpense = asyncHandler(async (req, res) => {
 // get all expense
 const getAllExpense = asyncHandler(async (req, res) => {
     const { name, status, expense_type } = req.body;
-    if (!(name || status || expense_type)) {
-        throw new apiError(400, 'all fields are required');
+    // if (!(name || status || expense_type)) {
+    //     throw new apiError(400, 'all fields are required');
+    // }
+const matchConditions=[]
+    if(name){
+matchConditions.push({name:{$regex:name,$options:"i"}})
     }
 
+    if(status){
+        matchConditions.push({status})
+    }
+    if(expense_type){
+        matchConditions.push({expense_type})
+    }
     const getExpense = await add_expense.aggregate([
-        {
-            $match: {
-                $or: [{ name: name }, { status: status }, { expense_type: expense_type }],
-            },
-        },
+        
         {
             $project: {
                 name: 1,
@@ -432,6 +438,7 @@ const getAllExpense = asyncHandler(async (req, res) => {
                 phone: 1,
             },
         },
+       ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[])
     ]);
     if (getExpense.length === 0) {
         throw new apiError(404, 'no expense found');

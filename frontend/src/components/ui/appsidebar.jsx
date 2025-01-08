@@ -88,7 +88,7 @@ const items = [
     icon: DollarSign,
     submenu: [
       { title: 'Students fee', url: '/addFees', icon: DollarSign },
-      { title: 'Expenses', url: '#', icon: DollarSign },
+      { title: 'Expenses', url: '/getexpense', icon: DollarSign },
       { title: 'ADD exprense', url: '/addExpenses', icon: DollarSign },
     ],
   },

@@ -15,7 +15,6 @@ export default function Protected ({children,Authentication=true}) {
     }else if (!Authentication && authStatus !== Authentication ){
          if (userdata.role==="admin") {
             navigate("/")
-            
          }
          if(userdata.role==="student") {
             navigate("/studentdashboard")
