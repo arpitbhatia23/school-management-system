@@ -18,7 +18,7 @@ const GetFees = () => {
     })
     const [data,setdata] = useState([])
     const {getFees} = adminApi()
-    onsubmit= async(data)=>{
+    const onsubmit= async(data)=>{
         console.log(data)
         const res = await getFees(data)
         if(res?.data?.success){
@@ -84,7 +84,9 @@ render={({field})=>(
                             <FormControl>
                                 <Input
                                 type="text"
-                                placeholder="Enter rollno"/>{...field}
+                                placeholder="Enter rollno"
+                                {...field}
+                                />
                             </FormControl>
                         </FormItem>
                     )
@@ -96,7 +98,7 @@ render={({field})=>(
             </form>
         </Form>
         <CardContent>
-            {data?.length> 0 ? (
+       
                <Table>
                 <TableHeader>
                     <TableRow>  
@@ -137,9 +139,7 @@ render={({field})=>(
                     </TableRow>
                 </TableBody>
                </Table>
-            ):(
-                <CardTitle>Data not found</CardTitle>
-            )}
+            
         </CardContent>
     </Card>
       
