@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardTitle } from './ui/card';
 import { useForm } from 'react-hook-form';
-import { Form, FormControl, FormField, FormItem, FormMessage } from './ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Input } from './ui/input'; // Ensure this is the correct path for your Input component
 import { Button } from './ui/button';
 import { adminApi } from '@/services/adminapi';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
+import { toast } from '@/hooks/use-toast';
 
 const GetExpense = () => {
     const [data,setdata]=useState()
@@ -18,10 +19,20 @@ const GetExpense = () => {
   });
 const {getExpenses}=adminApi()
   const onSubmit = async(data) => {
-    
+
     const res=await getExpenses(data)
 if(res.data.success){
 setdata(res.data.data)
+toast({
+  title:"success",
+  description:"expenses get successfully"
+})
+}
+else{
+  toast({
+    title:"failed",
+    description:res.data.message
+  })
 }
   };
 
@@ -41,6 +52,7 @@ setdata(res.data.data)
             control={form.control}
             render={({ field }) => (
               <FormItem>
+                <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="Name" />
                 </FormControl>
@@ -55,6 +67,7 @@ setdata(res.data.data)
             control={form.control}
             render={({ field }) => (
               <FormItem>
+                <FormLabel>Status</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="Status" />
                 </FormControl>
@@ -69,6 +82,7 @@ setdata(res.data.data)
             control={form.control}
             render={({ field }) => (
               <FormItem>
+                <FormLabel>Expense_type</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="Expense Type" />
                 </FormControl>
