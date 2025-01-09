@@ -21,22 +21,17 @@ const Setting = () => {
   const userData = useSelector((state) => state.auth.userData);
   console.log(userData);
   const form = useForm({
-    defaultValues:{
-      name:"",
-      gender:"",
-      email:"",
-      mobile:""
-      }
-    });
-    
-    
-    
-  
- 
-  const { updateProfile,  } = useAuthApi();
+    defaultValues: {
+      name: '',
+      gender: '',
+      email: '',
+      mobile: '',
+    },
+  });
+
+  const { updateProfile } = useAuthApi();
 
   const onSubmit = async (data) => {
-   
     const res = await updateProfile(data);
 
     console.log(res?.data);
@@ -57,19 +52,18 @@ const Setting = () => {
   return (
     <>
       <Card className="m-20 ">
-        <CardContent className="bg-blue-600 rounded-t-lg h-44 w-full py-10">     
-              <Avatar className="rounded-full bg-red-300  ">
-                <AvatarImage
-                  src={userData?.profile_image?.url}
-                  className="rounded-full h-32 w-32 mx-4 transform translate-y-12"
-                />
-                <AvatarFallback className="rounded-full h-32 w-32 mx-4 transform translate-y-12">
-                  cn
-                </AvatarFallback>
-              </Avatar>
+        <CardContent className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
+          <Avatar className="rounded-full bg-red-300  ">
+            <AvatarImage
+              src={userData?.profile_image?.url}
+              className="rounded-full h-32 w-32 mx-4 transform translate-y-12"
+            />
+            <AvatarFallback className="rounded-full h-32 w-32 mx-4 transform translate-y-12">
+              cn
+            </AvatarFallback>
+          </Avatar>
         </CardContent>
         <CardContent>
-         
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="py-10">
               <CardContent className="flex flex-col item-center">

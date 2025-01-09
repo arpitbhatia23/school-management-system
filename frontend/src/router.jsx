@@ -14,79 +14,139 @@ import GetParents from './components/GetParents';
 import Getteacher from './components/GetTeacher';
 import AddExpenses from './components/AddExpenses';
 import AddSubject from './components/AddSubject';
-import AddFees from './components/AddFees';
 import GetFees from './components/GetFees';
-
-import Authlayout from "./components/Authlayout"
+import AddFees from './components/AddFees';
+import Authlayout from './components/Authlayout';
 import GetExpense from './components/GetExpense';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App /> ,
+    element: <App />,
     children: [
       {
         path: '/',
-        element: <Authlayout><Dashboard /></Authlayout>,
+        element: (
+          <Authlayout>
+            <Dashboard />
+          </Authlayout>
+        ),
         children: [
           {
             path: '/',
-            element: <Authlayout><AdminDashbaord /></Authlayout>,
+            element: (
+              <Authlayout>
+                <AdminDashbaord />
+              </Authlayout>
+            ),
           },
           {
             path: '/addstudent',
-            element: <Authlayout><AddStudent /></Authlayout>,
+            element: (
+              <Authlayout>
+                <AddStudent />
+              </Authlayout>
+            ),
           },
           {
-            path:'/addteacher',
-            element:<Authlayout><AddTeacher/></Authlayout>
+            path: '/addteacher',
+            element: (
+              <Authlayout>
+                <AddTeacher />
+              </Authlayout>
+            ),
           },
-          
+
           {
             path: '/addExpenses',
-            element: <Authlayout><AddExpenses /></Authlayout>,
-          },{
-            path:'/addFees',
-            element:<Authlayout><AddFees/></Authlayout>
+            element: (
+              <Authlayout>
+                <AddExpenses />
+              </Authlayout>
+            ),
           },
           {
-            path:'/addSubject'
-            ,element:<Authlayout><AddSubject/></Authlayout>
+            path: '/addFees',
+            element: (
+              <Authlayout>
+                <AddFees />
+              </Authlayout>
+            ),
+          },
+          {
+            path: '/addSubject',
+            element: (
+              <Authlayout>
+                <AddSubject />
+              </Authlayout>
+            ),
           },
 
           {
             path: '/setting',
-            element: <Authlayout><Setting /></Authlayout>
+            element: (
+              <Authlayout>
+                <Setting />
+              </Authlayout>
+            ),
           },
           {
             path: '/getstudents',
             element: <Getstudent />,
-          },{
-            path:"/getFees",
-            element: <Authlayout><GetFees /></Authlayout>,
+          },
+          {
+            path: '/getFees',
+            element: (
+              <Authlayout>
+                <GetFees />
+              </Authlayout>
+            ),
           },
 
           {
             path: '/promoteStudent',
-            element: <Authlayout><PromoteStudent /></Authlayout>,
+            element: (
+              <Authlayout>
+                <PromoteStudent />
+              </Authlayout>
+            ),
           },
 
           {
             path: '/getparents',
-            element:<Authlayout><GetParents /></Authlayout> ,
+            element: (
+              <Authlayout>
+                <GetParents />
+              </Authlayout>
+            ),
           },
           {
             path: '/getteacher',
-            element:<Authlayout> <Getteacher /></Authlayout>,
+            element: (
+              <Authlayout>
+                {' '}
+                <Getteacher />
+              </Authlayout>
+            ),
           },
           {
-            path:"/getexpense",
-            element:<Authlayout> <GetExpense /></Authlayout>,
-          }
+            path: '/getexpense',
+            element: (
+              <Authlayout>
+                {' '}
+                <GetExpense />
+              </Authlayout>
+            ),
+          },
         ],
       },
       {
         path: '/login',
-        element:<Authlayout Authentication={false}> <LoginPage /></Authlayout>,
+        element: (
+          <Authlayout Authentication={false}>
+            {' '}
+            <LoginPage />
+          </Authlayout>
+        ),
       },
     ],
   },

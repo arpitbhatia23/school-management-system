@@ -51,7 +51,7 @@ import { toast } from '@/hooks/use-toast';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { useState } from 'react';
 const Dashboard = () => {
-  const { logout ,updateImage} = useAuthApi();
+  const { logout, updateImage } = useAuthApi();
   const location = useLocation();
   console.log(location.pathname);
   const dispatch = useDispatch();
@@ -96,14 +96,14 @@ const Dashboard = () => {
     }
   };
 
-  const [image,setimage]=useState()
-  console.log(image)
+  const [image, setimage] = useState();
+  console.log(image);
 
- const handelupdateprofileimage=async()=>{
-  console.log(image)
- const res=await updateImage({profile_image:image})
- console.log(res.data)
- }
+  const handelupdateprofileimage = async () => {
+    console.log(image);
+    const res = await updateImage({ profile_image: image });
+    console.log(res.data);
+  };
 
   return (
     <>
@@ -247,23 +247,28 @@ const Dashboard = () => {
                     </Form>
                   </Dialog>
 
-                 <Dialog>
-                  <DialogTrigger>
-
-                <DropdownMenuItem onSelect={e=>e.preventDefault()}>
-                  update profile image
-                </DropdownMenuItem>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogTitle>update title</DialogTitle>
-                    <DialogDescription>
-
-                    <Input type="file"  onChange={e=>setimage(e?.target?.files[0])}/>
-                    <Button onClick={handelupdateprofileimage} className="mt-2" >submit</Button>
-                    </DialogDescription>
-                  </DialogContent>
-                 
-                </Dialog>
+                  <Dialog>
+                    <DialogTrigger>
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        update profile image
+                      </DropdownMenuItem>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogTitle>update title</DialogTitle>
+                      <DialogDescription>
+                        <Input
+                          type="file"
+                          onChange={(e) => setimage(e?.target?.files[0])}
+                        />
+                        <Button
+                          onClick={handelupdateprofileimage}
+                          className="mt-2"
+                        >
+                          submit
+                        </Button>
+                      </DialogDescription>
+                    </DialogContent>
+                  </Dialog>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handelLogout}>

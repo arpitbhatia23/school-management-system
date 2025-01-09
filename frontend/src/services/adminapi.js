@@ -54,7 +54,7 @@ export const adminApi = () => {
   };
   const getallteacher = async () => {
     try {
-      return await api.get('admin/getteacher', );
+      return await api.get('admin/getteacher');
     } catch (error) {
       return error.response;
     }
@@ -221,6 +221,6 @@ export const adminApi = () => {
     totalexpense,
     totalteacher,
     deleteuser,
-    getallteacher
+    getallteacher,
   };
 };
