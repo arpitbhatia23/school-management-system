@@ -15,13 +15,17 @@ const getStudent = asyncHandler(async (req, res) => {
     const { className, name } = req.body;
 
     // Execute aggregation
+    const matchConditions=[{role:"student"}]
+    if(name){
+matchConditions.push({name:{$regex:name,$options:"i"}})
+    }
+
+    if(className){
+        matchConditions.push({"profile.className":className})
+    }
+    
     const students = await User.aggregate([
-        {
-            $match: {
-                role: 'student',
-                $or: [{ 'profile.className': className }, { name: name }],
-            },
-        },
+        ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[]),
         {
             $lookup: {
                 from: 'parents_details', // Replace with the actual parent collection name
@@ -164,7 +168,7 @@ const promoteStudents = asyncHandler(async (req, res) => {
     const student = await User.findOne({
         role: 'student',
         'profile.className': currentClass,
-        name: name,
+        name: {$regex:name,$options:"i"},
         phone_no: phone_no,
     });
 
@@ -208,20 +212,19 @@ return res.status(200).json(new apiResponse(200,{},"student delete sucessfully")
 
 const getAllParents = asyncHandler(async (req, res) => {
     const { name, className } = req.body;
-    if (!(name ||    className)) {
-        throw new apiError(400, 'name and class is required');
+  
+    const matchConditions=[{role:"student"}]
+    if(name){
+matchConditions.push({name:{$regex:name,$options:"i"}})
     }
 
+    if(className){
+        matchConditions.push({className})
+    }
+  
+
     const parents = await User.aggregate([
-        {
-            $match: {
-                $or: [
-                    { role: 'student' },
-                    { name: name },
-                    { 'profile.className': className || '' },
-                ],
-            },
-        },
+        ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[]),
         {
             $lookup: {
                 from: 'parents_details',
@@ -254,16 +257,17 @@ const getAllParents = asyncHandler(async (req, res) => {
 // get all teacher
 const getAllTeacher = asyncHandler(async (req, res) => {
     const { name, class_incharge } = req.body;
-    if (!(name || class_incharge)) {
-        throw new apiError(400, 'name kne class tere pape pani');
+    const matchConditions=[{role:"teacher"}]
+    if(name){
+matchConditions.push({name:{$regex:name,$options:"i"}})
     }
+
+    if(class_incharge){
+        matchConditions.push({"profile.class_incharge":class_incharge})
+    }
+   
     const teachers = await User.aggregate([
-        {
-            $match: {
-                role: 'teacher',
-                $or: [{ 'profile.class_incharge': class_incharge }, { name: name }],
-            },
-        },
+        ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[])
     ]);
     if (teachers.length === 0) {
         throw new apiError(204, 'teacher ni aaa');
@@ -314,16 +318,17 @@ const getteachers=asyncHandler(async(req,res)=>{
 // getall subject
 const getallsubject = asyncHandler(async (req, res) => {
     const { subject_name, class_name } = req.body;
-    console.log(subject_name,class_name)
+    const matchConditions=[]
+    if(class_name){
+matchConditions.push({name:{$regex:class_name,$options:"i"}})
+    }
+
+    if(subject_name){
+        matchConditions.push({subject_name:{$regex:subject_name,$options:"i"}})
+    }
+      
     const sujects = await Subject.aggregate([
-        {
-            $match: {
-                $or: [
-                    { subject_name: subject_name || '' },
-                    { class: { $regex: class_name || '', $options: 'i' } },
-                ],
-            },
-        },
+        ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[]),
         {
             $lookup: {
                 from: 'users',
@@ -337,6 +342,7 @@ const getallsubject = asyncHandler(async (req, res) => {
             $project: {
                 subject_name: 1,
                 days: 1,
+                time:1,
                 class: 1,
                 teacher_name: '$teacher.name',
             },
@@ -480,7 +486,7 @@ const addFees = asyncHandler(async (req, res) => {
             $match: {
                 'profile.className': className,
                 'profile.roll_no': roll_no,
-                name,
+                name:{$regex:name,$options:"i"},
             },
         },
         {

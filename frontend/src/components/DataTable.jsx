@@ -141,7 +141,7 @@ const DataTable = React.memo(function ({
                       {/* Render fields dynamically */}
                       {type === 'student'
                         ? Object.entries(
-                            {
+                            {    
                               ...selectedStudent?.profile,
                               ...selectedStudent?.parents_Detail,
                             } || {},
@@ -188,6 +188,8 @@ const DataTable = React.memo(function ({
                       >
                         Delete
                       </Button>
+                                             
+                       
                     </DialogFooter>
                   </>
                 ) : (

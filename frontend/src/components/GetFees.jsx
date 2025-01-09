@@ -121,7 +121,7 @@ const GetFees = () => {
                     <TableRow key={item._id}>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.className}</TableCell>
-                      <TableCell>{item.rollno}</TableCell>
+                      <TableCell>{item.roll_no}</TableCell>
                       <TableCell>{item.amount}</TableCell>
                       <TableCell>{item.status}</TableCell>
                       <TableCell>{item.payment_method}</TableCell>
