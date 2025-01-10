@@ -138,7 +138,7 @@ const AddStudent = ({ className }) => {
                 />
                 <FormField
                   name="gender"
-                  rules={{ required: 'gender is reuired' }}
+                  rules={{ required: 'gender is required' }}
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
