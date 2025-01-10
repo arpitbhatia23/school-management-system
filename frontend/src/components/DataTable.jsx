@@ -21,6 +21,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from './ui/dialog';
+import PaginationComponent from './paginationcomp';
 
 const DataTable = React.memo(function ({
   data,
@@ -33,7 +34,13 @@ const DataTable = React.memo(function ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { studentsById, deleteuser, getTeacherById } = adminApi();
-
+const [currentpages,setcurrentpages]=useState(1)
+const rows=10
+const totalpages=Math.ceil(data?.length/rows)
+const handelpagination=(newpage)=>{
+setcurrentpages(newpage)
+}
+const pagaination=data.slice((currentpages-1)*rows,currentpages*rows)
   const handleRowClick = useCallback(async (id) => {
     try {
       setLoading(true);
@@ -96,7 +103,7 @@ const DataTable = React.memo(function ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.map((row) => (
+          {pagaination?.map((row) => (
             <Dialog key={row._id}>
               <DialogTrigger asChild>
                 <TableRow
@@ -203,6 +210,9 @@ const DataTable = React.memo(function ({
           ))}
         </TableBody>
       </Table>
+     <PaginationComponent totalPages={totalpages} currentPage={currentpages} onPageChange={handelpagination}/>
+
+    
     </div>
   );
 });

@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from './ui/table';
+import PaginationComponent from './paginationcomp';
 
 const GetParents = () => {
   const form = useForm({
@@ -42,6 +43,15 @@ const GetParents = () => {
   };
 
   console.log(data);
+
+  const [currentpage,setcurrentpages]=useState(1)
+  const rows=10
+  const totalpages=Math.ceil(data.length/rows)
+
+  const handelpagination=(newpages)=>{
+  setcurrentpages(newpages)
+  }
+  const pagination=data?.slice((currentpage-1)*rows,currentpage*rows)
 
   return (
     <div>
@@ -98,9 +108,9 @@ const GetParents = () => {
                 <TableHead>PARENTS CONTACT</TableHead>
               </TableRow>
             </TableHeader>
-            {data?.map((data) => (
-              <TableBody>
-                <TableRow>
+            {pagination?.map((data) => (
+              <TableBody key={data?.father_name}>
+                <TableRow >
                   <TableCell>{data?.father_name}</TableCell>
                   <TableCell>{data?.mother_name}</TableCell>
                   <TableCell>{data?.father_occupation}</TableCell>
@@ -110,8 +120,11 @@ const GetParents = () => {
               </TableBody>
             ))}
           </Table>
-        </CardContent>
+          {  data?.length>0&&     
+ <PaginationComponent onPageChange={handelpagination} totalPages={totalpages} currentPage={currentPage}/>
+}        </CardContent>
       </Card>
+
     </div>
   );
 };

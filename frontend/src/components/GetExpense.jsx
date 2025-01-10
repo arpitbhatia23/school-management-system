@@ -21,6 +21,7 @@ import {
   TableRow,
 } from './ui/table';
 import { toast } from '@/hooks/use-toast';
+import PaginationComponent from './paginationcomp';
 
 const GetExpense = () => {
   const [data, setdata] = useState();
@@ -47,7 +48,13 @@ const GetExpense = () => {
       });
     }
   };
-
+const [currentPage,setcurrentpages]=useState(1)
+  const rows=10
+  const totalpages=Math.ceil(data?.length/rows)
+  const handelpagination=(newpage)=>{
+    setcurrentpages(newpage)
+  }
+  const pagination=data?.slice((currentPage-1)*rows,currentPage*rows)
   return (
     <Card className="m-20">
       <CardTitle className="m-4">Get Expense</CardTitle>
@@ -120,8 +127,8 @@ const GetExpense = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.length > 0 &&
-              data.map((item) => (
+            {pagination?.length > 0 &&
+              pagination.map((item) => (
                 <>
                   <TableRow key={item._id}>
                     <TableCell>{item.name}</TableCell>
@@ -136,6 +143,9 @@ const GetExpense = () => {
               ))}
           </TableBody>
         </Table>
+{  data?.length>0&&     
+ <PaginationComponent onPageChange={handelpagination} totalPages={totalpages} currentPage={currentPage}/>
+}
       </CardContent>
     </Card>
   );
