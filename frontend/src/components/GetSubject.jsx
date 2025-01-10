@@ -50,9 +50,9 @@ const GetSubject = () => {
                 name="class"
                 control={form.control}
                 render={({field})=>(
-                  <>  <FormItem>
-                        <FormLabel></FormLabel>
-                        class
+                    <FormItem>
+                        <FormLabel> class</FormLabel>
+                       
                     <FormControl>
 <Input
 type="text"
@@ -63,7 +63,7 @@ placeholder="Enter Class....."
                     <FormMessage/>
                     </FormItem>
 
-                    </>
+                    
                 )}
                 
                 />
