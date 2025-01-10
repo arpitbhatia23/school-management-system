@@ -318,10 +318,10 @@ const getteachers=asyncHandler(async(req,res)=>{
 })
 // getall subject
 const getallsubject = asyncHandler(async (req, res) => {
-    const { subject_name, class_name } = req.body;
+    const { subject_name, className } = req.body;
     const matchConditions=[]
-    if(class_name){
-matchConditions.push({class_name:{$regex:class_name,$options:"i"}})
+    if(className){
+matchConditions.push({class:{$regex:className,$options:"i"}})
     }
 
     if(subject_name){
@@ -349,7 +349,6 @@ matchConditions.push({class_name:{$regex:class_name,$options:"i"}})
             },
         },
     ]);
-    console.log(sujects)
     if (sujects.length === 0) {
         throw new apiError(404, 'subject not found');
     }

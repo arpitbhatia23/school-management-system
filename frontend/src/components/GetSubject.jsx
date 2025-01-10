@@ -13,7 +13,7 @@ const GetSubject = () => {
     const form = useForm({
         defaultValues:{
               subject_name:'',
-             class:'',
+             className:'',
              days:'',
              time:'',
              teacher_name:''
@@ -46,7 +46,7 @@ const GetSubject = () => {
         >
             <CardDescription>
                 <FormField
-                name="class"
+                name="className"
                 control={form.control}
                 render={({field})=>(
                   <>  <FormItem>
