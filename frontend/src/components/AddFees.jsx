@@ -154,11 +154,12 @@ const AddFees = () => {
                     <FormItem>
                       <FormLabel>Payment Method</FormLabel>
                       <FormControl>
-                        <Input
+                        {/* <Input
                           type="text"
                           placeholder="Enter payment method"
                           {...field}
-                        />
+                        /> */}
+                        <Selectcomp selectItems={["cash","bank","online","none"]} selectLable={"select payment method"} selectvalue={"payment method"} field={field}/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

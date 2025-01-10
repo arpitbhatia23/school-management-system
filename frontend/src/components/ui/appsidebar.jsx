@@ -84,7 +84,7 @@ const items = [
 
   {
     title: 'Accounts',
-    url: '#',
+ 
     icon: DollarSign,
     submenu: [
       { title: 'Students fee', url: '/addFees', icon: DollarSign },
