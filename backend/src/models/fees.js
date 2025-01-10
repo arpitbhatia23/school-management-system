@@ -12,7 +12,7 @@ const fees = new Schema(
         },
         status: {
             type: String,
-            enum: ['pending', 'paid',"unpaid"],
+            enum: ['pending', 'paid', 'unpaid'],
             default: 'pending',
             required: true,
         },
@@ -26,7 +26,7 @@ const fees = new Schema(
         },
         payment_method: {
             type: String,
-            enum: ['cash', 'bank',"online","none"],
+            enum: ['cash', 'bank', 'online', 'none'],
             required: true,
         },
     },

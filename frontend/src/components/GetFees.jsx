@@ -45,21 +45,21 @@ const GetFees = () => {
       });
     }
   };
-  const [currentPage,setcurrentpages]=useState(1)
-  const rows=10
-  const totalpages=Math.ceil(data?.length/rows)
-  const handelpagination=(newpage)=>{
-    setcurrentpages(newpage)
-  }
-  const pagination=data.slice((currentPage-1)*rows,currentPage*rows)
+  const [currentPage, setcurrentpages] = useState(1);
+  const rows = 10;
+  const totalpages = Math.ceil(data?.length / rows);
+  const handelpagination = (newpage) => {
+    setcurrentpages(newpage);
+  };
+  const pagination = data.slice((currentPage - 1) * rows, currentPage * rows);
   return (
     <>
       <Card className="m-20">
         <CardContent>
-          <CardTitle className ="m-4">GET FEES</CardTitle>
+          <CardTitle className="m-4">GET FEES</CardTitle>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(submit)}>
-              <CardDescription className="grid grid-cols-4 gap-4"> 
+              <CardDescription className="grid grid-cols-4 gap-4">
                 <FormField
                   name="name"
                   control={form.control}
@@ -123,9 +123,9 @@ const GetFees = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-                {pagination.length > 0 &&
-                  pagination.map((item) => (
-                    <>
+              {pagination.length > 0 &&
+                pagination.map((item) => (
+                  <>
                     <TableRow key={item._id}>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.className}</TableCell>
@@ -133,14 +133,19 @@ const GetFees = () => {
                       <TableCell>{item.amount}</TableCell>
                       <TableCell>{item.status}</TableCell>
                       <TableCell>{item.payment_method}</TableCell>
-              </TableRow>
-                    </>
-                  ))}
+                    </TableRow>
+                  </>
+                ))}
             </TableBody>
           </Table>
-          {  data?.length>0&&     
- <PaginationComponent onPageChange={handelpagination} totalPages={totalpages} currentPage={currentPage}/>
-}        </CardContent>
+          {data?.length > 0 && (
+            <PaginationComponent
+              onPageChange={handelpagination}
+              totalPages={totalpages}
+              currentPage={currentPage}
+            />
+          )}{' '}
+        </CardContent>
       </Card>
     </>
   );

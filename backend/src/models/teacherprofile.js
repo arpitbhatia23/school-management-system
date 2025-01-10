@@ -5,8 +5,8 @@ const teacher_profile = new Schema(
         class_incharge: {
             type: String,
         },
-        subject:{
-            type:String ,
+        subject: {
+            type: String,
         },
         DOB: {
             type: String,

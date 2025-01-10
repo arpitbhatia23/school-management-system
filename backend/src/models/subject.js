@@ -18,10 +18,10 @@ const subject = new Schema(
             type: String,
             required: [true, 'Days is required'],
         },
-        time:{
-            type:String,
-            required:[true,"Time is required"]
-        }
+        time: {
+            type: String,
+            required: [true, 'Time is required'],
+        },
     },
     { timestamps: true },
 );

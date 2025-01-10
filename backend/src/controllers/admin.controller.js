@@ -15,17 +15,17 @@ const getStudent = asyncHandler(async (req, res) => {
     const { className, name } = req.body;
 
     // Execute aggregation
-    const matchConditions=[{role:"student"}]
-    if(name){
-matchConditions.push({name:{$regex:name,$options:"i"}})
+    const matchConditions = [{ role: 'student' }];
+    if (name) {
+        matchConditions.push({ name: { $regex: name, $options: 'i' } });
     }
 
-    if(className){
-        matchConditions.push({"profile.className":className})
+    if (className) {
+        matchConditions.push({ 'profile.className': className });
     }
-    
+
     const students = await User.aggregate([
-        ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[]),
+        ...(matchConditions.length > 0 ? [{ $match: { $and: matchConditions } }] : []),
         {
             $lookup: {
                 from: 'parents_details', // Replace with the actual parent collection name
@@ -138,7 +138,7 @@ const getStudentById = asyncHandler(async (req, res) => {
                     address: '$profile.address',
                 },
                 parents_Detail: {
-                    _id:"$parents_Detail._id",
+                    _id: '$parents_Detail._id',
                     father_name: '$parents_Detail.father_name',
                     mother_name: '$parents_Detail.mother_name',
                     parents_contact: '$parents_Detail.phone',
@@ -168,7 +168,7 @@ const promoteStudents = asyncHandler(async (req, res) => {
     const student = await User.findOne({
         role: 'student',
         'profile.className': currentClass,
-        name: {$regex:name,$options:"i"},
+        name: { $regex: name, $options: 'i' },
         phone_no: phone_no,
     });
 
@@ -191,40 +191,36 @@ const promoteStudents = asyncHandler(async (req, res) => {
         .json(new apiResponse(200, updatedStudent, 'student promoted successfully'));
 });
 //delete student by  id
-const deleteStudentbyID=asyncHandler(async(req,res)=>{
-    const {id}=req.body
-    if(!id){
-        throw new apiError(400,"id is required")
+const deleteStudentbyID = asyncHandler(async (req, res) => {
+    const { id } = req.body;
+    if (!id) {
+        throw new apiError(400, 'id is required');
     }
-    const user=await User.findById(id)
-    if(user.profile.parents_Detail){
-        await parents_Detail.findByIdAndDelete(user.profile.parents_Detail)
+    const user = await User.findById(id);
+    if (user.profile.parents_Detail) {
+        await parents_Detail.findByIdAndDelete(user.profile.parents_Detail);
     }
-    
-await User.findByIdAndDelete(id)
 
-return res.status(200).json(new apiResponse(200,{},"student delete sucessfully"))
+    await User.findByIdAndDelete(id);
 
-
-
-})
+    return res.status(200).json(new apiResponse(200, {}, 'student delete sucessfully'));
+});
 // get all parents
 
 const getAllParents = asyncHandler(async (req, res) => {
     const { name, className } = req.body;
-  
-    const matchConditions=[{role:"student"}]
-    if(name){
-matchConditions.push({name:{$regex:name,$options:"i"}})
+
+    const matchConditions = [{ role: 'student' }];
+    if (name) {
+        matchConditions.push({ name: { $regex: name, $options: 'i' } });
     }
 
-    if(className){
-        matchConditions.push({className})
+    if (className) {
+        matchConditions.push({ className });
     }
-  
 
     const parents = await User.aggregate([
-        ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[]),
+        ...(matchConditions.length > 0 ? [{ $match: { $and: matchConditions } }] : []),
         {
             $lookup: {
                 from: 'parents_details',
@@ -257,17 +253,17 @@ matchConditions.push({name:{$regex:name,$options:"i"}})
 // get all teacher
 const getAllTeacher = asyncHandler(async (req, res) => {
     const { name, class_incharge } = req.body;
-    const matchConditions=[{role:"teacher"}]
-    if(name){
-matchConditions.push({name:{$regex:name,$options:"i"}})
+    const matchConditions = [{ role: 'teacher' }];
+    if (name) {
+        matchConditions.push({ name: { $regex: name, $options: 'i' } });
     }
 
-    if(class_incharge){
-        matchConditions.push({"profile.class_incharge":class_incharge})
+    if (class_incharge) {
+        matchConditions.push({ 'profile.class_incharge': class_incharge });
     }
-   
+
     const teachers = await User.aggregate([
-        ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[])
+        ...(matchConditions.length > 0 ? [{ $match: { $and: matchConditions } }] : []),
     ]);
     if (teachers.length === 0) {
         throw new apiError(204, 'teacher ni aaa');
@@ -290,15 +286,15 @@ const getTeacherById = asyncHandler(async (req, res) => {
 // add subject
 
 const addsuject = asyncHandler(async (req, res) => {
-    const { subject_name, class_name, day,time, teacher_id } = req.body;
-    if ([subject_name, class_name, day,time, teacher_id].some((fileds) => fileds?.trim() === '')) {
+    const { subject_name, class_name, day, time, teacher_id } = req.body;
+    if ([subject_name, class_name, day, time, teacher_id].some((fileds) => fileds?.trim() === '')) {
         throw new apiError(400, 'all fields are required');
     }
     const subject = await Subject.create({
         subject_name,
         class: class_name,
         days: day,
-        time:time,
+        time: time,
         teacher_id,
     });
 
@@ -309,27 +305,27 @@ const addsuject = asyncHandler(async (req, res) => {
     return res.status(200).json(new apiResponse(200, subject, 'subject registered successfully'));
 });
 
-const getteachers=asyncHandler(async(req,res)=>{
-    const teacher=await User.find({role:"teacher"})
-    if(teacher.length===0){
-        throw new apiError(404,"teacher not found")
+const getteachers = asyncHandler(async (req, res) => {
+    const teacher = await User.find({ role: 'teacher' });
+    if (teacher.length === 0) {
+        throw new apiError(404, 'teacher not found');
     }
-    return res.status(200).json(new apiResponse(200,teacher,"teacher get sucesfully"))
-})
+    return res.status(200).json(new apiResponse(200, teacher, 'teacher get sucesfully'));
+});
 // getall subject
 const getallsubject = asyncHandler(async (req, res) => {
     const { subject_name, className } = req.body;
-    const matchConditions=[]
-    if(className){
-matchConditions.push({class:{$regex:className,$options:"i"}})
+    const matchConditions = [];
+    if (className) {
+        matchConditions.push({ class: { $regex: className, $options: 'i' } });
     }
 
-    if(subject_name){
-        matchConditions.push({subject_name:{$regex:subject_name,$options:"i"}})
+    if (subject_name) {
+        matchConditions.push({ subject_name: { $regex: subject_name, $options: 'i' } });
     }
-      
+
     const sujects = await Subject.aggregate([
-        ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[]),
+        ...(matchConditions.length > 0 ? [{ $match: { $and: matchConditions } }] : []),
         {
             $lookup: {
                 from: 'users',
@@ -343,7 +339,11 @@ matchConditions.push({class:{$regex:className,$options:"i"}})
             $project: {
                 subject_name: 1,
                 days: 1,
+<<<<<<< HEAD
                 time:1,
+=======
+                time: 1,
+>>>>>>> 9cfaa853fdb71427042d985014bc2609432483a9
                 class: 1,
                 teacher_name: '$teacher.name',
             },
@@ -365,7 +365,7 @@ const updateSubject = asyncHandler(async (req, res) => {
     // findby id and update
     const subject = await Subject.findByIdAndUpdate(
         subject_id,
-        { $set: { subject_name, class: class_name, days,time, teacher_id } },
+        { $set: { subject_name, class: class_name, days, time, teacher_id } },
         { new: true },
     );
     if (!subject) {
@@ -420,19 +420,18 @@ const getAllExpense = asyncHandler(async (req, res) => {
     // if (!(name || status || expense_type)) {
     //     throw new apiError(400, 'all fields are required');
     // }
-const matchConditions=[]
-    if(name){
-matchConditions.push({name:{$regex:name,$options:"i"}})
+    const matchConditions = [];
+    if (name) {
+        matchConditions.push({ name: { $regex: name, $options: 'i' } });
     }
 
-    if(status){
-        matchConditions.push({status})
+    if (status) {
+        matchConditions.push({ status });
     }
-    if(expense_type){
-        matchConditions.push({expense_type})
+    if (expense_type) {
+        matchConditions.push({ expense_type });
     }
     const getExpense = await add_expense.aggregate([
-        
         {
             $project: {
                 name: 1,
@@ -444,7 +443,7 @@ matchConditions.push({name:{$regex:name,$options:"i"}})
                 phone: 1,
             },
         },
-       ...(matchConditions.length>0?[{$match:{$and:matchConditions}}]:[])
+        ...(matchConditions.length > 0 ? [{ $match: { $and: matchConditions } }] : []),
     ]);
     if (getExpense.length === 0) {
         throw new apiError(404, 'no expense found');
@@ -486,7 +485,7 @@ const addFees = asyncHandler(async (req, res) => {
             $match: {
                 'profile.className': className,
                 'profile.roll_no': roll_no,
-                name:{$regex:name,$options:"i"},
+                name: { $regex: name, $options: 'i' },
             },
         },
         {
@@ -519,7 +518,7 @@ const addFees = asyncHandler(async (req, res) => {
     const authToken = process.env.AuthToken;
     const client = twilio(accountSid, authToken);
 
-     await client.messages.create({
+    await client.messages.create({
         body: ` Fees of ₹${fee.amount} submitted successfully on ${new Date(fee.createdAt).toLocaleDateString()} at ${new Date(fee.createdAt).toLocaleTimeString()}.`,
         from: process.env.TwilioPhoneNumber,
         to: `+91${student[0].phone_no}`,
@@ -581,52 +580,52 @@ const getfees = asyncHandler(async (req, res) => {
     return res.status(200).json(new apiResponse(200, fees, 'Fees fetched successfully'));
 });
 // add notification
-const addNotification = asyncHandler(async(req,res)=>{
-    const {title,message}= req.body
-    if(!(title||message)){
-                     throw new apiError(400,"all fields are required")
+const addNotification = asyncHandler(async (req, res) => {
+    const { title, message } = req.body;
+    if (!(title || message)) {
+        throw new apiError(400, 'all fields are required');
     }
     const notification = await Notification.create({
-        title,message
-    })
-    if(!notification){
-        throw new apiError(400,"Failed to add notification")
+        title,
+        message,
+    });
+    if (!notification) {
+        throw new apiError(400, 'Failed to add notification');
     }
 
-    return res.status(200).json (new apiResponse(200,notification,"notification sent successfully"))
-    
-
-})
+    return res
+        .status(200)
+        .json(new apiResponse(200, notification, 'notification sent successfully'));
+});
 // get notification
-const getNotification = asyncHandler(async(req,res)=>{
-    const {_id}=req.user._id
-    const admin = await User.findById(_id)
-    if(!admin){
-        throw new apiError(404,"Admin not found")
-        }
-        const notifications = await Notification.find().sort({ createdAt: -1 })
-        .limit(5)
-        if(!notifications){
-            throw new apiError(404,"Notifications not found")
-        }
-        return res.status(200).json(new apiResponse(200,notifications,"Notifications fetched successfully"))
-})
-// delete notification
-const deleteNotification = asyncHandler(async(req,res)=>{
-    const {id}=req.params
-    console.log(id)
-    if(!id){
-        throw new apiError(404,"id is required ")
+const getNotification = asyncHandler(async (req, res) => {
+    const { _id } = req.user._id;
+    const admin = await User.findById(_id);
+    if (!admin) {
+        throw new apiError(404, 'Admin not found');
     }
-    const notification = await Notification.findByIdAndDelete(id)
-    
-        return res.status(200).json(new apiResponse(200,"Notification deleted successfully"))
-        })
+    const notifications = await Notification.find().sort({ createdAt: -1 }).limit(5);
+    if (!notifications) {
+        throw new apiError(404, 'Notifications not found');
+    }
+    return res
+        .status(200)
+        .json(new apiResponse(200, notifications, 'Notifications fetched successfully'));
+});
+// delete notification
+const deleteNotification = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    if (!id) {
+        throw new apiError(404, 'id is required ');
+    }
+    const notification = await Notification.findByIdAndDelete(id);
 
-// 
+    return res.status(200).json(new apiResponse(200, 'Notification deleted successfully'));
+});
 
+//
 
-        
 export {
     getStudent,
     getStudentById,
@@ -647,5 +646,5 @@ export {
     getNotification,
     deleteNotification,
     getteachers,
-    deleteStudentbyID
+    deleteStudentbyID,
 };

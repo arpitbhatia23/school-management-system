@@ -48,13 +48,13 @@ const GetExpense = () => {
       });
     }
   };
-const [currentPage,setcurrentpages]=useState(1)
-  const rows=10
-  const totalpages=Math.ceil(data?.length/rows)
-  const handelpagination=(newpage)=>{
-    setcurrentpages(newpage)
-  }
-  const pagination=data?.slice((currentPage-1)*rows,currentPage*rows)
+  const [currentPage, setcurrentpages] = useState(1);
+  const rows = 10;
+  const totalpages = Math.ceil(data?.length / rows);
+  const handelpagination = (newpage) => {
+    setcurrentpages(newpage);
+  };
+  const pagination = data?.slice((currentPage - 1) * rows, currentPage * rows);
   return (
     <Card className="m-20">
       <CardTitle className="m-4">Get Expense</CardTitle>
@@ -143,9 +143,13 @@ const [currentPage,setcurrentpages]=useState(1)
               ))}
           </TableBody>
         </Table>
-{  data?.length>0&&     
- <PaginationComponent onPageChange={handelpagination} totalPages={totalpages} currentPage={currentPage}/>
-}
+        {data?.length > 0 && (
+          <PaginationComponent
+            onPageChange={handelpagination}
+            totalPages={totalpages}
+            currentPage={currentPage}
+          />
+        )}
       </CardContent>
     </Card>
   );

@@ -34,13 +34,16 @@ const DataTable = React.memo(function ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { studentsById, deleteuser, getTeacherById } = adminApi();
-const [currentpages,setcurrentpages]=useState(1)
-const rows=10
-const totalpages=Math.ceil(data?.length/rows)
-const handelpagination=(newpage)=>{
-setcurrentpages(newpage)
-}
-const pagaination=data.slice((currentpages-1)*rows,currentpages*rows)
+  const [currentpages, setcurrentpages] = useState(1);
+  const rows = 10;
+  const totalpages = Math.ceil(data?.length / rows);
+  const handelpagination = (newpage) => {
+    setcurrentpages(newpage);
+  };
+  const pagaination = data.slice(
+    (currentpages - 1) * rows,
+    currentpages * rows,
+  );
   const handleRowClick = useCallback(async (id) => {
     try {
       setLoading(true);
@@ -148,7 +151,7 @@ const pagaination=data.slice((currentpages-1)*rows,currentpages*rows)
                       {/* Render fields dynamically */}
                       {type === 'student'
                         ? Object.entries(
-                            {    
+                            {
                               ...selectedStudent?.profile,
                               ...selectedStudent?.parents_Detail,
                             } || {},
@@ -195,8 +198,6 @@ const pagaination=data.slice((currentpages-1)*rows,currentpages*rows)
                       >
                         Delete
                       </Button>
-                                             
-                       
                     </DialogFooter>
                   </>
                 ) : (
@@ -210,9 +211,11 @@ const pagaination=data.slice((currentpages-1)*rows,currentpages*rows)
           ))}
         </TableBody>
       </Table>
-     <PaginationComponent totalPages={totalpages} currentPage={currentpages} onPageChange={handelpagination}/>
-
-    
+      <PaginationComponent
+        totalPages={totalpages}
+        currentPage={currentpages}
+        onPageChange={handelpagination}
+      />
     </div>
   );
 });
