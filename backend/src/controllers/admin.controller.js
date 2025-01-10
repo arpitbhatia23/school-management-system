@@ -339,11 +339,7 @@ const getallsubject = asyncHandler(async (req, res) => {
             $project: {
                 subject_name: 1,
                 days: 1,
-<<<<<<< HEAD
-                time:1,
-=======
                 time: 1,
->>>>>>> 9cfaa853fdb71427042d985014bc2609432483a9
                 class: 1,
                 teacher_name: '$teacher.name',
             },
