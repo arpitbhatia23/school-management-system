@@ -117,7 +117,7 @@ const GetSubject = () => {
                     <TableCell>{item.subject_name}</TableCell>
                     <TableCell>{item.class}</TableCell>
                     <TableCell>{item.time}</TableCell>
-                    <TableCell>{item.day}</TableCell>
+                    <TableCell>{item.days}</TableCell>
                     <TableCell>{item.teacher_name}</TableCell>
                   </TableRow>
                 ))}

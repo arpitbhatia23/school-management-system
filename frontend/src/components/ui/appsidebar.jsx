@@ -31,79 +31,95 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar';
 import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
+ const [item,setitem]=useState([])
 // Menu items.
-const items = [
-  {
-    title: 'Dashboard',
-    url: '/',
-    icon: Home,
-  },
-  {
-    title: 'Student',
-    icon: Users,
-    submenu: [
-      {
-        title: 'Students',
-        url: '/getstudents',
-        icon: User, // Represents individual student profiles
-      },
-      {
-        title: 'Add Students',
-        url: '/addstudent',
-        icon: UserPlus, // Represents adding a new student
-      },
-      {
-        title: 'Promote Students',
-        url: '/promotestudent',
-        icon: UserCheck, // Represents promotion or approval
-      },
-    ],
-  },
-  {
-    title: 'parents',
-    url: '/getparents',
-    icon: Search,
-  },
-  {
-    title: 'Teachers',
-    icon: Users,
-    submenu: [
-      {
-        title: 'Teachers',
-        url: '/getteacher',
-        icon: Users, // Represents a group of parents
-      },
-      {
-        title: 'Add Teachers',
-        url: 'addteacher',
-        icon: UserPlus, // Represents adding a new parent
-      },
-    ],
-  },
+const userData=useSelector(state=>state.auth.userData)
+if(userData.role==="admin"){
+  setitem([
+    {
+      title: 'Dashboard',
+      url: '/',
+      icon: Home,
+    },
+    {
+      title: 'Student',
+      icon: Users,
+      submenu: [
+        {
+          title: 'Students',
+          url: '/getstudents',
+          icon: User, // Represents individual student profiles
+        },
+        {
+          title: 'Add Students',
+          url: '/addstudent',
+          icon: UserPlus, // Represents adding a new student
+        },
+        {
+          title: 'Promote Students',
+          url: '/promotestudent',
+          icon: UserCheck, // Represents promotion or approval
+        },
+      ],
+    },
+    {
+      title: 'parents',
+      url: '/getparents',
+      icon: Search,
+    },
+    {
+      title: 'Teachers',
+      icon: Users,
+      submenu: [
+        {
+          title: 'Teachers',
+          url: '/getteacher',
+          icon: Users, // Represents a group of parents
+        },
+        {
+          title: 'Add Teachers',
+          url: 'addteacher',
+          icon: UserPlus, // Represents adding a new parent
+        },
+      ],
+    },
+  
+    {
+      title: 'Accounts',
+  
+      icon: DollarSign,
+      submenu: [
+        { title: 'Students fee', url: '/addFees', icon: DollarSign },
+        { title: 'get  students fees', url: '/getFees', icon: DollarSign },
+        { title: 'Expenses', url: '/getexpense', icon: DollarSign },
+        { title: 'ADD exprense', url: '/addExpenses', icon: DollarSign },
+      ],
+    },
+    {
+      title: 'subjects',
+      url: '/addSubject',
+      icon: Book,
+    },
+    {
+      title: 'Settings',
+      url: '/setting',
+      icon: Settings,
+    },
+  ])
+}
+else if(userData.role==="teacher"){
+  setitem([
+   { title:"Dashboard",url:"#"},
+   { title:"Atendence",url:"#"},
+   { title:"Students",url:"#"},
+   { title:"Assignement",url:"#"},
+   { title:"Exam",url:"#"},
+   { title:"Result",url:"#"},
+   { title:"Setting",url:"#"},
+  ])
+}
 
-  {
-    title: 'Accounts',
-
-    icon: DollarSign,
-    submenu: [
-      { title: 'Students fee', url: '/addFees', icon: DollarSign },
-      { title: 'get  students fees', url: '/getFees', icon: DollarSign },
-      { title: 'Expenses', url: '/getexpense', icon: DollarSign },
-      { title: 'ADD exprense', url: '/addExpenses', icon: DollarSign },
-    ],
-  },
-  {
-    title: 'subjects',
-    url: '/addSubject',
-    icon: Book,
-  },
-  {
-    title: 'Settings',
-    url: '/setting',
-    icon: Settings,
-  },
-];
 
 export default function Appsidebar() {
   const [expandedSubmenu, setExpandedSubmenu] = useState(null);
@@ -121,7 +137,7 @@ export default function Appsidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent className="px-0 py-4">
             <SidebarMenu>
-              {items.map((item) => (
+              {item.map((item) => (
                 <SidebarMenuItem
                   key={item.title}
                   className="px-0 py-1 border-b border-black"
