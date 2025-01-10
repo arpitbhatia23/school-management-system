@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationPrevious,
   PaginationNext,
-} from "@/components/ui/pagination";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/pagination';
+import { Button } from '@/components/ui/button';
 
 const PaginationComponent = ({ totalPages, currentPage, onPageChange }) => {
   const handlePagination = (page) => {
@@ -24,13 +24,13 @@ const PaginationComponent = ({ totalPages, currentPage, onPageChange }) => {
       }
     } else if (currentPage <= 2) {
       // Show first 3 pages with ellipsis
-      pages.push(1, 2, 3, "...");
+      pages.push(1, 2, 3, '...');
     } else if (currentPage >= totalPages - 1) {
       // Show last 3 pages with ellipsis
-      pages.push("...", totalPages - 2, totalPages - 1, totalPages);
+      pages.push('...', totalPages - 2, totalPages - 1, totalPages);
     } else {
       // Show current page and neighbors with ellipsis
-      pages.push("...", currentPage - 1, currentPage, currentPage + 1, "...");
+      pages.push('...', currentPage - 1, currentPage, currentPage + 1, '...');
     }
     return pages;
   };
@@ -48,10 +48,10 @@ const PaginationComponent = ({ totalPages, currentPage, onPageChange }) => {
 
         {/* Page Numbers */}
         {renderPageNumbers().map((page, index) =>
-          typeof page === "number" ? (
+          typeof page === 'number' ? (
             <Button
               key={index}
-              variant={currentPage === page ? "solid" : "outline"}
+              variant={currentPage === page ? 'solid' : 'outline'}
               onClick={() => handlePagination(page)}
             >
               {page}
@@ -60,7 +60,7 @@ const PaginationComponent = ({ totalPages, currentPage, onPageChange }) => {
             <span key={index} className="px-2 text-gray-500">
               {page}
             </span>
-          )
+          ),
         )}
 
         {/* Next Button */}

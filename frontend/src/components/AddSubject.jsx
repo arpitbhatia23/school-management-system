@@ -63,7 +63,7 @@ const AddSubject = () => {
 
   return (
     <>
-    <GetSubject/>
+      <GetSubject />
       <Card className="m-20">
         <CardContent>
           <CardTitle className="p-4">add new subject</CardTitle>
