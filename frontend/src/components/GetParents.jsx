@@ -124,7 +124,7 @@ const GetParents = () => {
             <PaginationComponent
               onPageChange={handelpagination}
               totalPages={totalpages}
-              currentPage={currentPage}
+              currentPage={currentpage}
             />
           )}{' '}
         </CardContent>

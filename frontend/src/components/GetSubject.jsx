@@ -21,6 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from './ui/table';
+import PaginationComponent from './paginationcomp';
 
 const GetSubject = () => {
   const [data, setdata] = useState();
@@ -49,6 +50,13 @@ const GetSubject = () => {
       });
     }
   };
+  const [currentpages,setcurrentpages]=useState(1)
+  const rows=10
+  const totalpages=Math.ceil(data?.length/rows)
+  const pagination=data?.slice((currentpages-1)*rows,currentpages*rows)
+  const handelpagination=(newpage)=>{
+setcurrentpages(newpage)
+  }
   return (
     <>
       <Card className="m-20">
@@ -111,8 +119,8 @@ const GetSubject = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.length > 0 &&
-                data.map((item) => (
+              {pagination?.length > 0 &&
+                pagination.map((item) => (
                   <TableRow key={item._id}>
                     <TableCell>{item.subject_name}</TableCell>
                     <TableCell>{item.class}</TableCell>
@@ -123,7 +131,10 @@ const GetSubject = () => {
                 ))}
             </TableBody>
           </Table>
-        </CardContent>
+          {
+            data?.length>0&&
+          <PaginationComponent totalPages={totalpages} currentPage={currentpages} onPageChange={handelpagination}/>
+   }     </CardContent>
       </Card>
     </>
   );

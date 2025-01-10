@@ -14,13 +14,13 @@ export default function Protected({ children, Authentication = true }) {
       navigate('/login');
     } else if (!Authentication && authStatus !== Authentication) {
       if (userdata.role === 'admin') {
-        navigate('/');
+        navigate("/")
       }
       if (userdata.role === 'student') {
         navigate('/studentdashboard');
       }
       if (userdata.role === 'teacher') {
-        navigate('/teacherdashboard');
+        navigate('/teacher');
       }
     }
     setloader(false);

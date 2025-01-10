@@ -77,7 +77,7 @@ const AddSubject = () => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Subect Name</FormLabel>
+                      <FormLabel>Subject Name</FormLabel>
                       <FormControl>
                         <Input
                           type="text"

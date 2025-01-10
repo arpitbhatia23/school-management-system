@@ -10,12 +10,10 @@ import {
   UserPlus,
   Users,
   UserCheck,
-  icons,
   Book,
   DollarSign,
 } from 'lucide-react';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import {
   Sidebar,
   SidebarContent,
@@ -25,104 +23,78 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarProvider,
-  SidebarTrigger,
-  SidebarInset,
-  SidebarRail,
 } from '@/components/ui/sidebar';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
- const [item,setitem]=useState([])
-// Menu items.
-const userData=useSelector(state=>state.auth.userData)
-if(userData.role==="admin"){
-  setitem([
-    {
-      title: 'Dashboard',
-      url: '/',
-      icon: Home,
-    },
-    {
-      title: 'Student',
-      icon: Users,
-      submenu: [
+
+const AppSidebar = () => {
+  const [expandedSubmenu, setExpandedSubmenu] = useState(null);
+  const [menuItems, setMenuItems] = useState([]);
+  const userData = useSelector((state) => state.auth.userData);
+
+  useEffect(() => {
+    if (userData?.role === 'admin') {
+      setMenuItems([
         {
-          title: 'Students',
-          url: '/getstudents',
-          icon: User, // Represents individual student profiles
+          title: 'Dashboard',
+          url: '/',
+          icon: Home,
         },
         {
-          title: 'Add Students',
-          url: '/addstudent',
-          icon: UserPlus, // Represents adding a new student
+          title: 'Student',
+          icon: Users,
+          submenu: [
+            { title: 'Students', url: '/getstudents', icon: User },
+            { title: 'Add Students', url: '/addstudents', icon: UserPlus },
+            { title: 'Promote Students', url: '/promotestudents', icon: UserCheck },
+          ],
         },
         {
-          title: 'Promote Students',
-          url: '/promotestudent',
-          icon: UserCheck, // Represents promotion or approval
+          title: 'Parents',
+          url: '/getparents',
+          icon: Search,
         },
-      ],
-    },
-    {
-      title: 'parents',
-      url: '/getparents',
-      icon: Search,
-    },
-    {
-      title: 'Teachers',
-      icon: Users,
-      submenu: [
         {
           title: 'Teachers',
-          url: '/getteacher',
-          icon: Users, // Represents a group of parents
+          icon: Users,
+          submenu: [
+            { title: 'Teachers', url: '/getteachers', icon: Users },
+            { title: 'Add Teachers', url: '/addteachers', icon: UserPlus },
+          ],
         },
         {
-          title: 'Add Teachers',
-          url: 'addteacher',
-          icon: UserPlus, // Represents adding a new parent
+          title: 'Accounts',
+          icon: DollarSign,
+          submenu: [
+            { title: 'Students Fee', url: '/addFees', icon: DollarSign },
+            { title: 'Get Students Fees', url: '/getFees', icon: DollarSign },
+            { title: 'Expenses', url: '/getexpenses', icon: DollarSign },
+            { title: 'Add Expense', url: '/addExpenses', icon: DollarSign },
+          ],
         },
-      ],
-    },
-  
-    {
-      title: 'Accounts',
-  
-      icon: DollarSign,
-      submenu: [
-        { title: 'Students fee', url: '/addFees', icon: DollarSign },
-        { title: 'get  students fees', url: '/getFees', icon: DollarSign },
-        { title: 'Expenses', url: '/getexpense', icon: DollarSign },
-        { title: 'ADD exprense', url: '/addExpenses', icon: DollarSign },
-      ],
-    },
-    {
-      title: 'subjects',
-      url: '/addSubject',
-      icon: Book,
-    },
-    {
-      title: 'Settings',
-      url: '/setting',
-      icon: Settings,
-    },
-  ])
-}
-else if(userData.role==="teacher"){
-  setitem([
-   { title:"Dashboard",url:"#"},
-   { title:"Atendence",url:"#"},
-   { title:"Students",url:"#"},
-   { title:"Assignement",url:"#"},
-   { title:"Exam",url:"#"},
-   { title:"Result",url:"#"},
-   { title:"Setting",url:"#"},
-  ])
-}
-
-
-export default function Appsidebar() {
-  const [expandedSubmenu, setExpandedSubmenu] = useState(null);
+        {
+          title: 'Subjects',
+          url: '/addSubjects',
+          icon: Book,
+        },
+        {
+          title: 'Settings',
+          url: '/settings',
+          icon: Settings,
+        },
+      ]);
+    } else if (userData?.role === 'teacher') {
+      setMenuItems([
+        { title: 'Dashboard', url: '/teacher', icon: Home },
+        { title: 'Attendance', url: '/attendance', icon: Calendar },
+        { title: 'Students', url: '/students', icon: Users },
+        { title: 'Assignments', url: '/assignments', icon: Inbox },
+        { title: 'Exams', url: '/exams', icon: Search },
+        { title: 'Results', url: '/results', icon: UserCheck },
+        { title: 'Settings', url: '/settings', icon: Settings },
+      ]);
+    }
+  }, [userData?.role]);
 
   const toggleSubmenu = (title) => {
     setExpandedSubmenu((prev) => (prev === title ? null : title));
@@ -137,22 +109,19 @@ export default function Appsidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent className="px-0 py-4">
             <SidebarMenu>
-              {item.map((item) => (
+              {menuItems.map((item) => (
                 <SidebarMenuItem
                   key={item.title}
                   className="px-0 py-1 border-b border-black"
                 >
-                  <SidebarMenuButton
-                    asChild
-                    className="peer-data-[active=true]/menu-button:opacity-100"
-                  >
+                  <SidebarMenuButton asChild>
                     <div
                       onClick={() => item.submenu && toggleSubmenu(item.title)}
                       className="flex items-center justify-between w-full cursor-pointer"
                     >
                       <Link to={item.url}>
                         <div className="flex items-center">
-                          <item.icon className="mr-2" />
+                          {item.icon && <item.icon className="mr-2" />}
                           <span>{item.title}</span>
                         </div>
                       </Link>
@@ -164,18 +133,13 @@ export default function Appsidebar() {
                         ))}
                     </div>
                   </SidebarMenuButton>
-
-                  {/* Submenu items */}
                   {item.submenu && expandedSubmenu === item.title && (
                     <div className="ml-6 mt-2">
                       {item.submenu.map((subItem) => (
                         <SidebarMenuItem key={subItem.title}>
                           <SidebarMenuButton asChild>
-                            <Link
-                              to={subItem.url}
-                              className="flex items-center"
-                            >
-                              <subItem.icon className="mr-2" />
+                            <Link to={subItem.url} className="flex items-center">
+                              {subItem.icon && <subItem.icon className="mr-2" />}
                               <span>{subItem.title}</span>
                             </Link>
                           </SidebarMenuButton>
@@ -191,4 +155,6 @@ export default function Appsidebar() {
       </SidebarContent>
     </Sidebar>
   );
-}
+};
+
+export default AppSidebar;
