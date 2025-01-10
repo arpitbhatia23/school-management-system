@@ -38,20 +38,21 @@ const GetSubject = () => {
     }
   return (
     <>
-      <Card className="m-20">
-        <CardTitle>subjects</CardTitle>
+      <Card className="mx-20 my-20">
+        <CardTitle className="m-4 "><h2>Subjects</h2></CardTitle>
 <CardContent>
     <Form{...form}>
         <form 
         onSubmit={form.handleSubmit(submit)}
+        className='m-4'
         >
-            <CardDescription>
-                <FormField
+            <CardDescription >
+                <div className='grid  grid-cols-2 sm:grid-cols-3 gap-4'><FormField
                 name="className"
                 control={form.control}
                 render={({field})=>(
                     <FormItem>
-                        <FormLabel> class</FormLabel>
+                        <FormLabel> Class</FormLabel>
                        
                     <FormControl>
 <Input
@@ -86,9 +87,9 @@ placeholder="Enter Class....."
                     </FormItem>
                 )}
                />
-               <Button
+             <div className='my-7'>  <Button
                type='submit'
-               >Submit</Button>
+               >Submit</Button></div></div>
             </CardDescription>
         </form>
     </Form>
