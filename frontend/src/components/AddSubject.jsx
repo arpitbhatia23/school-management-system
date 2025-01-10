@@ -63,13 +63,9 @@ const AddSubject = () => {
 
   return (
     <>
-<<<<<<< HEAD
-    <GetSubject/>
+            <GetSubject/>
+
       <Card className="mx-20">
-=======
-      <GetSubject />
-      <Card className="m-20">
->>>>>>> 9cfaa853fdb71427042d985014bc2609432483a9
         <CardContent>
           <CardTitle className="p-4">Add New Subject</CardTitle>
           <Form {...form}>
@@ -167,12 +163,13 @@ const AddSubject = () => {
                   )}
                 />
 
-                <div>
+                
+              </CardContent>
+              <div className='flex justify-center'>
                   <Button type="submit">
                     {loading ? 'Submitting...' : 'Submit'}{' '}
                   </Button>
                 </div>
-              </CardContent>
             </form>
           </Form>
         </CardContent>
