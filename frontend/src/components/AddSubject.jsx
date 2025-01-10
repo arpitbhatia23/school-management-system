@@ -14,6 +14,7 @@ import { adminApi } from '@/services/adminapi';
 import { toast } from '@/hooks/use-toast';
 import Selectcomp from './Select';
 import { Button } from './ui/button';
+import GetSubject from './GetSubject';
 
 const AddSubject = () => {
   const [loading, setloading] = useState(false);
@@ -35,6 +36,7 @@ const AddSubject = () => {
       subject_name: '',
       class_name: '',
       day: '',
+      time: '',
       teacher_id: '',
     },
   });
@@ -61,6 +63,7 @@ const AddSubject = () => {
 
   return (
     <>
+    <GetSubject/>
       <Card className="m-20">
         <CardContent>
           <CardTitle className="p-4">add new subject</CardTitle>
@@ -114,6 +117,24 @@ const AddSubject = () => {
                         <Input
                           type="text"
                           placeholder="Days are rquired"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="time"
+                  rules={{ required: 'time is required' }}
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Time</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="time is required"
                           {...field}
                         />
                       </FormControl>

@@ -286,14 +286,15 @@ const getTeacherById = asyncHandler(async (req, res) => {
 // add subject
 
 const addsuject = asyncHandler(async (req, res) => {
-    const { subject_name, class_name, day, teacher_id } = req.body;
-    if ([subject_name, class_name, day, teacher_id].some((fileds) => fileds?.trim() === '')) {
+    const { subject_name, class_name, day,time, teacher_id } = req.body;
+    if ([subject_name, class_name, day,time, teacher_id].some((fileds) => fileds?.trim() === '')) {
         throw new apiError(400, 'all fields are required');
     }
     const subject = await Subject.create({
         subject_name,
         class: class_name,
         days: day,
+        time:time,
         teacher_id,
     });
 
@@ -337,6 +338,7 @@ const getallsubject = asyncHandler(async (req, res) => {
             $project: {
                 subject_name: 1,
                 days: 1,
+                timr:1,
                 class: 1,
                 teacher_name: '$teacher.name',
             },
@@ -359,7 +361,7 @@ const updateSubject = asyncHandler(async (req, res) => {
     // findby id and update
     const subject = await Subject.findByIdAndUpdate(
         subject_id,
-        { $set: { subject_name, class: class_name, days, teacher_id } },
+        { $set: { subject_name, class: class_name, days,time, teacher_id } },
         { new: true },
     );
     if (!subject) {

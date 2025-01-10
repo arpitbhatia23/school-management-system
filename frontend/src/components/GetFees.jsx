@@ -20,7 +20,7 @@ const GetFees = () => {
     defaultValues: {
       className: '',
       name: '',
-      rollno: '',
+      roll_no: '',
     },
   });
   const [data, setdata] = useState([]);
@@ -83,7 +83,7 @@ const GetFees = () => {
                   )}
                 />
                 <FormField
-                  name="rollno"
+                  name="roll_no"
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
@@ -121,7 +121,7 @@ const GetFees = () => {
                     <TableRow key={item._id}>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.className}</TableCell>
-                      <TableCell>{item.rollno}</TableCell>
+                      <TableCell>{item.roll_no}</TableCell>
                       <TableCell>{item.amount}</TableCell>
                       <TableCell>{item.status}</TableCell>
                       <TableCell>{item.payment_method}</TableCell>
