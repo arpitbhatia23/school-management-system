@@ -52,11 +52,11 @@ const GetSubject = () => {
   return (
     <>
       <Card className="m-20">
-        <CardTitle>subjects</CardTitle>
+        <CardTitle className="m-4"><h2>Subjects</h2></CardTitle>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <CardDescription>
+              <CardDescription className="grid  grid-cols-2 sm:grid-cols-4 gap-4">
                 <FormField
                   name="className"
                   control={form.control}
@@ -65,7 +65,7 @@ const GetSubject = () => {
                       {' '}
                       <FormItem>
                         <FormLabel></FormLabel>
-                        class
+                        Class
                         <FormControl>
                           <Input
                             type="text"
@@ -95,7 +95,7 @@ const GetSubject = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit" className="my-6">Submit</Button>
               </CardDescription>
             </form>
           </Form>
