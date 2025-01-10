@@ -20,7 +20,7 @@ const GetSubject = () => {
         }
     })
     const {getSubject} = adminApi()
-    const onSubmit= async(data)=>{
+    const submit= async(data)=>{
         const res = await getSubject(data)
         if(res.data.success){
             setdata(res.data.data)
@@ -31,7 +31,8 @@ const GetSubject = () => {
         }else{
             toast({
                 title: 'Error',
-                description:res.data.message
+                description:res.data.message,
+                variant:"destructive"
             })
         }
     }
@@ -42,7 +43,7 @@ const GetSubject = () => {
 <CardContent>
     <Form{...form}>
         <form 
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(submit)}
         >
             <CardDescription>
                 <FormField
@@ -109,7 +110,7 @@ placeholder="Enter Class....."
                     <TableCell>{item.subject_name}</TableCell>
                     <TableCell>{item.class}</TableCell>
                     <TableCell>{item.time}</TableCell>
-                    <TableCell>{item.day}</TableCell>
+                    <TableCell>{item.days}</TableCell>
                     <TableCell>{item.teacher_name}</TableCell>
 
                 </TableRow>

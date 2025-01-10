@@ -343,11 +343,8 @@ matchConditions.push({name:{$regex:class_name,$options:"i"}})
             $project: {
                 subject_name: 1,
                 days: 1,
-<<<<<<< HEAD
                 timr:1,
-=======
                 time:1,
->>>>>>> 602566c05735a5976a0e97f10e362e24ef8f4fef
                 class: 1,
                 teacher_name: '$teacher.name',
             },
