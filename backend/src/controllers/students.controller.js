@@ -295,18 +295,17 @@ const getSyllabus = asyncHandler(async (req, res) => {
     return res.status(200).json(new apiResponse(200, syllabus, 'syllabus found'));
 });
 // get notificati   on
-const getnotification = asyncHandler(async(req,res)=>{
+const getnotification = asyncHandler(async (req, res) => {
     const { _id } = req.user._id;
     const student = await User.findById(_id);
     if (!student) {
         throw new apiError(404, 'student not found');
-        }
-        const notification = await Notification.find({});
-        if (!notification) {
-            throw new apiError(400, 'something went wrong');
-            }
-            return res.status(200).json(new apiResponse(200, notification, 'notification found'));
+    }
+    const notification = await Notification.find({});
+    if (!notification) {
+        throw new apiError(400, 'something went wrong');
+    }
+    return res.status(200).json(new apiResponse(200, notification, 'notification found'));
+});
 
-})
-
-export { genIdCard, getMonthlyAttendance, getResult, getexam, getSyllabus,getnotification };
+export { genIdCard, getMonthlyAttendance, getResult, getexam, getSyllabus, getnotification };

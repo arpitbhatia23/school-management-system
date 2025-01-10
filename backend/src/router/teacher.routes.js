@@ -21,5 +21,5 @@ router.route('/addResult').post(uploadFile.single('file'), verifyJwt, verifyTeac
 router.route('/getStudent').get(verifyJwt, verifyTeacher, getStudents);
 router.route('/genidcard').get(verifyJwt, verifyTeacher, genIdCard);
 router.route('/addSyllabus').post(uploadFile.single('file'), verifyJwt, verifyTeacher, addSyllabus);
-router.route('/getnotification').get(verifyJwt,verifyTeacher,getNotification)
+router.route('/getnotification').get(verifyJwt, verifyTeacher, getNotification);
 export default router;

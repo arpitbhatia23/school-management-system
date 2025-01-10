@@ -121,7 +121,7 @@ const register = asyncHandler(async (req, res) => {
 
         // upload profile image on cloudnary
         const avtar = req.file?.path;
-       console.log(avtar)
+        console.log(avtar);
         if (!avtar) {
             throw new apiError(400, 'Profile image is required');
         }
@@ -163,16 +163,9 @@ const register = asyncHandler(async (req, res) => {
         }
 
         if (
-            [
-                religion,
-                blood_group,
-                nationality,
-                qualification,
-                phone_no,
-                email,
-                address,
-                DOB,
-            ].some((field) => field?.trim() === '')
+            [religion, blood_group, nationality, qualification, phone_no, email, address, DOB].some(
+                (field) => field?.trim() === '',
+            )
         ) {
             throw new apiError(400, 'All teacher profile fields are required');
         }
@@ -202,7 +195,7 @@ const register = asyncHandler(async (req, res) => {
             admission_Date,
             address,
             DOB,
-            subject
+            subject,
         };
         const password = DOB;
         const user = await User.create({

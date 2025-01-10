@@ -327,18 +327,18 @@ const addSyllabus = asyncHandler(async (req, res) => {
     return res.status(200).json(new apiResponse(200, syllabus, 'syllabus added successfully'));
 });
 //get notification
-const  getNotification = asyncHandler(async(req,res)=>{
-    const {_id}= req.user._id
-     const teacher= await User.findById(_id)
-     if(!teacher){
-        throw new apiError(400,"teacher not found")
-     }
-     const notification = await Notification.find({})
-     if(!notification){
-        throw new apiError(400,"something went wrong")
-     }
-     return res.status(200).json(new apiResponse(200,"notification "))
-})
+const getNotification = asyncHandler(async (req, res) => {
+    const { _id } = req.user._id;
+    const teacher = await User.findById(_id);
+    if (!teacher) {
+        throw new apiError(400, 'teacher not found');
+    }
+    const notification = await Notification.find({});
+    if (!notification) {
+        throw new apiError(400, 'something went wrong');
+    }
+    return res.status(200).json(new apiResponse(200, 'notification '));
+});
 
 export {
     addAssignment,
@@ -349,5 +349,5 @@ export {
     getStudents,
     genIdCard,
     addSyllabus,
-    getNotification
+    getNotification,
 };
