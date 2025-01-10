@@ -321,7 +321,7 @@ const getallsubject = asyncHandler(async (req, res) => {
     const { subject_name, class_name } = req.body;
     const matchConditions=[]
     if(class_name){
-matchConditions.push({name:{$regex:class_name,$options:"i"}})
+matchConditions.push({class_name:{$regex:class_name,$options:"i"}})
     }
 
     if(subject_name){
@@ -343,12 +343,8 @@ matchConditions.push({name:{$regex:class_name,$options:"i"}})
             $project: {
                 subject_name: 1,
                 days: 1,
-<<<<<<< HEAD
-                timr:1,
-=======
                 time:1,
->>>>>>> 602566c05735a5976a0e97f10e362e24ef8f4fef
-                class: 1,
+               class: 1,
                 teacher_name: '$teacher.name',
             },
         },

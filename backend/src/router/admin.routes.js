@@ -32,7 +32,7 @@ router.route('/getTeacher').post(verifyJwt, verifyAdmin, getAllTeacher);
 router.route('/getTeacherById').post(verifyJwt, verifyAdmin, getTeacherById);
 router.route("/getteacher").get(verifyJwt,verifyAdmin,getteachers)
 router.route('/addSubject').post(verifyJwt, verifyAdmin, addsuject);
-router.route('/getallsubject').get(verifyJwt, verifyAdmin, getallsubject);
+router.route('/getallsubject').post(verifyJwt, verifyAdmin, getallsubject);
 router.route('/getparentsById').get(verifyJwt, getParentsById);
 router.route('/addNewExpense').post(verifyJwt, addNewExpense);
 router.route('/getAllExpense').post(verifyJwt, getAllExpense);

@@ -86,7 +86,7 @@ export const adminApi = () => {
   // get subject
   const getSubject = async (data) => {
     try {
-      return await api.get('admin/getallsubject', data);
+      return await api.post('admin/getallsubject', data);
     } catch (error) {
       return error.response;
     }
