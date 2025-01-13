@@ -71,34 +71,51 @@ const addExam = asyncHandler(async (req, res) => {
 });
 // add attendance
 const addAttendance = asyncHandler(async (req, res) => {
-    const { date, status, student_id } = req.body;
-    if (!isValidObjectId(student_id)) {
-        throw new apiError(400, 'invalid id');
-    }
-    if (!(date && status && student_id)) {
-        throw new apiError(400, 'all felids required');
-    }
-    const attendance = await Attendance.create({
-        date: new Date(date),
-        status,
-    });
-    if (!attendance) {
-        throw new apiError(500, 'something went wrong while creating attendance');
+    const { attendance } = req.body; // Accept an array of attendance objects
+
+    if (!Array.isArray(attendance) || attendance.length === 0) {
+        throw new apiError(400, 'Attendance must be a non-empty array');
     }
 
-    const student = await User.findByIdAndUpdate(
-        student_id,
-        {
-            $push: { 'profile.attendance': attendance._id },
-        },
-        { new: true },
-    );
-    if (!student) {
-        throw new apiError(500, 'sone thing went wrong while updating student');
+    // Validate each attendance object
+    for (const att of attendance) {
+        const { date, student_status, student_id, student_class} = att;
+        if (!student_id || !isValidObjectId(student_id)) {
+            throw new apiError(400, `Invalid or missing student ID: ${student_id}`);
+        }
+        if (!date || !student_status ||!student_class) {
+            throw new apiError(
+                400,
+                `Missing required fields (date or status or class) for student ID: ${student_id}`
+            );
+        }
     }
 
-    return res.status(200).json(new apiResponse(200, student, 'atendence sucessfully added'));
+    try {
+        // Insert attendances in bulk
+        const insertedAttendances = await Attendance.insertMany(
+            attendance.map(({ date, student_status, student_id,student_class }) => ({
+                date: new Date(date),
+                status: student_status,
+                student_id,
+                className:student_class
+            }))
+        );
+
+        if ( insertedAttendances.length === 0) {
+            throw new apiError(500, 'Failed to insert attendance records');
+        }
+
+        
+        return res.status(200).json(
+            new apiResponse(200, insertedAttendances, 'Attendances successfully added')
+        );
+    } catch (error) {
+        console.error('Error while adding attendance:', error.message);
+        throw new apiError(500, 'An unexpected error occurred while adding attendance');
+    }
 });
+
 
 // add result
 const addResult = asyncHandler(async (req, res) => {
@@ -142,7 +159,6 @@ const getStudents = asyncHandler(async (req, res) => {
     if (students.length == 0) {
         throw new apiError(400, 'student not found');
     }
-    console.log(students);
     return res.status(200).json(new apiResponse(200, students, 'students found'));
 });
 

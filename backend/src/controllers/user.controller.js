@@ -100,6 +100,7 @@ const register = asyncHandler(async (req, res) => {
             nationality,
             address,
             category,
+          admission_Date,
         };
 
         // Register parents' details
@@ -139,7 +140,7 @@ const register = asyncHandler(async (req, res) => {
             password: student_password,
             role,
             profile: { ...profile, parents_Detail: parentsDetailRecord._id, roll_no },
-
+           
             phone_no,
             profile_image: { url: profile_image?.secure_url, public_id: profile_image?.public_id },
         });

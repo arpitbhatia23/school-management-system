@@ -21,7 +21,8 @@ import GetFees from './components/GetFees';
 import AddExpenses from './components/AddExpenses';
 import GetExpense from './components/GetExpense';
 import AddSubject from './components/AddSubject';
-import TeacherDashboard from './components/TeacherDashboard';
+import TeacherDashboard from './components/teachercomp/TeacherDashboard';
+import Attendance from './components/teachercomp/Attendance';
 
 function App() {
   
@@ -63,6 +64,7 @@ function App() {
              
              <Route path='/teacher' element={<Authlayout><Dashboard/></Authlayout>}>
              <Route path='/teacher' element={<Authlayout><TeacherDashboard/></Authlayout>}/>
+             <Route path='attendance' element={<Authlayout><Attendance/></Authlayout>}/>
 
              </Route>
 

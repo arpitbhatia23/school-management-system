@@ -86,7 +86,7 @@ const AppSidebar = () => {
     } else if (userData?.role === 'teacher') {
       setMenuItems([
         { title: 'Dashboard', url: '/teacher', icon: Home },
-        { title: 'Attendance', url: '/attendance', icon: Calendar },
+        { title: 'Attendance', url: '/teacher/attendance', icon: Calendar },
         { title: 'Students', url: '/students', icon: Users },
         { title: 'Assignments', url: '/assignments', icon: Inbox },
         { title: 'Exams', url: '/exams', icon: Search },
