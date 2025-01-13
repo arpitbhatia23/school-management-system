@@ -134,6 +134,9 @@ const getStudents = asyncHandler(async (req, res) => {
                 className: '$profile.className',
                 roll_no: '$profile.roll_no',
                 phone_no: 1,
+                gender:1,
+                DOB:'$profile.DOB',
+                address:'$profile.address'
             },
         },
     ]);

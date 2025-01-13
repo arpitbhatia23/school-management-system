@@ -21,7 +21,8 @@ import GetFees from './components/GetFees';
 import AddExpenses from './components/AddExpenses';
 import GetExpense from './components/GetExpense';
 import AddSubject from './components/AddSubject';
-import TeacherDashboard from './components/TeacherDashboard';
+import TeacherDashboard from './components/teachercomp/TeacherDashboard';
+import GetStudent from './components/teachercomp/GetStudent';
 
 function App() {
   
@@ -44,7 +45,9 @@ function App() {
        
           <Routes>
             <Route path='/' element={<Authlayout><Dashboard/></Authlayout>}>
-            {/* admin */}
+
+                            {/* admin */}
+
             <Route path='/' element={<Authlayout><AdminDashboard/></Authlayout>}/>
             <Route path='getstudents' element={<Authlayout><Getstudent/></Authlayout>}/>
             <Route path='addstudents' element={<Authlayout><AddStudent/></Authlayout>}/>
@@ -59,11 +62,14 @@ function App() {
             <Route path='settings' element={<Authlayout><Setting/></Authlayout>}/>
             <Route path='addsubjects' element={<Authlayout><AddSubject/></Authlayout>}/>
             
-             </Route>
+             </Route>   
+
+                           {/* teacher router */}
+
              
              <Route path='/teacher' element={<Authlayout><Dashboard/></Authlayout>}>
              <Route path='/teacher' element={<Authlayout><TeacherDashboard/></Authlayout>}/>
-
+<Route path ="Getstudents" element={<Authlayout><GetStudent/></Authlayout>}/>
              </Route>
 
             <Route path='/login' element={<Authlayout Authentication={false}><LoginPage/></Authlayout>}/>

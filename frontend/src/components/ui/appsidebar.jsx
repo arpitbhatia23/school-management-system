@@ -87,7 +87,7 @@ const AppSidebar = () => {
       setMenuItems([
         { title: 'Dashboard', url: '/teacher', icon: Home },
         { title: 'Attendance', url: '/attendance', icon: Calendar },
-        { title: 'Students', url: '/students', icon: Users },
+        { title: 'Students', url: '/teacher/Getstudents', icon: Users },
         { title: 'Assignments', url: '/assignments', icon: Inbox },
         { title: 'Exams', url: '/exams', icon: Search },
         { title: 'Results', url: '/results', icon: UserCheck },

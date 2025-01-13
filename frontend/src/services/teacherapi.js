@@ -42,7 +42,7 @@ export const teacherapi = () => {
     }
   };
   // get students
-  const getStudent = async (data) => {
+  const getStudents = async (data) => {
     try {
       return await api.get('teacher/getStudent', data);
     } catch (error) {
@@ -79,7 +79,7 @@ export const teacherapi = () => {
     exam,
     attendance,
     result,
-    getStudent,
+    getStudents,
     syllabus,
     notification,
     idCard,
