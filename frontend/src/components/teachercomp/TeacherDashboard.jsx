@@ -8,8 +8,8 @@ const TeacherDashboard = () => {
       <Card className="m-20">
         <CardContent>
           <CardTitle>
-            jhdkfdkfdk
-          </CardTitle>
+            hujdhjdbcwdcdc
+        </CardTitle>
         </CardContent>
       </Card>
     </div>
