@@ -6,15 +6,15 @@ import { Input } from '../ui/input'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Checkbox } from '../ui/checkbox'
 import { useForm } from 'react-hook-form'
+import { toast } from '@/hooks/use-toast'
+import { Button } from '../ui/button'
 
 const Attendance = () => {
-  const { getStudent,attendance } = teacherapi()
+  const { getStudents,attendance } = teacherapi()
   const [students, setStudents] = useState([])
-
   const fetchStudents = async () => {
     try {
-      const res = await getStudent()
-      console.log('API Response:', res.data) // Log API response for debugging
+      const res = await getStudents()
       if (res.data.success) {
         setStudents(res.data.data)
       } else {
@@ -59,9 +59,11 @@ const Attendance = () => {
   }, [students])
 
   const onSubmit =async (data) => {
-    console.log(data)
     const res= await attendance(data)
-    console.log(res)
+    if(res.data.success){
+     toast({title:"success",description:"student get succesfully"})
+    }
+    else{toast({title:"failed",description:"something went wrong"})}
     console.log('Attendance Data Submitted:', data)
 
 
@@ -233,9 +235,9 @@ const Attendance = () => {
                   )}
                 </TableBody>
               </Table>
-              <button type="submit" className="btn btn-primary mt-4">
+              <Button type="submit" className="btn btn-primary mt-4">
                 Submit Attendance
-              </button>
+              </Button>
             </form>
           </Form>
         </CardContent>

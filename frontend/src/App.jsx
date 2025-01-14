@@ -25,6 +25,9 @@ import TeacherDashboard from './components/teachercomp/TeacherDashboard';
 import Attendance from './components/teachercomp/Attendance';
 import GetStudent from './components/teachercomp/GetStudent';
 import AddResult from './components/teachercomp/AddResult';
+import ErrorFallback from './components/ErrorFallback';
+import Notfound from './components/Notfound';
+import AddExam from './components/teachercomp/AddExam';
 
 function App() {
   
@@ -46,7 +49,7 @@ function App() {
         <Toaster />
        
           <Routes>
-            <Route path='/' element={<Authlayout><Dashboard/></Authlayout>}>
+            <Route path='/' element={<Authlayout><Dashboard/></Authlayout>} errorElement={<ErrorFallback/>}>
 
                             {/* admin */}
 
@@ -63,23 +66,22 @@ function App() {
             <Route path='getexpenses' element={<Authlayout><GetExpense/></Authlayout>}/>
             <Route path='settings' element={<Authlayout><Setting/></Authlayout>}/>
             <Route path='addsubjects' element={<Authlayout><AddSubject/></Authlayout>}/>
-            
+            <Route path="*"  element={<Notfound/>} />
              </Route>   
 
                            {/* teacher router */}
 
              
-             <Route path='/teacher' element={<Authlayout><Dashboard/></Authlayout>}>
+             <Route path='/teacher' element={<Authlayout><Dashboard/></Authlayout>} errorElement={<ErrorFallback/>}>
              <Route path='/teacher' element={<Authlayout><TeacherDashboard/></Authlayout>}/>
-<<<<<<< HEAD
 <Route path ="Getstudents" element={<Authlayout><GetStudent/></Authlayout>}/>
 <Route path ='results' element={<Authlayout><AddResult/></Authlayout>}/>
 
-=======
              <Route path='attendance' element={<Authlayout><Attendance/></Authlayout>}/>
+             <Route path='settings' element={<Authlayout><Setting/></Authlayout>}/>
 
-           <Route path ="Getstudents" element={<Authlayout><GetStudent/></Authlayout>}/>
->>>>>>> ca6b3b3e2186dfb697f979fa3f6385813c2858f9
+           <Route path='Exams' element={<Authlayout><AddExam/></Authlayout>} errorElement={<ErrorFallback/>}/>
+           <Route path="*"  element={<Notfound/>} />
              </Route>
 
             <Route path='/login' element={<Authlayout Authentication={false}><LoginPage/></Authlayout>}/>
