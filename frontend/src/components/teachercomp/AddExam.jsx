@@ -11,7 +11,6 @@ import { toast } from '@/hooks/use-toast';
 
 const AddExam = () => {
     const [image, setImage] = useState(null);
-
     const onDrop = (acceptedFiles) => {
         if (acceptedFiles && acceptedFiles.length > 0) {
             const file = acceptedFiles[0];
@@ -123,7 +122,7 @@ const AddExam = () => {
                                 </div>
                             ) : (
                                 <>
-                                <div className='flex flex-col justify-center items-center'>
+                                <div className='flex flex-col justify-center item'>
                                     <UploadCloud className="text-gray-500 mb-4" size={40} />
                                     <span className="text-gray-600">Drag and drop an image here, or click to upload</span>
                                     </div>
