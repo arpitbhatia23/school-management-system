@@ -1,7 +1,6 @@
 import React from 'react'
 import { Card, CardContent, CardTitle } from '../ui/card'
-import Getstudent from '../Getstudent'
-import GetStudent from './GetStudent'
+import AddResult from './AddResult'
 
 const TeacherDashboard = () => {
   console.log("mounted")
@@ -10,7 +9,6 @@ const TeacherDashboard = () => {
       <Card className="m-20">
         <CardContent>
           <CardTitle>
-            hujdhjdbcwdcdc
         </CardTitle>
         </CardContent>
       </Card>

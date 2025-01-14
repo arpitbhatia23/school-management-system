@@ -105,12 +105,13 @@ const addResult = asyncHandler(async (req, res) => {
     const { student_id, name, examtype } = req.body;
 
     const pdfurl = `${req.protocol}://${req.get('host')}/files/${req.file.filename}`;
-    if (!(student_id, name, examtype, pdfurl)) {
+    if (!(student_id, name,roll_no, examtype, pdfurl)) {
         throw new apiError(400, 'all field are required');
     }
     const result = await Result.create({
         student_id,
         name,
+        roll_no,
         examtype,
         pdf: pdfurl,
     });
