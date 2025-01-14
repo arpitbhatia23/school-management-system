@@ -102,7 +102,7 @@ const addAttendance = asyncHandler(async (req, res) => {
 
 // add result
 const addResult = asyncHandler(async (req, res) => {
-    const { student_id, name, examtype } = req.body;
+    const { student_id, name, examtype,roll_no } = req.body;
 
     const pdfurl = `${req.protocol}://${req.get('host')}/files/${req.file.filename}`;
     if (!(student_id, name,roll_no, examtype, pdfurl)) {

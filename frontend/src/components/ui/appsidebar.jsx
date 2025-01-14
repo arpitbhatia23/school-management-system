@@ -90,7 +90,7 @@ const AppSidebar = () => {
         { title: 'Students', url: '/teacher/Getstudents', icon: Users },
         { title: 'Assignments', url: '/assignments', icon: Inbox },
         { title: 'Exams', url: '/exams', icon: Search },
-        { title: 'Results', url: '/results', icon: UserCheck },
+        { title: 'Results', url: '/teacher/results', icon: UserCheck },
         { title: 'Settings', url: '/settings', icon: Settings },
       ]);
     }

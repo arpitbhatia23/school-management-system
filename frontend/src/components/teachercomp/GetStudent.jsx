@@ -12,6 +12,7 @@ const GetStudent = () => {
     const form = useForm({
         defaultValues: {
             class:"",
+            _id:'',
             name:"",
             roll_no:'',
             phone_no:'',
@@ -59,6 +60,7 @@ const GetStudent = () => {
     <TableHeader>
         <TableRow>
             <TableHead>Sr.no</TableHead>
+            <TableHead>Id</TableHead>
             <TableHead>Name </TableHead>
             <TableHead>Roll No</TableHead>
             <TableHead>Gender</TableHead>
@@ -72,6 +74,7 @@ const GetStudent = () => {
         pagination.map((item,index)=>(
             <TableRow key ={item._id}>
                 <TableCell>{index+1}</TableCell>
+                <TableCell>{item._id}</TableCell>
 <TableCell>{item.name}</TableCell>
 <TableCell>{item.roll_no}</TableCell>
 <TableCell>{item.gender}</TableCell>

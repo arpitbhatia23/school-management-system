@@ -20,7 +20,11 @@ export const teacherapi = () => {
   // add exam
   const exam = async (data) => {
     try {
-      return await api.post('teacher/addExam', data);
+      return await api.post('teacher/addExam', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
     } catch (error) {
       return error.response;
     }
@@ -36,7 +40,11 @@ export const teacherapi = () => {
   // add result
   const result = async (data) => {
     try {
-      return await api.post('teacher/addResult', data);
+      return await api.post('teacher/addResult', data,{
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          },
+      });
     } catch (error) {
       return error.response;
     }

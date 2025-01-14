@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import './App.css';
 import { login } from './store/slice';
 import { Toaster } from './components/ui/toaster';
-import { Outlet, Route, Router, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useAuthApi } from './services/authapi';
 import Setting from './components/Setting';
@@ -23,6 +23,7 @@ import GetExpense from './components/GetExpense';
 import AddSubject from './components/AddSubject';
 import TeacherDashboard from './components/teachercomp/TeacherDashboard';
 import GetStudent from './components/teachercomp/GetStudent';
+import AddResult from './components/teachercomp/AddResult';
 
 function App() {
   
@@ -70,6 +71,8 @@ function App() {
              <Route path='/teacher' element={<Authlayout><Dashboard/></Authlayout>}>
              <Route path='/teacher' element={<Authlayout><TeacherDashboard/></Authlayout>}/>
 <Route path ="Getstudents" element={<Authlayout><GetStudent/></Authlayout>}/>
+<Route path ='results' element={<Authlayout><AddResult/></Authlayout>}/>
+
              </Route>
 
             <Route path='/login' element={<Authlayout Authentication={false}><LoginPage/></Authlayout>}/>
