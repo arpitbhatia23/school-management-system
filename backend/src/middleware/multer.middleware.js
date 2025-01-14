@@ -17,7 +17,8 @@ const filestorgage = multer.diskStorage({
         cb(null, `./public/files`);
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname);
+        console.log("on")
+        cb(null, `${Date.now()}${file.originalname}`);
     },
 });
 export const uploadFile = multer({ storage: filestorgage, limits: { fieldSize: 5 * 1024 * 1024 } });
