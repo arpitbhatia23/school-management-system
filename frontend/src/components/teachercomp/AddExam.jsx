@@ -123,8 +123,10 @@ const AddExam = () => {
                                 </div>
                             ) : (
                                 <>
+                                <div className='flex flex-col justify-center items-center'>
                                     <UploadCloud className="text-gray-500 mb-4" size={40} />
                                     <span className="text-gray-600">Drag and drop an image here, or click to upload</span>
+                                    </div>
                                 </>
                             )}
                         </div>
