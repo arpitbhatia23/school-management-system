@@ -22,6 +22,7 @@ import AddExpenses from './components/AddExpenses';
 import GetExpense from './components/GetExpense';
 import AddSubject from './components/AddSubject';
 import TeacherDashboard from './components/teachercomp/TeacherDashboard';
+import Attendance from './components/teachercomp/Attendance';
 import GetStudent from './components/teachercomp/GetStudent';
 import AddResult from './components/teachercomp/AddResult';
 
@@ -70,9 +71,15 @@ function App() {
              
              <Route path='/teacher' element={<Authlayout><Dashboard/></Authlayout>}>
              <Route path='/teacher' element={<Authlayout><TeacherDashboard/></Authlayout>}/>
+<<<<<<< HEAD
 <Route path ="Getstudents" element={<Authlayout><GetStudent/></Authlayout>}/>
 <Route path ='results' element={<Authlayout><AddResult/></Authlayout>}/>
 
+=======
+             <Route path='attendance' element={<Authlayout><Attendance/></Authlayout>}/>
+
+           <Route path ="Getstudents" element={<Authlayout><GetStudent/></Authlayout>}/>
+>>>>>>> ca6b3b3e2186dfb697f979fa3f6385813c2858f9
              </Route>
 
             <Route path='/login' element={<Authlayout Authentication={false}><LoginPage/></Authlayout>}/>
