@@ -53,7 +53,10 @@ const addAssignment = asyncHandler(async (req, res) => {
 // add exam
 const addExam = asyncHandler(async (req, res) => {
     const { exam_title, exam_discription, exam_date, class_name } = req.body;
+    console.log(exam_title, exam_discription, exam_date, class_name )
+
     const fileurl = `${req.protocol}://${req.get('host')}/files/${req.file.filename}`;
+    
     if (!(exam_title, exam_discription, exam_date, class_name, fileurl)) {
         throw new apiError(400, 'all fields are required');
     }

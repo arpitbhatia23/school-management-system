@@ -6,22 +6,11 @@ import { Input } from '../ui/input'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import PaginationComponent from '../paginationcomp'
 import { teacherapi } from '@/services/teacherapi'
+import { toast } from '@/hooks/use-toast'
 
 const GetStudent = () => {
     const [data,setdata]= useState()
-    const form = useForm({
-        defaultValues: {
-            class:"",
-            _id:'',
-            name:"",
-            roll_no:'',
-            phone_no:'',
-            address:'',
-            gender:'',
-            DOB:'',
-
-        }
-    })
+    
     const {getStudents} = teacherapi()
     const fetchData = async (data)=>{
         const res = await getStudents(data);
