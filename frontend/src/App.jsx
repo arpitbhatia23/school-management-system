@@ -25,6 +25,7 @@ import TeacherDashboard from './components/teachercomp/TeacherDashboard';
 import Attendance from './components/teachercomp/Attendance';
 import GetStudent from './components/teachercomp/GetStudent';
 import AddResult from './components/teachercomp/AddResult';
+import Addassignments from './components/teachercomp/Addassignments';
 
 function App() {
   
@@ -71,15 +72,13 @@ function App() {
              
              <Route path='/teacher' element={<Authlayout><Dashboard/></Authlayout>}>
              <Route path='/teacher' element={<Authlayout><TeacherDashboard/></Authlayout>}/>
-<<<<<<< HEAD
 <Route path ="Getstudents" element={<Authlayout><GetStudent/></Authlayout>}/>
 <Route path ='results' element={<Authlayout><AddResult/></Authlayout>}/>
+<Route path ="assignments" element={<Authlayout><Addassignments/></Authlayout>}/>
 
-=======
              <Route path='attendance' element={<Authlayout><Attendance/></Authlayout>}/>
 
-           <Route path ="Getstudents" element={<Authlayout><GetStudent/></Authlayout>}/>
->>>>>>> ca6b3b3e2186dfb697f979fa3f6385813c2858f9
+           {/* <Route path ="Getstudents" element={<Authlayout><GetStudent/></Authlayout>}/> */}
              </Route>
 
             <Route path='/login' element={<Authlayout Authentication={false}><LoginPage/></Authlayout>}/>
