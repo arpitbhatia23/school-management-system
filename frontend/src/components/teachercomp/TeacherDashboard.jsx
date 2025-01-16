@@ -42,7 +42,7 @@ const TeacherDashboard = () => {
                         <div className="flex flex-col items-center">
                           <CardTitle>{stat.label}</CardTitle>
                           <Separator />
-                          <CardDescription className="font-semibold text-white">
+                          <CardDescription className="font-se mibold text-white">
                             {stat.value}
                           </CardDescription>
                         </div>
