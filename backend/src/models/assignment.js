@@ -8,7 +8,7 @@ const assignment = new Schema(
         },
         class_name: {
             type: String,
-            required: [true, 'class is required'],
+            // required: [true, 'class is required'],
         },
         due_date: {
             type: String,

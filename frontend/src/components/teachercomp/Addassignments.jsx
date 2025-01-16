@@ -4,14 +4,18 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useForm } from 'react-hook-form'
 import { teacherapi } from '@/services/teacherapi'
 import { Input } from '../ui/input'
-import { Button } from '../ui/button'
+import { toast } from '@/hooks/use-toast'
+import GetAssignment from './GetAssignment'
+import { useSelector } from 'react-redux'
 
 const Addassignments = () => {
+  const userData = useSelector(state=>state.auth.userData)
+console.log(userData)
     const [loading,setLoading] = useState(false)
     const form = useForm({
         defaultValues: {
             title:'',
-            class_name:'',
+            class_name: userData.profile.class_incharge,
             due_date:'',
             subject:'',
         }
@@ -39,23 +43,24 @@ const onSubmit = async(data)=>{
 
   return (
     <>
-      <Card>
-        <CardTitle>Add Assignment</CardTitle>
-            <Form{...form}>
+    <GetAssignment/>
+      <Card className='m-20'>
+        <CardTitle className="flex justify-center my-2"><h2>Add Assignment</h2></CardTitle>
+            <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
-                <CardContent>
+                <CardContent className="grid grid-cols-4 gap-4">
 <FormField
                     name="title"
                     rules={{required:'title is required'}}
                     control={form.control}
-                    render={({field})=>(
+                    render={({ field })=>(
                       <FormItem>
                         <FormLabel>Title</FormLabel>
                         <FormControl>
                           <Input
                           type="text"
-                          placeholder="Enter title..."/>
-                          {...field}
+                          placeholder="Enter title..."
+                          {...field}/>
                         </FormControl>
                         <FormMessage/>
                       </FormItem>
@@ -63,15 +68,15 @@ const onSubmit = async(data)=>{
                     />
                     <FormField
                     name="class_name"
-                    rules={{required:"Class is required"}}
                     control={form.control}
-                    render={({field})=>(
+                    render={({ field })=>(
                       <FormItem>
                         <FormLabel>Class</FormLabel>
                         <FormControl>
                           <Input
-                          type="text"
-                          placeholder="Enter Class.."
+                          readOnly
+                          value={userData.profile.class_incharge}
+                          
 {...field}
 />
                         </FormControl>
@@ -83,7 +88,7 @@ const onSubmit = async(data)=>{
                     name="due_date"
                     rules={{required:"due date is required"}}
                     control={form.control}
-                    render={({field})=>(
+                    render={({ field })=>(
                       <FormItem>
                         <FormLabel>Due Date</FormLabel>
                         <FormControl>
@@ -100,7 +105,7 @@ const onSubmit = async(data)=>{
                     <FormField
                     name="subject"
                     control={form.control}
-                    render={({field})=>(
+                    render={({ field })=>(
                       <FormItem>
                         <FormLabel>Subject</FormLabel>
                         <FormControl>
@@ -114,12 +119,14 @@ const onSubmit = async(data)=>{
                       </FormItem>
                     )}
                     />
-                    <div>
+                  
+                            </CardContent>
+                            <div className=' flex justify-center'>
                       <button
+                      className='bg-green-700 p-1 w-28 text-white m-1'
                       type="submit"
                       > {loading?'submitting':'Submit'}</button>
                     </div>
-                            </CardContent>
 
                 </form>
             </Form>

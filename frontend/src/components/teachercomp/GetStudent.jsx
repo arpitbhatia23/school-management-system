@@ -75,7 +75,7 @@ const GetStudent = () => {
     </TableBody>
 </Table>
 {
-    data?.length>0&&
+    data?.length > 0 &&
 
 <PaginationComponent totalPages={totalpages} currentPage={currentpages} onPageChange={handlepagination}/>
 }
