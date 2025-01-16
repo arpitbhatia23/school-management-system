@@ -23,6 +23,7 @@ import AddResult from "@/components/teachercomp/AddResult";
 import Notfound from "@/components/Notfound";
 import AddExam from "@/components/teachercomp/AddExam";
 import Testcomp from "@/components/teachercomp/testcomp";
+import Addassignments from '@/components/teachercomp/Addassignments';
 const router=createBrowserRouter(
     createRoutesFromElements( <Route  path={"/" } errorElement={<Notfound/>}>
 
@@ -59,6 +60,8 @@ const router=createBrowserRouter(
           <Route path="attendance" element={<Attendance />} />
           <Route path="settings" element={<Setting />} />
           <Route path="exams" element={<AddExam />} />
+          <Route path='assignments' element={<Addassignments/>}/>
+
         </Route>
 
         {/* Login Route */}
