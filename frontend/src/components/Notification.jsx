@@ -23,7 +23,10 @@ import {
 import { useForm } from 'react-hook-form';
 import { Input } from './ui/input';
 import { DialogDescription } from '@radix-ui/react-dialog';
+import { useSelector } from 'react-redux';
+
 const Notification = () => {
+  const userData=useSelector(state=>state.auth.userData)
   const [notification, setnotifaction] = useState([
     {
       title: 'System Update',
@@ -111,7 +114,7 @@ const Notification = () => {
           <div className=" h-64 overflow-y-scroll p-2 scrollbar-hide">
             <CardTitle className="flex justify-between realtive top-0 ">
               Notifaction
-              <Dialog>
+             {userData.role==="admin" && <Dialog>
                 <DialogTrigger>
                   <Plus />
                 </DialogTrigger>
@@ -165,24 +168,26 @@ const Notification = () => {
                     </Form>
                   </DialogDescription>
                 </DialogContent>
-              </Dialog>
+              </Dialog>}
             </CardTitle>
             <Separator />
 
             {notification?.map((item, index) => (
               <CardContent key={index} className="mb-4">
                 <CardTitle className="p-2">{item.title}</CardTitle>
-                <CardDescription className="flex gap-2 justify-between ">
+                <CardDescription className="flex gap-2 justify-around ">
                   <span>{item.description || item.message}</span>{' '}
                   <span>
                     {item.date || new Date(item.createdAt).toLocaleDateString()}
-                  </span>
+                  </span>{
+                    userData.role==="admin" &&
+
                   <Button
                     className="bg-red-500"
                     onClick={() => handeldelete(item._id)}
                   >
                     delete
-                  </Button>
+                  </Button>}
                 </CardDescription>
               </CardContent>
             ))}

@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, CardContent, CardTitle,CardDescription } from '../ui/card'
 import { Separator } from '../ui/separator'
 import { Calendar, User } from 'lucide-react'
+import Notification from '../Notification'
 
 const TeacherDashboard = () => {
   const stats = [
@@ -12,13 +13,13 @@ const TeacherDashboard = () => {
       icon: User,
     },
     {
-      label: 'Teacher',
+      label: 'Attendance',
       value:  0,
       bgcolor: 'bg-green-500',
       icon: User,
     },
     {
-      label: 'Earning',
+      label: 'Assigmenent',
       value:  0,
       bgcolor: 'bg-blue-500',
       icon: Calendar ,
@@ -32,7 +33,7 @@ const TeacherDashboard = () => {
             Teacher Dashboard
         </CardTitle>
 
-        <CardContent className="shadow-sm shadow-black rounded-md gird grid-cols-3 ">
+        <CardContent className=" grid  grid-cols-1 lg:grid-cols-3 gap-x-24  gap-4 mt-4 ">
           {stats.map((stat, index) => (
                       <CardContent
                         key={index}
@@ -50,7 +51,7 @@ const TeacherDashboard = () => {
                     ))}
         </CardContent>
        
-
+          <Notification/>
       </Card>
     </div>
   )
