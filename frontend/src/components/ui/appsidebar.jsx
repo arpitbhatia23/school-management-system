@@ -88,7 +88,7 @@ const AppSidebar = () => {
         { title: 'Dashboard', url: '/teacher', icon: Home },
         { title: 'Attendance', url: '/teacher/attendance', icon: Calendar },
         { title: 'Students', url: '/teacher/getstudents', icon: Users },
-         { title: 'Assignments', url: '/assignments', icon: Inbox },
+         { title: 'Assignments', url: '/teacher/assignments', icon: Inbox },
         { title: 'Exams', url: '/teacher/exams', icon: Search },
         { title: 'Results', url: '/teacher/results', icon: UserCheck },
         { title: 'Settings', url: '/settings', icon: Settings },
