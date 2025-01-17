@@ -61,7 +61,7 @@ const Attendance = () => {
   const onSubmit =async (data) => {
     const res= await attendance(data)
     if(res.data.success){
-     toast({title:"success",description:"student get succesfully"})
+     toast({title:"success",description:"attendance added succesfully"})
     }
     else{toast({title:"failed",description:"something went wrong"})}
     console.log('Attendance Data Submitted:', data)
@@ -162,7 +162,7 @@ const Attendance = () => {
                               <FormItem>
                                 <FormControl>
                                   <Input
-                                    readOnly
+                                    
                                     value={new Date().toLocaleDateString()} // Use date dynamically
                                     {...field}
                                   />

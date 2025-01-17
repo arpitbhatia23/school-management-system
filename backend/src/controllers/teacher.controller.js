@@ -362,6 +362,47 @@ const getNotification = asyncHandler(async (req, res) => {
     }
     return res.status(200).json(new apiResponse(200, 'notification '));
 });
+// total montly atendance
+
+ const getWeeklyAttendance =asyncHandler( async (req,res) => {
+  try {
+    const weeklyAttendance = await Attendance.aggregate([
+        {$match:{
+            className:req.user.profile.class_incharge
+        }
+
+        },
+      {
+        $group: {
+          _id: {
+            month:{$month:"$date"},
+            year: { $year: "$date" }, // Extract the year to handle year boundaries
+          },
+          present: {
+            $sum: { $cond: [{ $eq: ["$status", "present"] }, 1, 0] },
+          },
+          absent: {
+            $sum: { $cond: [{ $eq: ["$status", "absent"] }, 1, 0] },
+          },
+          leave: {
+            $sum: { $cond: [{ $eq: ["$status", "leave"] }, 1, 0] },
+          },
+          total: {
+            $sum: 1, // Total entries for the week
+          },
+        },
+      },
+      {
+        $sort: { "_id.year": 1, "_id.month": 1 }, // Sort by year and week
+      },
+    ]);
+
+    return res.status(200).json(new apiResponse(200,weeklyAttendance,"sucessfully get attendance"));
+  } catch (error) {
+    console.error("Error fetching weekly attendance:", error);
+    throw error;
+  }
+});
 
 export {
     addAssignment,
@@ -373,4 +414,5 @@ export {
     genIdCard,
     addSyllabus,
     getNotification,
+    getWeeklyAttendance
 };

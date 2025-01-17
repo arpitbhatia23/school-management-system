@@ -112,7 +112,7 @@ const Notification = () => {
       <Card>
         <CardContent className="shadow-md shadow-black rounded-lg  ">
           <div className=" h-64 overflow-y-scroll p-2 scrollbar-hide">
-            <CardTitle className="flex justify-between realtive top-0 ">
+            <CardTitle className="flex justify-between  p-4 realtive top-0 ">
               Notifaction
              {userData.role==="admin" && <Dialog>
                 <DialogTrigger>
@@ -175,7 +175,7 @@ const Notification = () => {
             {notification?.map((item, index) => (
               <CardContent key={index} className="mb-4">
                 <CardTitle className="p-2">{item.title}</CardTitle>
-                <CardDescription className="flex gap-2 justify-around ">
+                <CardDescription className="flex gap-2 justify-start ">
                   <span>{item.description || item.message}</span>{' '}
                   <span>
                     {item.date || new Date(item.createdAt).toLocaleDateString()}

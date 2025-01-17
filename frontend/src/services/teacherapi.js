@@ -81,6 +81,17 @@ export const teacherapi = () => {
       return error.response;
     }
   };
+  const getweeklyattendance=async()=>{
+    console.log("hi")
+    try {
+      return await api.get('teacher/getweeklyattendance')
+    } catch (error) {
+      console.log("hibye",error)
+
+      return error.response;
+ 
+    }
+  }
   return {
     addAssignment,
     getAssignment,
@@ -91,5 +102,6 @@ export const teacherapi = () => {
     syllabus,
     notification,
     idCard,
+    getweeklyattendance
   };
 };
