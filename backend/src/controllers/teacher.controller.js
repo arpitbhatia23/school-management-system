@@ -363,8 +363,70 @@ const getNotification = asyncHandler(async (req, res) => {
     if (!notification) {
         throw new apiError(400, 'something went wrong');
     }
-    return res.status(200).json(new apiResponse(200, 'notification '));
+    return res.status(200).json(new apiResponse(200, notification,'notification '));
 });
+// total montly atendance
+
+ const getWeeklyAttendance =asyncHandler( async (req,res) => {
+  try {
+    const weeklyAttendance = await Attendance.aggregate([
+        {$match:{
+            className:req.user.profile.class_incharge
+        }
+
+        },
+      {
+        $group: {
+          _id: {
+            month:{$month:"$date"},
+            year: { $year: "$date" }, // Extract the year to handle year boundaries
+          },
+          present: {
+            $sum: { $cond: [{ $eq: ["$status", "present"] }, 1, 0] },
+          },
+          absent: {
+            $sum: { $cond: [{ $eq: ["$status", "absent"] }, 1, 0] },
+          },
+          leave: {
+            $sum: { $cond: [{ $eq: ["$status", "leave"] }, 1, 0] },
+          },
+          total: {
+            $sum: 1, // Total entries for the week
+          },
+        },
+      },
+      {
+        $sort: { "_id.year": 1, "_id.month": 1 }, // Sort by year and week
+      },
+    ]);
+
+    return res.status(200).json(new apiResponse(200,weeklyAttendance,"sucessfully get attendance"));
+  } catch (error) {
+    console.error("Error fetching weekly attendance:", error);
+    throw error;
+  }
+});
+
+// total student 
+const totalstudent=asyncHandler(async(req,res)=>{
+    const student=await User.aggregate([
+        {
+            $match:{$and: [{"profile.className":req?.user?.profile?.class_incharge},{role:"student"}]}
+        },
+        {
+            $group:{
+               "_id":"$role",
+               count:{
+                $sum:1
+               }
+            }
+        }
+    ])
+    if(student?.length===0){
+        throw new apiError(404 , "student not found")
+    }
+    return res.status(200).json(new apiResponse(200,student,"student found"))
+})
 
 export {
     addAssignment,
@@ -376,4 +438,6 @@ export {
     genIdCard,
     addSyllabus,
     getNotification,
+    getWeeklyAttendance ,
+    totalstudent
 };

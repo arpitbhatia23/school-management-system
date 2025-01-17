@@ -66,9 +66,9 @@ export const teacherapi = () => {
     }
   };
   // get notification
-  const notification = async (data) => {
+  const getnotification = async (data) => {
     try {
-      return await api.get('', data);
+      return await api.get('teacher/getnotification', data);
     } catch (error) {
       return error.response;
     }
@@ -81,6 +81,25 @@ export const teacherapi = () => {
       return error.response;
     }
   };
+  const getweeklyattendance=async()=>{
+    try {
+      return await api.get('teacher/getweeklyattendance')
+    } catch (error) {
+
+      return error.response;
+ 
+    }
+  }
+  
+  const totalstudent=async()=>{
+    try {
+      return await api.get('teacher/totalstudent')
+    } catch (error) {
+
+      return error.response;
+ 
+    }
+  }
   return {
     addAssignment,
     getAssignment,
@@ -89,7 +108,9 @@ export const teacherapi = () => {
     result,
     getStudents,
     syllabus,
-    notification,
+    getnotification,
     idCard,
+    getweeklyattendance,
+    totalstudent
   };
 };

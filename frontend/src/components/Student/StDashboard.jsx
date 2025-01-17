@@ -1,8 +1,10 @@
 import React from 'react'
 import { Card, CardContent, CardTitle } from '../ui/card'
-import StResult from './StResult'
+import { useNavigate } from 'react-router-dom'
+
 
 const StDashboard = () => {
+   const navigate = useNavigate()
     const styling = [{
         text:'text-white p-6 px-14',
         bgcolor:"bg-orange-600",
@@ -31,8 +33,9 @@ const StDashboard = () => {
  <Card
  key={index}
  className={`${styling.bgcolor} ${styling.height}`}
+ onClick={navigate('/student/notification')}
  >
-    <h2 className={`${styling.text}`}>Notification</h2>
+    <h2 className={`${styling.text}`} >Notification</h2>
 
  </Card>
  <Card
