@@ -50,17 +50,22 @@ const GetSubject = () => {
       });
     }
   };
-  const [currentpages,setcurrentpages]=useState(1)
-  const rows=10
-  const totalpages=Math.ceil(data?.length/rows)
-  const pagination=data?.slice((currentpages-1)*rows,currentpages*rows)
-  const handelpagination=(newpage)=>{
-setcurrentpages(newpage)
-  }
+  const [currentpages, setcurrentpages] = useState(1);
+  const rows = 10;
+  const totalpages = Math.ceil(data?.length / rows);
+  const pagination = data?.slice(
+    (currentpages - 1) * rows,
+    currentpages * rows,
+  );
+  const handelpagination = (newpage) => {
+    setcurrentpages(newpage);
+  };
   return (
     <>
       <Card className="m-20">
-        <CardTitle className="m-4"><h2>Subjects</h2></CardTitle>
+        <CardTitle className="m-4">
+          <h2>Subjects</h2>
+        </CardTitle>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -103,11 +108,12 @@ setcurrentpages(newpage)
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="my-6">Submit</Button>
+                <Button type="submit" className="my-6">
+                  Submit
+                </Button>
               </CardDescription>
             </form>
           </Form>
-
           <Table>
             <TableHeader>
               <TableRow>
@@ -131,10 +137,14 @@ setcurrentpages(newpage)
                 ))}
             </TableBody>
           </Table>
-          {
-            data?.length>0&&
-          <PaginationComponent totalPages={totalpages} currentPage={currentpages} onPageChange={handelpagination}/>
-   }     </CardContent>
+          {data?.length > 0 && (
+            <PaginationComponent
+              totalPages={totalpages}
+              currentPage={currentpages}
+              onPageChange={handelpagination}
+            />
+          )}{' '}
+        </CardContent>
       </Card>
     </>
   );

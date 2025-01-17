@@ -101,7 +101,7 @@ const addAttendance = asyncHandler(async (req, res) => {
         // Insert attendances in bulk
         const insertedAttendances = await Attendance.insertMany(
             attendance.map(({ date, student_status, student_id,student_class }) => ({
-                date: new Date(date),
+                date: new Date(date).toISOString(),
                 status: student_status,
                 student_id,
                 className:student_class
@@ -111,10 +111,29 @@ const addAttendance = asyncHandler(async (req, res) => {
         if ( insertedAttendances.length === 0) {
             throw new apiError(500, 'Failed to insert attendance records');
         }
+        const updateResults = await Promise.allSettled(
+            insertedAttendances.map((attendance) =>
+                User.findByIdAndUpdate(
+                    attendance.student_id,
+                    { $push: { 'profile.attendance': attendance._id } },
+                    { new: true }
+                ).exec()
+            )
+        );
+
+        // Check for failed updates
+        const failedUpdates = updateResults.filter((result) => result.status === 'rejected');
+        if (failedUpdates.length > 0) {
+            console.error('Failed student updates:', failedUpdates.map((f) => f.reason));
+            throw new apiError(
+                500,
+                `${failedUpdates.length} student(s) failed to update with attendance`
+            );
+        }
 
         
         return res.status(200).json(
-            new apiResponse(200, insertedAttendances, 'Attendances successfully added')
+            new apiResponse(200, updateResults, 'Attendances successfully added')
         );
     } catch (error) {
         console.error('Error while adding attendance:', error.message);

@@ -46,7 +46,11 @@ const AppSidebar = () => {
           submenu: [
             { title: 'Students', url: '/getstudents', icon: User },
             { title: 'Add Students', url: '/addstudents', icon: UserPlus },
-            { title: 'Promote Students', url: '/promotestudents', icon: UserCheck },
+            {
+              title: 'Promote Students',
+              url: '/promotestudents',
+              icon: UserCheck,
+            },
           ],
         },
         {
@@ -93,14 +97,15 @@ const AppSidebar = () => {
         { title: 'Exams', url: 'exams', icon: Search },
         { title: 'Results', url: 'results', icon: UserCheck },
         { title: 'Settings', url: '/settings', icon: Settings },
-        ]);
-        
-    }else if(userData?.role==='student'){
+      ]);
+    } else if (userData?.role === 'student') {
       setMenuItems([
-        {title:'Dashboard',url:'/student',icon:Home},
-        {title:'Result',url:'result',icon:UserCheck},
-        {title:'Setting',url:'setting',icon:Settings}
-      ])
+        { title: 'Dashboard', url: '/student', icon: Home },
+        { title: 'Result', url: 'result', icon: UserCheck },
+        { title: 'Attendance', url: 'attendance', icon: UserCheck },
+
+        { title: 'Setting', url: 'setting', icon: Settings },
+      ]);
     }
   }, [userData?.role]);
 
@@ -146,8 +151,13 @@ const AppSidebar = () => {
                       {item.submenu.map((subItem) => (
                         <SidebarMenuItem key={subItem.title}>
                           <SidebarMenuButton asChild>
-                            <Link to={subItem.url} className="flex items-center">
-                              {subItem.icon && <subItem.icon className="mr-2" />}
+                            <Link
+                              to={subItem.url}
+                              className="flex items-center"
+                            >
+                              {subItem.icon && (
+                                <subItem.icon className="mr-2" />
+                              )}
                               <span>{subItem.title}</span>
                             </Link>
                           </SidebarMenuButton>

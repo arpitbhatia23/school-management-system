@@ -223,30 +223,24 @@ const getMonthlyAttendance = asyncHandler(async (req, res) => {
             },
         },
         {
-            $group: {
-                _id: '$attendanceRecords.status',
-                count: {
-                    $sum: 1,
-                },
-            },
-        },
+            $project:{
+                _id:0,
+                name:1,
+                className:"$profile.className",
+                roll_no:"$profile.roll_no",
+                status:"$attendanceRecords.status",
+                Date:"$attendanceRecords.date",
+            }
+            
+        }
+        
     ]);
-    // Format the result
-    const attendanceSummary = {
-        present: 0,
-        absent: 0,
-        leave: 0,
-    };
-
-    result.forEach((record) => {
-        attendanceSummary[record._id] = record.count;
-    });
+   
 
     return res
         .status(200)
-        .json(new apiResponse(200, attendanceSummary, 'attendance fetch successfully'));
+        .json(new apiResponse(200, result, 'attendance fetch successfully'));
 });
-
 // get result by id
 const getResult = asyncHandler(async (req, res) => {
     const _id = req.user._id;

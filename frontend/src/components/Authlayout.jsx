@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export default function Protected({ children, Authentication = true }) {
-  console.log("mounted");
+  console.log('mounted');
   const navigate = useNavigate();
   const [loader, setLoader] = useState(true);
   const userdata = useSelector((state) => state.auth.userData);
@@ -17,7 +17,7 @@ export default function Protected({ children, Authentication = true }) {
       navigate('/login');
     } else if (!Authentication && authStatus !== Authentication) {
       if (userdata.role === 'admin') {
-        navigate("/");
+        navigate('/');
       }
       if (userdata.role === 'student') {
         navigate('/student');

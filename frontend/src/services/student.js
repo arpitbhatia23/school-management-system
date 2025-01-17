@@ -10,8 +10,9 @@ export const studentapi = () => {
   };
   // get monthly attendance
   const getMonthlyAttendance = async (data) => {
+    console.log(data);
     try {
-      return await api.get('student/getMonthlyAttendance', data);
+      return await api.post('student/getMonthlyAttendance', data);
     } catch (error) {
       return error.response;
     }

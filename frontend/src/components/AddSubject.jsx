@@ -63,7 +63,7 @@ const AddSubject = () => {
 
   return (
     <>
-            <GetSubject/>
+      <GetSubject />
 
       <Card className="mx-20">
         <CardContent>
@@ -162,14 +162,12 @@ const AddSubject = () => {
                     </FormItem>
                   )}
                 />
-
-                
               </CardContent>
-              <div className='flex justify-center'>
-                  <Button type="submit">
-                    {loading ? 'Submitting...' : 'Submit'}{' '}
-                  </Button>
-                </div>
+              <div className="flex justify-center">
+                <Button type="submit">
+                  {loading ? 'Submitting...' : 'Submit'}{' '}
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>

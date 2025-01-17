@@ -1,74 +1,79 @@
-import React, { useEffect, useState } from 'react'
-import { Card, CardContent, CardTitle } from '../ui/card'
-import { teacherapi } from '@/services/teacherapi'
-import { Form, FormControl, FormField, FormItem } from '../ui/form'
-import { Input } from '../ui/input'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
-import { Checkbox } from '../ui/checkbox'
-import { useForm } from 'react-hook-form'
-import { toast } from '@/hooks/use-toast'
-import { Button } from '../ui/button'
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardTitle } from '../ui/card';
+import { teacherapi } from '@/services/teacherapi';
+import { Form, FormControl, FormField, FormItem } from '../ui/form';
+import { Input } from '../ui/input';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../ui/table';
+import { Checkbox } from '../ui/checkbox';
+import { useForm } from 'react-hook-form';
+import { toast } from '@/hooks/use-toast';
+import { Button } from '../ui/button';
 
 const Attendance = () => {
-  const { getStudents,attendance } = teacherapi()
-  const [students, setStudents] = useState([])
+  const { getStudents, attendance } = teacherapi();
+  const [students, setStudents] = useState([]);
   const fetchStudents = async () => {
     try {
-      const res = await getStudents()
+      const res = await getStudents();
       if (res.data.success) {
-        setStudents(res.data.data)
+        setStudents(res.data.data);
       } else {
-        console.error('Failed to fetch students')
+        console.error('Failed to fetch students');
       }
     } catch (error) {
-      console.error('Error fetching students:', error)
+      console.error('Error fetching students:', error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchStudents()
-  }, [])
+    fetchStudents();
+  }, []);
 
   const form = useForm({
     defaultValues: {
       attendance: students.map((student) => ({
         student_id: student._id,
         date: new Date().toLocaleDateString(),
-        student_name:student.name,
-        student_class:student.className,
-        student_roll_no:student.roll_no,
+        student_name: student.name,
+        student_class: student.className,
+        student_roll_no: student.roll_no,
         student_status: '',
       })),
     },
-  })
+  });
 
-  const { handleSubmit, control, setValue } = form
+  const { handleSubmit, control, setValue } = form;
 
   useEffect(() => {
     // Update form's default values when students are fetched
     form.reset({
       attendance: students.map((student) => ({
         student_id: student._id,
-        student_name:student.name,
-        student_roll_no:student.roll_no,
-        student_class:student.className,
+        student_name: student.name,
+        student_roll_no: student.roll_no,
+        student_class: student.className,
         date: new Date().toLocaleDateString(),
         student_status: '',
       })),
-    })
-  }, [students])
+    });
+  }, [students]);
 
-  const onSubmit =async (data) => {
-    const res= await attendance(data)
-    if(res.data.success){
-     toast({title:"success",description:"attendance added succesfully"})
+  const onSubmit = async (data) => {
+    const res = await attendance(data);
+    if (res.data.success) {
+      toast({ title: 'success', description: 'attendance added succesfully' });
+    } else {
+      toast({ title: 'failed', description: 'something went wrong' });
     }
-    else{toast({title:"failed",description:"something went wrong"})}
-    console.log('Attendance Data Submitted:', data)
-
-
-  }
-
+    console.log('Attendance Data Submitted:', data);
+  };
 
   return (
     <div>
@@ -109,7 +114,8 @@ const Attendance = () => {
                             )}
                           />
                         </TableCell>
-                        <TableCell><FormField
+                        <TableCell>
+                          <FormField
                             name={`attendance[${index}].student_name`}
                             control={control}
                             render={({ field }) => (
@@ -117,14 +123,16 @@ const Attendance = () => {
                                 <FormControl>
                                   <Input
                                     readOnly
-                                    value={student.name} 
+                                    value={student.name}
                                     {...field}
                                   />
                                 </FormControl>
                               </FormItem>
                             )}
-                          /></TableCell>
-                          <TableCell><FormField
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <FormField
                             name={`attendance[${index}].student_roll_no`}
                             control={control}
                             render={({ field }) => (
@@ -132,14 +140,16 @@ const Attendance = () => {
                                 <FormControl>
                                   <Input
                                     readOnly
-                                    value={student.roll_no} 
+                                    value={student.roll_no}
                                     {...field}
                                   />
                                 </FormControl>
                               </FormItem>
                             )}
-                          /></TableCell>
-                           <TableCell><FormField
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <FormField
                             name={`attendance[${index}].student_class`}
                             control={control}
                             render={({ field }) => (
@@ -147,13 +157,14 @@ const Attendance = () => {
                                 <FormControl>
                                   <Input
                                     readOnly
-                                    value={student.className} 
+                                    value={student.className}
                                     {...field}
                                   />
                                 </FormControl>
                               </FormItem>
                             )}
-                          /></TableCell>
+                          />
+                        </TableCell>
                         <TableCell>
                           <FormField
                             name={`attendance[${index}].date`}
@@ -162,7 +173,6 @@ const Attendance = () => {
                               <FormItem>
                                 <FormControl>
                                   <Input
-                                    
                                     value={new Date().toLocaleDateString()} // Use date dynamically
                                     {...field}
                                   />
@@ -172,53 +182,53 @@ const Attendance = () => {
                           />
                         </TableCell>
                         <TableCell>
-                        <FormField
+                          <FormField
                             name={`attendance[${index}].student_status`}
                             control={control}
                             render={({ field }) => (
                               <FormItem>
                                 <FormControl>
-                                <div className="flex items-center gap-2">
-                            <label className="flex items-center gap-1">
-                              <Checkbox
-                                id={`present-${student._id}`}
-                                onCheckedChange={(checked) =>
-                                  setValue(
-                                    `attendance[${index}].student_status`,
-                                    checked ? 'present' : ''
-                                  )
-                                }
-                               checked={field.value==="present"}
-                              />
-                              Present
-                            </label>
-                            <label className="flex items-center gap-1">
-                              <Checkbox
-                                id={`absent-${student._id}`}
-                                onCheckedChange={(checked) =>
-                                  setValue(
-                                    `attendance[${index}].student_status`,
-                                    checked ? 'absent' : ''
-                                  )
-                                }
-                                checked={field.value==="absent"}
-                                />
-                              Absent
-                            </label>
-                            <label className="flex items-center gap-1">
-                              <Checkbox
-                                id={`leave-${student._id}`}
-                                onCheckedChange={(checked) =>
-                                  setValue(
-                                    `attendance[${index}].student_status`,
-                                    checked ? 'leave' : ''
-                                  )
-                                }
-                              checked={field.value==="leave"}
-                              />
-                              Leave
-                            </label>
-                          </div>
+                                  <div className="flex items-center gap-2">
+                                    <label className="flex items-center gap-1">
+                                      <Checkbox
+                                        id={`present-${student._id}`}
+                                        onCheckedChange={(checked) =>
+                                          setValue(
+                                            `attendance[${index}].student_status`,
+                                            checked ? 'present' : '',
+                                          )
+                                        }
+                                        checked={field.value === 'present'}
+                                      />
+                                      Present
+                                    </label>
+                                    <label className="flex items-center gap-1">
+                                      <Checkbox
+                                        id={`absent-${student._id}`}
+                                        onCheckedChange={(checked) =>
+                                          setValue(
+                                            `attendance[${index}].student_status`,
+                                            checked ? 'absent' : '',
+                                          )
+                                        }
+                                        checked={field.value === 'absent'}
+                                      />
+                                      Absent
+                                    </label>
+                                    <label className="flex items-center gap-1">
+                                      <Checkbox
+                                        id={`leave-${student._id}`}
+                                        onCheckedChange={(checked) =>
+                                          setValue(
+                                            `attendance[${index}].student_status`,
+                                            checked ? 'leave' : '',
+                                          )
+                                        }
+                                        checked={field.value === 'leave'}
+                                      />
+                                      Leave
+                                    </label>
+                                  </div>
                                 </FormControl>
                               </FormItem>
                             )}
@@ -243,7 +253,7 @@ const Attendance = () => {
         </CardContent>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Attendance
+export default Attendance;

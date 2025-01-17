@@ -1,16 +1,12 @@
+import { useEffect, useState } from 'react';
+import './App.css';
+import { login } from './store/slice';
+import { Toaster } from './components/ui/toaster';
+import { RouterProvider } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useAuthApi } from './services/authapi';
 
-
-import { useEffect, useState } from "react";
-import "./App.css";
-import { login } from "./store/slice";
-import { Toaster } from "./components/ui/toaster";
-import {  RouterProvider } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useAuthApi } from "./services/authapi";
-
-
-
-import router from "@/router/router";
+import router from '@/router/router';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,15 +26,13 @@ function App() {
     fetchCurrentUser();
   }, [dispatch]);
 
- 
-
   return (
     <>
       <div className="flex justify-center w-screen min-h-screen">
         <Toaster />
-       <RouterProvider router={router}/>
-      
-        <Toaster/>
+        <RouterProvider router={router} />
+
+        <Toaster />
       </div>
     </>
   );

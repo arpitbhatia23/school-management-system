@@ -27,7 +27,7 @@ import { useSelector } from 'react-redux';
 import { teacherapi } from '@/services/teacherapi';
 
 const Notification = () => {
-  const userData=useSelector(state=>state.auth.userData)
+  const userData = useSelector((state) => state.auth.userData);
   const [notification, setnotifaction] = useState([
     {
       title: 'System Update',
@@ -56,10 +56,13 @@ const Notification = () => {
   ]);
 
   const { getNotification, delNoification, addnotification } = adminApi();
-const {getnotification}=teacherapi()
+  const { getnotification } = teacherapi();
   const fetchnotgication = async () => {
-    const res =  userData.role==="admin"? await getNotification(): await getnotification();
-    console.log(res)
+    const res =
+      userData.role === 'admin'
+        ? await getNotification()
+        : await getnotification();
+    console.log(res);
     if (res.data.success === true) {
       setnotifaction(res.data.data);
     }
@@ -85,7 +88,7 @@ const {getnotification}=teacherapi()
 
   useEffect(() => {
     fetchnotgication();
-  }, [userData.role==="admin"?addnotification:""]);
+  }, [userData.role === 'admin' ? addnotification : '']);
 
   const form = useForm({
     defaultValues: {
@@ -116,61 +119,63 @@ const {getnotification}=teacherapi()
           <div className=" h-64 overflow-y-scroll p-2 scrollbar-hide">
             <CardTitle className="flex justify-between  p-4 realtive top-0 ">
               Notifaction
-             {userData.role==="admin" && <Dialog>
-                <DialogTrigger>
-                  <Plus />
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogTitle>Add Notification</DialogTitle>
-                  <DialogDescription>
-                    <Form {...form}>
-                      <form
-                        onSubmit={form.handleSubmit(handeladdnotification)}
-                        className="grid grid-cols-1 gap-5"
-                      >
-                        <FormField
-                          name="title"
-                          control={Form.control}
-                          rules={{ required: 'title is required' }}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>title</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="enter title of notification"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          name="message"
-                          control={Form.control}
-                          rules={{ required: 'discription is required' }}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>description</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="enter title of notification"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+              {userData.role === 'admin' && (
+                <Dialog>
+                  <DialogTrigger>
+                    <Plus />
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogTitle>Add Notification</DialogTitle>
+                    <DialogDescription>
+                      <Form {...form}>
+                        <form
+                          onSubmit={form.handleSubmit(handeladdnotification)}
+                          className="grid grid-cols-1 gap-5"
+                        >
+                          <FormField
+                            name="title"
+                            control={Form.control}
+                            rules={{ required: 'title is required' }}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>title</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    placeholder="enter title of notification"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            name="message"
+                            control={Form.control}
+                            rules={{ required: 'discription is required' }}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>description</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    placeholder="enter title of notification"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                        <DialogFooter>
-                          <Button type="submit">submit</Button>
-                        </DialogFooter>
-                      </form>
-                    </Form>
-                  </DialogDescription>
-                </DialogContent>
-              </Dialog>}
+                          <DialogFooter>
+                            <Button type="submit">submit</Button>
+                          </DialogFooter>
+                        </form>
+                      </Form>
+                    </DialogDescription>
+                  </DialogContent>
+                </Dialog>
+              )}
             </CardTitle>
             <Separator />
 
@@ -181,15 +186,15 @@ const {getnotification}=teacherapi()
                   <span>{item.description || item.message}</span>{' '}
                   <span>
                     {item.date || new Date(item.createdAt).toLocaleDateString()}
-                  </span>{
-                    userData.role==="admin" &&
-
-                  <Button
-                    className="bg-red-500"
-                    onClick={() => handeldelete(item._id)}
-                  >
-                    delete
-                  </Button>}
+                  </span>
+                  {userData.role === 'admin' && (
+                    <Button
+                      className="bg-red-500"
+                      onClick={() => handeldelete(item._id)}
+                    >
+                      delete
+                    </Button>
+                  )}
                 </CardDescription>
               </CardContent>
             ))}

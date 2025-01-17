@@ -37,6 +37,7 @@ const Login = ({ className }, props) => {
     console.log(data);
     setloading(true);
     const res = await login(data);
+    console.log(res.data);
     setloading(false);
     if (res.data.success === true) {
       dispatch(AuthLogin(res.data.data.user));

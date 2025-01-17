@@ -4,7 +4,7 @@ const attendance = new Schema(
 
     {
         student_id:{
-            type:String,
+            type:Schema.Types.ObjectId,
             required: [true, 'student_id is required'],
 
         },

@@ -40,10 +40,10 @@ export const teacherapi = () => {
   // add result
   const result = async (data) => {
     try {
-      return await api.post('teacher/addResult', data,{
+      return await api.post('teacher/addResult', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          },
+        },
       });
     } catch (error) {
       return error.response;
@@ -81,25 +81,21 @@ export const teacherapi = () => {
       return error.response;
     }
   };
-  const getweeklyattendance=async()=>{
+  const getweeklyattendance = async () => {
     try {
-      return await api.get('teacher/getweeklyattendance')
+      return await api.get('teacher/getweeklyattendance');
     } catch (error) {
-
       return error.response;
- 
     }
-  }
-  
-  const totalstudent=async()=>{
+  };
+
+  const totalstudent = async () => {
     try {
-      return await api.get('teacher/totalstudent')
+      return await api.get('teacher/totalstudent');
     } catch (error) {
-
       return error.response;
- 
     }
-  }
+  };
   return {
     addAssignment,
     getAssignment,
@@ -111,6 +107,6 @@ export const teacherapi = () => {
     getnotification,
     idCard,
     getweeklyattendance,
-    totalstudent
+    totalstudent,
   };
 };
