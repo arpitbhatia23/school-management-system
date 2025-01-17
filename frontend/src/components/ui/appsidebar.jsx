@@ -97,7 +97,9 @@ const AppSidebar = () => {
         
     }else if(userData?.role==='student'){
       setMenuItems([
-        {title:'Dashboard',url:'/student',icon:Home}
+        {title:'Dashboard',url:'/student',icon:Home},
+        {title:'Result',url:'result',icon:UserCheck},
+        {title:'Setting',url:'setting',icon:Settings}
       ])
     }
   }, [userData?.role]);

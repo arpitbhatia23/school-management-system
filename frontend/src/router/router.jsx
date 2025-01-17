@@ -25,6 +25,9 @@ import AddExam from "@/components/teachercomp/AddExam";
 import Testcomp from "@/components/teachercomp/testcomp";
 import Addassignments from '@/components/teachercomp/Addassignments';
 import StDashboard from '@/components/Student/StDashboard';
+import StResult from '@/components/Student/StResult';
+import stNotification from '@/components/Student/StNotification';
+import StNotification from '@/components/Student/StNotification';
 const router=createBrowserRouter(
     createRoutesFromElements( <Route  path={"/" } errorElement={<Notfound/>}>
 
@@ -71,6 +74,9 @@ const router=createBrowserRouter(
         errorElement={<Notfound/>}>
           
           <Route index element={<StDashboard/>}/>
+          <Route path='result' element={<StResult/>}/>
+          <Route path='setting' element={<Setting/>}/>
+          <Route path ='notification' element={<StNotification/>}/>
 
         </Route>
 
