@@ -86,6 +86,7 @@ const AppSidebar = () => {
     } else if (userData?.role === 'teacher') {
       setMenuItems([
         { title: 'Dashboard', url: '/teacher', icon: Home },
+
         { title: 'Attendance', url: 'attendance', icon: Calendar },
         { title: 'Students', url: 'Getstudents', icon: Users },
         { title: 'Assignments', url: 'assignments', icon: Inbox },
@@ -93,6 +94,10 @@ const AppSidebar = () => {
         { title: 'Results', url: 'results', icon: UserCheck },
         { title: 'Settings', url: '/settings', icon: Settings },
         ]);
+    }else if(userData?.role==='student'){
+      setMenuItems([
+        {title:'Dashboard',url:'/student',icon:Home}
+      ])
     }
   }, [userData?.role]);
 

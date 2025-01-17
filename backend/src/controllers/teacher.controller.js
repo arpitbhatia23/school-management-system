@@ -15,6 +15,7 @@ import { drawRoundImage } from '../utils/pdf.js';
 import { qrcodegen } from '../utils/qr.js';
 import { Syllabus } from '../models/syllabus.js';
 import { Notification } from '../models/notification.js';
+
 const getallAssignment = asyncHandler(async (req, res) => {
     const teacher_id = req.user._id;
     const teacher = await User.findById(teacher_id);
@@ -24,6 +25,7 @@ const getallAssignment = asyncHandler(async (req, res) => {
     console.log(teacher);
     const class_incharge = teacher.profile.class_incharge;
     console.log(class_incharge);
+
     const assignments = await Assignment.find({ class_name: class_incharge });
     if (!assignments) {
         throw new apiError(404, 'assignments ni mile 😒');
@@ -49,6 +51,7 @@ const addAssignment = asyncHandler(async (req, res) => {
     }
     return res.status(200).json(new apiResponse(200, assignment, 'added successfully'));
 });
+
 
 // add exam
 const addExam = asyncHandler(async (req, res) => {
