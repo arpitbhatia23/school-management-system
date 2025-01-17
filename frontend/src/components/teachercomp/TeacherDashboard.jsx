@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardTitle,CardDescription } from '../ui/card'
 import { Separator } from '../ui/separator'
-import { Calendar, User } from 'lucide-react'
+import { Calendar, Download, User } from 'lucide-react'
 import Notification from '../Notification'
 import { chartConfig } from '@/utils/chatconfig';
 import { Bar, BarChart, CartesianGrid, XAxis, Tooltip } from 'recharts';
@@ -10,15 +10,39 @@ import {
  
 } from '@/components/ui/chart';
 import { teacherapi } from '@/services/teacherapi'
+import { Button } from '../ui/button'
+import { link } from 'fs'
+function calculateAttendancePercentage(daysPresent, totalWorkingDays) {
+  if (totalWorkingDays === 0) return 0; // Avoid division by zero
+  return Math.floor( (daysPresent / totalWorkingDays) * 100);
+}
+
+// Example usage
+
+
 const TeacherDashboard = () => {
   const [weeklyatendance,setweeklyatendance]=useState([])
-  const {getweeklyattendance,totalstudent}=teacherapi()
+  const {getweeklyattendance,totalstudent,idCard}=teacherapi()
  const [student,setstudent]=useState()
+ const currentDate = new Date();
+ const currentMonth = currentDate.getMonth() + 1; // getMonth() is zero-indexed
+ const currentYear = currentDate.getFullYear();
+
+ // Find attendance for the current month
+ const currentMonthAttendance = weeklyatendance.find(
+     (record) => record._id.month === currentMonth && record._id.year === currentYear
+
+ );
+
+ console.log(currentMonthAttendance)
   const gettotalstudent=async()=>{
     const res=await totalstudent()
     if(res.data.success){
       setstudent(res?.data?.data)
     }
+  }
+  const genid=async()=>{
+    const res=await idCard()
   }
   const getattendace=async()=>{
     const res= await getweeklyattendance()
@@ -40,11 +64,16 @@ const TeacherDashboard = () => {
     },
     {
       label: 'Attendance',
-      value:  0,
+      value:  calculateAttendancePercentage(currentMonthAttendance?.present ,22) +"%",
       bgcolor: 'bg-green-500',
       icon: User,
     },
-    
+    {
+      label: 'Download id card',
+      bgcolor: 'bg-green-500',
+      link:"",
+      icon: Download,
+    }
     
   ];
   const attendanceData = weeklyatendance.map((item) => ({
@@ -54,7 +83,7 @@ const TeacherDashboard = () => {
     leave: item.leave || 0,
   }));
   
-
+ 
 
   
   
@@ -75,12 +104,13 @@ const TeacherDashboard = () => {
                       >
                         <stat.icon />
                         <div className="flex flex-col items-center">
-                          <CardTitle>{stat.label}</CardTitle>
+                          <CardTitle>{stat?.label}</CardTitle>
                           <Separator />
                           <CardDescription className="font-se mibold text-white">
-                            {stat.value}
+                            {stat?.value}
                           </CardDescription>
                         </div>
+                        
                       </CardContent>
                     ))}
         </CardContent>
