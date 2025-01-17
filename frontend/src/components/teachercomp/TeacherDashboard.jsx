@@ -12,24 +12,29 @@ import {
 import { teacherapi } from '@/services/teacherapi'
 const TeacherDashboard = () => {
   const [weeklyatendance,setweeklyatendance]=useState([])
-  const {getweeklyattendance}=teacherapi()
+  const {getweeklyattendance,totalstudent}=teacherapi()
+ const [student,setstudent]=useState()
+  const gettotalstudent=async()=>{
+    const res=await totalstudent()
+    if(res.data.success){
+      setstudent(res?.data?.data)
+    }
+  }
   const getattendace=async()=>{
-    console.log("hi")
     const res= await getweeklyattendance()
-    console.log("hi 2")
 
-    console.log("res",res?.data?.data)
     setweeklyatendance(res.data.data)
 
   }
+  console.log(student)
   useEffect(()=>{
     getattendace()
+    gettotalstudent()
   },[])
-  console.log("weekly",weeklyatendance)
   const stats = [
     {
       label: 'Students',
-      value:  0,
+      value:  student?.[0]?.count,
       bgcolor: 'bg-orange-500',
       icon: User,
     },
@@ -39,12 +44,7 @@ const TeacherDashboard = () => {
       bgcolor: 'bg-green-500',
       icon: User,
     },
-    {
-      label: 'Assigmenent',
-      value:  0,
-      bgcolor: 'bg-blue-500',
-      icon: Calendar ,
-    },
+    
     
   ];
   const attendanceData = weeklyatendance.map((item) => ({
@@ -55,15 +55,8 @@ const TeacherDashboard = () => {
   }));
   
 
-  const assignmentData = [
-    { subject: "science", totalAssignments: 5 },
-    { subject: "math", totalAssignments: 7 },
-    { subject: "history", totalAssignments: 3 },
-    { subject: "hindi", totalAssignments: 5 },
-    { subject: "english", totalAssignments: 6 },
-    { subject: "cs", totalAssignments: 2 }
 
-  ];
+  
   
   
   
@@ -91,7 +84,7 @@ const TeacherDashboard = () => {
                       </CardContent>
                     ))}
         </CardContent>
-       <CardContent className="grid grid-cols-2 gap-4">
+       <CardContent className="grid grid-cols-1 gap-4">
         <CardContent>
      <ChartContainer config={chartConfig}>
             <BarChart data={attendanceData} width={600} height={300}>
@@ -110,21 +103,7 @@ const TeacherDashboard = () => {
             </BarChart>
           </ChartContainer>
           </CardContent>
-          <CardContent>
-     <ChartContainer config={chartConfig}>
-            <BarChart data={assignmentData} width={600} height={300}>
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="subject"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-              />
-              <Tooltip />
-              <Bar dataKey="totalAssignments" fill="var(--color-mobile)" radius={4} />
-            </BarChart>
-          </ChartContainer>
-          </CardContent>
+         
 
        </CardContent>
        <CardContent>

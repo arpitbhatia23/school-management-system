@@ -11,6 +11,7 @@ import {
     addSyllabus,
     getNotification,
     getWeeklyAttendance,
+    totalstudent,
 } from '../controllers/teacher.controller.js';
 import { uploadFile } from '../middleware/multer.middleware.js';
 const router = Router();
@@ -24,5 +25,6 @@ router.route('/genidcard').get(verifyJwt, verifyTeacher, genIdCard);
 router.route('/addSyllabus').post(uploadFile.single('file'), verifyJwt, verifyTeacher, addSyllabus);
 router.route('/getnotification').get(verifyJwt, verifyTeacher, getNotification);
 router.route('/getweeklyattendance').get(verifyJwt, verifyTeacher, getWeeklyAttendance);
+router.route('/totalstudent').get(verifyJwt, verifyTeacher, totalstudent);
 
 export default router;

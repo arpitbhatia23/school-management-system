@@ -24,6 +24,7 @@ import { useForm } from 'react-hook-form';
 import { Input } from './ui/input';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { useSelector } from 'react-redux';
+import { teacherapi } from '@/services/teacherapi';
 
 const Notification = () => {
   const userData=useSelector(state=>state.auth.userData)
@@ -55,9 +56,10 @@ const Notification = () => {
   ]);
 
   const { getNotification, delNoification, addnotification } = adminApi();
-
+const {getnotification}=teacherapi()
   const fetchnotgication = async () => {
-    const res = await getNotification();
+    const res =  userData.role==="admin"? await getNotification(): await getnotification();
+    console.log(res)
     if (res.data.success === true) {
       setnotifaction(res.data.data);
     }
@@ -83,7 +85,7 @@ const Notification = () => {
 
   useEffect(() => {
     fetchnotgication();
-  }, [addnotification]);
+  }, [userData.role==="admin"?addnotification:""]);
 
   const form = useForm({
     defaultValues: {

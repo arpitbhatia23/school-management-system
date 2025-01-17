@@ -94,6 +94,7 @@ const AppSidebar = () => {
         { title: 'Results', url: 'results', icon: UserCheck },
         { title: 'Settings', url: '/settings', icon: Settings },
         ]);
+        
     }else if(userData?.role==='student'){
       setMenuItems([
         {title:'Dashboard',url:'/student',icon:Home}

@@ -363,7 +363,7 @@ const getNotification = asyncHandler(async (req, res) => {
     if (!notification) {
         throw new apiError(400, 'something went wrong');
     }
-    return res.status(200).json(new apiResponse(200, 'notification '));
+    return res.status(200).json(new apiResponse(200, notification,'notification '));
 });
 // total montly atendance
 
@@ -407,6 +407,27 @@ const getNotification = asyncHandler(async (req, res) => {
   }
 });
 
+// total student 
+const totalstudent=asyncHandler(async(req,res)=>{
+    const student=await User.aggregate([
+        {
+            $match:{$and: [{"profile.className":req?.user?.profile?.class_incharge},{role:"student"}]}
+        },
+        {
+            $group:{
+               "_id":"$role",
+               count:{
+                $sum:1
+               }
+            }
+        }
+    ])
+    if(student?.length===0){
+        throw new apiError(404 , "student not found")
+    }
+    return res.status(200).json(new apiResponse(200,student,"student found"))
+})
+
 export {
     addAssignment,
     getallAssignment,
@@ -417,5 +438,6 @@ export {
     genIdCard,
     addSyllabus,
     getNotification,
-    getWeeklyAttendance
+    getWeeklyAttendance ,
+    totalstudent
 };
