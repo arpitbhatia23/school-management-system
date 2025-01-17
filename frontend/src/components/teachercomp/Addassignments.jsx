@@ -45,7 +45,7 @@ const onSubmit = async(data)=>{
     <>
     <GetAssignment/>
       <Card className='m-20'>
-        <CardTitle className="flex justify-center my-2"><h2>Add Assignment</h2></CardTitle>
+        <CardTitle className="flex justify-center my-2 text-orange-600"><h2>Add Assignment</h2></CardTitle>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                 <CardContent className="grid grid-cols-4 gap-4">

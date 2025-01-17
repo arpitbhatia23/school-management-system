@@ -20,7 +20,7 @@ export default function Protected({ children, Authentication = true }) {
         navigate("/");
       }
       if (userdata.role === 'student') {
-        navigate('/studentdashboard');
+        navigate('/student');
       }
       if (userdata.role === 'teacher') {
         navigate('/teacher');

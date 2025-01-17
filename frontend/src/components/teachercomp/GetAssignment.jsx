@@ -35,7 +35,8 @@ const GetAssignment = () => {
   return (
     <>
     <Card className='m-20'>
-<CardTitle>All Assignment</CardTitle>
+
+<CardTitle className='flex justify-center my-2 text-orange-600'> <h2>All Assignment</h2></CardTitle>
 <CardContent>
 <Table>
     <TableHeader>
