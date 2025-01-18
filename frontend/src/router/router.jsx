@@ -34,6 +34,7 @@ import StResult from '@/components/Student/StResult';
 import stNotification from '@/components/Student/StNotification';
 import StNotification from '@/components/Student/StNotification';
 import StAttendance from '@/components/Student/StAttendance';
+import GetSubject from '@/components/Student/Getsuject';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path={'/'} errorElement={<Notfound />}>
@@ -94,6 +95,7 @@ const router = createBrowserRouter(
         <Route path="result" element={<StResult />} />
         <Route path="setting" element={<Setting />} />
         <Route path="notification" element={<StNotification />} />
+        <Route path="subject" element={<GetSubject />} />
         <Route path="attendance" element={<StAttendance />} />
       </Route>
 

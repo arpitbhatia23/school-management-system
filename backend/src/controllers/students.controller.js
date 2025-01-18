@@ -15,6 +15,7 @@ import { Exam } from '../models/exam.js';
 import { Result } from '../models/result.js';
 import { Syllabus } from '../models/syllabus.js';
 import { Notification } from '../models/notification.js';
+import { Subject } from '../models/subject.js';
 
 const genIdCard = asyncHandler(async (req, res) => {
     const userId = req.user._id;
@@ -305,4 +306,22 @@ const getnotification = asyncHandler(async (req, res) => {
     return res.status(200).json(new apiResponse(200, notification, 'notification found'));
 });
 
-export { genIdCard, getMonthlyAttendance, getResult, getexam, getSyllabus, getnotification };
+const getsubjects=asyncHandler(async(req,res)=>{
+    const className=req.user.profile.className
+    const escapedClassName = className?.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+    console.log(escapedClassName)
+
+    const subject = await Subject.aggregate([
+        {
+        $match:{
+            class: { $regex: escapedClassName, $options: 'i' }
+        }
+        }
+    ])
+    if( subject.length===0){
+    throw new apiError(404,"subject fetch successfully")
+    }
+    return res.status(200).json(new apiResponse(200,subject,"subject fetch successfully"))
+})
+
+export { genIdCard, getMonthlyAttendance, getResult, getexam, getSyllabus, getnotification,getsubjects };
