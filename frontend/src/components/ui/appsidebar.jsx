@@ -103,7 +103,8 @@ const AppSidebar = () => {
         { title: 'Dashboard', url: '/student', icon: Home },
         { title: 'Result', url: 'result', icon: UserCheck },
         { title: 'Attendance', url: 'attendance', icon: UserCheck },
-
+         {title:'Datesheet',url:'datesheet',icon:Search},
+         
         { title: 'Setting', url: 'setting', icon: Settings },
       ]);
     }
