@@ -92,7 +92,7 @@ const StDashboard = () => {
         <CardTitle className="flex justify-center my-8 text-2xl">
           <h2>Welcome Back {userData?.name} </h2>
         </CardTitle>
-        <CardContent className="grid grid-cols-3 gap-8">
+        <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {styling.map((styling, index) => (
             <>
               <Card

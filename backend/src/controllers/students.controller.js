@@ -316,6 +316,28 @@ const getsubjects=asyncHandler(async(req,res)=>{
         $match:{
             class: { $regex: escapedClassName, $options: 'i' }
         }
+        },
+        {
+           $lookup:{
+            from:"users",
+            localField:"teacher_id",
+            foreignField:"_id",
+            as:"teacher"
+           } 
+        },
+        {
+            $unwind:{
+                path:"$teacher"
+            }
+        },
+        {
+            $project:{
+                subject_name:1,
+                class:1,
+                days:1,
+                time:1,
+                teacher_name:"$teacher.name"
+            }
         }
     ])
     if( subject.length===0){
