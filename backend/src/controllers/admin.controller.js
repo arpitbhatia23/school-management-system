@@ -315,9 +315,11 @@ const getteachers = asyncHandler(async (req, res) => {
 // getall subject
 const getallsubject = asyncHandler(async (req, res) => {
     const { subject_name, className } = req.body;
+
     const matchConditions = [];
     if (className) {
-        matchConditions.push({ class: { $regex: className, $options: 'i' } });
+        const escapedClassName = className.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+        matchConditions.push({ class: { $regex: escapedClassName, $options: 'i' } });
     }
 
     if (subject_name) {

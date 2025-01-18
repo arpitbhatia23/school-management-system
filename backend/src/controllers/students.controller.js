@@ -236,6 +236,9 @@ const getMonthlyAttendance = asyncHandler(async (req, res) => {
         
     ]);
    
+    if(result.length===0){
+        throw new apiError(404,"attendance not found")
+    }
 
     return res
         .status(200)

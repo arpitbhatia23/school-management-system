@@ -25,10 +25,11 @@ import { Input } from './ui/input';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { useSelector } from 'react-redux';
 import { teacherapi } from '@/services/teacherapi';
+import { studentapi } from '@/services/student';
 
 const Notification = () => {
   const userData = useSelector((state) => state.auth.userData);
-  const [notification, setnotifaction] = useState([
+  const [notifications, setnotifaction] = useState([
     {
       title: 'System Update',
       description: 'A new system update is available.',
@@ -57,12 +58,16 @@ const Notification = () => {
 
   const { getNotification, delNoification, addnotification } = adminApi();
   const { getnotification } = teacherapi();
+  const {notification}=studentapi()
   const fetchnotgication = async () => {
-    const res =
-      userData.role === 'admin'
-        ? await getNotification()
-        : await getnotification();
-    console.log(res);
+    let res
+     if (userData.role === 'admin') {
+      res = await getNotification(); // Fetch notifications for admin
+    } else if (userData.role === 'student') {
+      res = await notification(); // Fetch notifications for students
+    } else {
+      res = await getnotification(); // Default notification fetch for other roles
+    };
     if (res.data.success === true) {
       setnotifaction(res.data.data);
     }
@@ -179,7 +184,7 @@ const Notification = () => {
             </CardTitle>
             <Separator />
 
-            {notification?.map((item, index) => (
+            {notifications?.map((item, index) => (
               <CardContent key={index} className="mb-4">
                 <CardTitle className="p-2">{item.title}</CardTitle>
                 <CardDescription className="flex gap-2 justify-start ">
