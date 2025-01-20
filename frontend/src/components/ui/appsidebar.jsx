@@ -105,8 +105,8 @@ const AppSidebar = () => {
         { title: 'Attendance', url: 'attendance', icon: UserCheck },
         { title: 'Subject', url: 'subject', icon: UserCheck },
 
-         {title:'Datesheet',url:'datesheet',icon:Search},
-         
+        { title: 'Datesheet', url: 'datesheet', icon: Search },
+
         { title: 'Setting', url: 'setting', icon: Settings },
       ]);
     }

@@ -27,7 +27,6 @@ import GetStudent from '@/components/teachercomp/GetStudent';
 import AddResult from '@/components/teachercomp/AddResult';
 import Notfound from '@/components/Notfound';
 import AddExam from '@/components/teachercomp/AddExam';
-import Testcomp from '@/components/teachercomp/testcomp';
 import Addassignments from '@/components/teachercomp/Addassignments';
 import StDashboard from '@/components/Student/StDashboard';
 import StResult from '@/components/Student/StResult';
@@ -97,10 +96,9 @@ const router = createBrowserRouter(
         <Route path="notification" element={<StNotification />} />
         <Route path="subject" element={<GetSubject />} />
         <Route path="attendance" element={<StAttendance />} />
-        <Route path="datesheet" element={<StDatesheet/>} />
+        <Route path="datesheet" element={<StDatesheet />} />
         <Route path="notification" element={<StNotification />} />
         <Route path="setting" element={<Setting />} />
-
       </Route>
 
       {/* Login Route */}
@@ -112,10 +110,6 @@ const router = createBrowserRouter(
           </Authlayout>
         }
       />
-
-      {/* Test Route */}
-
-      <Route path="/test" element={<Testcomp />} errorElement={<Notfound />} />
     </Route>,
   ),
 );

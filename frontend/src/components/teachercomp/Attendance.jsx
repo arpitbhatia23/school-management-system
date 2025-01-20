@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardTitle } from '../ui/card';
 import { teacherapi } from '@/services/teacherapi';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '../ui/form';
 import { Input } from '../ui/input';
 import {
   Table,
@@ -169,7 +175,7 @@ const Attendance = () => {
                           <FormField
                             name={`attendance[${index}].date`}
                             control={control}
-                            rules={{required:"date is required"}}
+                            rules={{ required: 'date is required' }}
                             render={({ field }) => (
                               <FormItem>
                                 <FormControl>
@@ -178,7 +184,7 @@ const Attendance = () => {
                                     {...field}
                                   />
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage />
                               </FormItem>
                             )}
                           />
@@ -187,7 +193,7 @@ const Attendance = () => {
                           <FormField
                             name={`attendance[${index}].student_status`}
                             control={control}
-                            rules={{required:"status required"}}
+                            rules={{ required: 'status required' }}
                             render={({ field }) => (
                               <FormItem>
                                 <FormControl>
@@ -233,7 +239,7 @@ const Attendance = () => {
                                     </label>
                                   </div>
                                 </FormControl>
-                                <FormMessage/>
+                                <FormMessage />
                               </FormItem>
                             )}
                           />

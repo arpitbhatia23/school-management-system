@@ -34,11 +34,11 @@ const PromoteStudent = () => {
 
   return (
     <div>
-      <Card className="m-20 p-8">
+      <Card className="m-20  sm:p-8">
         <CardTitle className="p-4 text-center">PROMOTE STUDENT</CardTitle>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CardContent className="grid grid-cols-4 gap-4">
+            <CardContent className="grid grid-cols-1  sm:grid-cols-4 gap-4">
               <FormField
                 name="name"
                 control={form.control}

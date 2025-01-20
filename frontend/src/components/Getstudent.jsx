@@ -57,6 +57,7 @@ const Getstudent = () => {
   return (
     <div>
       <Card className="m-2 sm:m-20 py-10 min-h-screen">
+        <CardTitle className="p-2 px-6 ">List of Students</CardTitle>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onsumbit)}>
             <CardContent className="grid grid-cols-3 gap-x-16 items-center">

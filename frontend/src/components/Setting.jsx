@@ -52,11 +52,16 @@ const Setting = () => {
   return (
     <>
       <Card className="m-20 ">
-        <CardContent className="bg-blue-600 rounded-t-lg h-44 w-full py-10">
+        <CardContent className="rounded-t-lg h-44 w-full bg-orange-500 p-0">
+          <img
+            src="https://cmsv2-assets.apptegy.net/uploads/9636/file/1041950/5a29fe57-06d2-49d0-bd96-64ccde879889.png"
+            className="h-44 w-full object-cover rounded-t-lg "
+            alt=""
+          />
           <Avatar className="rounded-full bg-red-300  ">
             <AvatarImage
               src={userData?.profile_image?.url}
-              className="rounded-full h-32 w-32 mx-4 transform translate-y-12"
+              className="rounded-full h-32 w-32 mx-4 transform -translate-y-16 border-4 border-white"
             />
             <AvatarFallback className="rounded-full h-32 w-32 mx-4 transform translate-y-12">
               cn
@@ -65,7 +70,7 @@ const Setting = () => {
         </CardContent>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="py-10">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="py-16">
               <CardContent className="flex flex-col item-center">
                 <FormField
                   name="name"
@@ -98,7 +103,7 @@ const Setting = () => {
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="enter email address"
+                          placeholder="Enter email address"
                           {...field}
                         />
                       </FormControl>
@@ -116,7 +121,7 @@ const Setting = () => {
                       <FormControl>
                         <Input
                           type="tel"
-                          placeholder="enter mobile number.."
+                          placeholder="Enter mobile number.."
                           {...field}
                         />
                       </FormControl>
@@ -130,11 +135,11 @@ const Setting = () => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>gender</FormLabel>
+                      <FormLabel>Gender</FormLabel>
                       <FormControl>
                         <Selectcomp
                           selectLable="select gender"
-                          selectvalue="gender"
+                          selectvalue="Gender"
                           selectItems={['male', 'female', 'other']}
                           field={{ ...field }}
                         />
@@ -146,7 +151,7 @@ const Setting = () => {
                 <div className="flex  justify-center">
                   <button
                     type="submit"
-                    className="bg-orange-500 p-2 text-white  m-4 w-28 "
+                    className="bg-orange-600 p-2 text-white  m-4 w-28 "
                   >
                     Update
                   </button>

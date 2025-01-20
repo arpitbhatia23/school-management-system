@@ -49,13 +49,13 @@ export const studentapi = () => {
       return error.response;
     }
   };
-  const getsubject=async()=>{
+  const getsubject = async () => {
     try {
       return await api.get('student/getsubject');
     } catch (error) {
       return error.response;
     }
-  }
+  };
   return {
     idCard,
     getMonthlyAttendance,
@@ -63,6 +63,6 @@ export const studentapi = () => {
     result,
     syllabus,
     notification,
-    getsubject
+    getsubject,
   };
 };

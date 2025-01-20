@@ -58,16 +58,16 @@ const Notification = () => {
 
   const { getNotification, delNoification, addnotification } = adminApi();
   const { getnotification } = teacherapi();
-  const {notification}=studentapi()
+  const { notification } = studentapi();
   const fetchnotgication = async () => {
-    let res
-     if (userData.role === 'admin') {
+    let res;
+    if (userData.role === 'admin') {
       res = await getNotification(); // Fetch notifications for admin
     } else if (userData.role === 'student') {
       res = await notification(); // Fetch notifications for students
     } else {
       res = await getnotification(); // Default notification fetch for other roles
-    };
+    }
     if (res.data.success === true) {
       setnotifaction(res.data.data);
     }

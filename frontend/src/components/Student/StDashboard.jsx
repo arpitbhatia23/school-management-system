@@ -10,8 +10,8 @@ function calculateAttendancePercentage(daysPresent, totalWorkingDays) {
   return Math.floor((daysPresent / totalWorkingDays) * 100);
 }
 const StDashboard = () => {
-  const[attendance,setattendance]=useState()
-  const [idcard,setidcard]=useState()
+  const [attendance, setattendance] = useState();
+  const [idcard, setidcard] = useState();
   const navigate = useNavigate();
   const styling = [
     {
@@ -20,46 +20,45 @@ const StDashboard = () => {
       height: 'h-28 ',
     },
   ];
-  const { getMonthlyAttendance,idCard } = studentapi();
+  const { getMonthlyAttendance, idCard } = studentapi();
   const userData = useSelector((state) => state.auth.userData);
-  
+
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth(); // getMonth() is zero-indexed (0 = January)
   const currentYear = currentDate.getFullYear();
-  
+
   // Calculate the start and end dates of the current month
   const startOfMonth = new Date(currentYear, currentMonth, 1); // First day of the month
   const endOfMonth = new Date(currentYear, currentMonth + 1, 0); // Last day of the month
-  
+
   const fetchAttendance = async () => {
     const res = await getMonthlyAttendance({
       startDate: startOfMonth.toISOString().split('T')[0], // Format as YYYY-MM-DD
       endDate: endOfMonth.toISOString().split('T')[0], // Format as YYYY-MM-DD
     });
 
-    if(res.data.success){
-      setattendance(res.data.data)
+    if (res.data.success) {
+      setattendance(res.data.data);
     }
-  
+
     // Handle the response as needed
   };
-  const fetchCard=async()=>{
-    const res=await idCard()
-    if(res.data.success){
-      setidcard(res.data.data)
+  const fetchCard = async () => {
+    const res = await idCard();
+    if (res.data.success) {
+      setidcard(res.data.data);
     }
-  }
+  };
 
-  useEffect(()=>{
-    fetchAttendance()
-    fetchCard()
-
-  },[])
+  useEffect(() => {
+    fetchAttendance();
+    fetchCard();
+  }, []);
   const currentMonthPresent = attendance?.filter(
-    (record) => record.status === "present"
+    (record) => record.status === 'present',
   )?.length;
-  console.log("present",currentMonthPresent)
-  
+  console.log('present', currentMonthPresent);
+
   const handeDownload = async () => {
     try {
       const res = await axios.get(idcard, {
@@ -85,7 +84,7 @@ const StDashboard = () => {
     } catch (error) {
       console.error('Something went wrong while downloading the file:', error);
     }
-  }; 
+  };
   return (
     <>
       <Card className="m-20 mx-24">
@@ -95,10 +94,15 @@ const StDashboard = () => {
         <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {styling.map((styling, index) => (
             <>
-              <Card
-                className={`${styling.bgcolor} ${styling.height} `}
-              >
-                <h2 className={`${styling.text}`}>Monthly attendance {calculateAttendancePercentage(currentMonthPresent,attendance?.length)}%</h2>
+              <Card className={`${styling.bgcolor} ${styling.height} `}>
+                <h2 className={`${styling.text} cursor-pointer`}>
+                  Monthly attendance{' '}
+                  {calculateAttendancePercentage(
+                    currentMonthPresent,
+                    attendance?.length,
+                  )}
+                  %
+                </h2>
               </Card>
               <Card
                 className={`${styling.bgcolor} ${styling.height}`}
@@ -106,7 +110,9 @@ const StDashboard = () => {
                   navigate('/student/attendance');
                 }}
               >
-                <h2 className={`${styling.text}`}>Attendance </h2>
+                <h2 className={`${styling.text} cursor-pointer`}>
+                  Attendance{' '}
+                </h2>
               </Card>
               <Card
                 className={`${styling.bgcolor} ${styling.height}`}
@@ -115,7 +121,9 @@ const StDashboard = () => {
                 }}
               >
                 <CardContent>
-                  <h2 className={`${styling.text}`}>Notification</h2>
+                  <h2 className={`${styling.text} cursor-pointer`}>
+                    Notification
+                  </h2>
                 </CardContent>
               </Card>
               <Card
@@ -124,21 +132,23 @@ const StDashboard = () => {
                   navigate('/student/result');
                 }}
               >
-                <h2 className={`${styling.text}`}>Result</h2>
+                <h2 className={`${styling.text} cursor-pointer`}>Result</h2>
               </Card>
-              
-                
+
               <Card
-               
                 className={`${styling.bgcolor} ${styling.height}`}
+                onClick={handeDownload}
               >
-                <h2 className={`${styling.text}`} onClick={handeDownload}> Download Id Card</h2>
+                <h2 className={`${styling.text} cursor-pointer`}>
+                  {' '}
+                  Download Id Card
+                </h2>
               </Card>
             </>
           ))}
         </CardContent>
       </Card>
-          </>
+    </>
   );
 };
 
