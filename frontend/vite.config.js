@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
   return {
     server: {
       proxy: {
-        '/api/v1': env.VITE_BASE_URL,
+        '/api/v1': 'http://localhost:3000',
       },
     },
     plugins: [react()],

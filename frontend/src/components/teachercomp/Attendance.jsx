@@ -180,6 +180,7 @@ const Attendance = () => {
                               <FormItem>
                                 <FormControl>
                                   <Input
+                                    type="date"
                                     value={new Date().toLocaleDateString()} // Use date dynamically
                                     {...field}
                                   />

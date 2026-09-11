@@ -27,11 +27,11 @@ const StAttendance = () => {
   const { getMonthlyAttendance } = studentapi();
   const [attendance, setattendance] = useState();
   const fetchattendance = async (data) => {
-    console.log(data);
+    const now = new Date();
     const res = await getMonthlyAttendance(
       data || {
-        startDate: '2025-01-01',
-        endDate: '2025-01-31',
+        startDate: new Date(now.getFullYear(), now.getMonth(), 1),
+        endDate: new Date(now.getFullYear(), now.getMonth() + 1, 0),
       },
     );
     console.log(res.data);
@@ -130,7 +130,7 @@ const StAttendance = () => {
                     <TableCell>{item.className}</TableCell>
                     <TableCell>{item.roll_no}</TableCell>
                     <TableCell>{item.status}</TableCell>
-                    <TableCell>{new Date(item.Date).toDateString()}</TableCell>
+                    <TableCell>{new Date(item.date).toDateString()}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

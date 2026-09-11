@@ -11,6 +11,17 @@ app.use(express.urlencoded({ extended: true, limit: '16kb' }));
 app.use(express.static('public'));
 app.use(cookieParser());
 app.use(status());
+app.use((req, res, next) => {
+    const start = Date.now();
+
+    res.on('finish', () => {
+        const duration = Date.now() - start;
+
+        console.log(`${req.method} ${req.originalUrl} ${res.statusCode} - ${duration}ms`);
+    });
+
+    next();
+});
 
 // routers
 

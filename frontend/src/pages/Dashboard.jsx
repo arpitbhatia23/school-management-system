@@ -65,9 +65,10 @@ const Dashboard = () => {
   console.log(userData);
   const handelLogout = async () => {
     const res = await logout();
-    console.log(res);
+    console.log('logout', res);
     if (res.data.success === true) {
       dispatch(authlogout(null));
+      console.log('uderdata', userData);
       navigate('/login');
     }
   };

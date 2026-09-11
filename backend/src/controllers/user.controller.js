@@ -100,7 +100,7 @@ const register = asyncHandler(async (req, res) => {
             nationality,
             address,
             category,
-          admission_Date,
+            admission_Date,
         };
 
         // Register parents' details
@@ -140,7 +140,7 @@ const register = asyncHandler(async (req, res) => {
             password: student_password,
             role,
             profile: { ...profile, parents_Detail: parentsDetailRecord._id, roll_no },
-           
+
             phone_no,
             profile_image: { url: profile_image?.secure_url, public_id: profile_image?.public_id },
         });
@@ -381,8 +381,17 @@ const logout = asyncHandler(async (req, res) => {
         },
         { new: true },
     );
-
-    return res.status(200).json(new apiResponse(200, {}, 'user logout successfully'));
+    const cookieOptions = {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+    };
+    console.log('logout');
+    return res
+        .clearCookie('acessToken', cookieOptions)
+        .clearCookie('refreshToken', cookieOptions)
+        .status(200)
+        .json(new apiResponse(200, {}, 'user logout successfully'));
 });
 // update refreshtoken
 const refreshAccessToken = asyncHandler(async (req, res) => {

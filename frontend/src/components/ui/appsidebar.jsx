@@ -96,7 +96,7 @@ const AppSidebar = () => {
         { title: 'Assignments', url: 'assignments', icon: Inbox },
         { title: 'Exams', url: 'exams', icon: Search },
         { title: 'Results', url: 'results', icon: UserCheck },
-        { title: 'Settings', url: '/settings', icon: Settings },
+        { title: 'Settings', url: 'settings', icon: Settings },
       ]);
     } else if (userData?.role === 'student') {
       setMenuItems([

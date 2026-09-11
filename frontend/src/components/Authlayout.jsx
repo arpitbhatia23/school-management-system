@@ -3,38 +3,41 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export default function Protected({ children, Authentication = true }) {
-  console.log('mounted');
   const navigate = useNavigate();
   const [loader, setLoader] = useState(true);
-  const userdata = useSelector((state) => state.auth.userData);
-  console.log(userdata);
-  const authStatus = useSelector((state) => state.auth.status);
-  console.log(authStatus);
+
+  const { userData, status: authStatus } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (Authentication && authStatus !== Authentication) {
-      console.log(Authentication && authStatus !== Authentication);
-      navigate('/login');
-    } else if (!Authentication && authStatus !== Authentication) {
-      if (userdata.role === 'admin') {
-        navigate('/');
-      }
-      if (userdata.role === 'student') {
-        navigate('/student');
-      }
-      if (userdata.role === 'teacher') {
-        navigate('/teacher');
-      }
+    // Protected route
+    if (Authentication && !authStatus) {
+      navigate('/login', { replace: true });
+      return;
     }
-    setLoader(false);
-  }, [authStatus, navigate, Authentication]);
 
-  // Loader Component
+    // Public route
+    if (!Authentication && authStatus) {
+      const role = userData?.role;
+
+      if (role === 'admin') {
+        navigate('/', { replace: true });
+      } else if (role === 'student') {
+        navigate('/student', { replace: true });
+      } else if (role === 'teacher') {
+        navigate('/teacher', { replace: true });
+      }
+
+      return;
+    }
+
+    setLoader(false);
+  }, [authStatus, userData, Authentication, navigate]);
+
   const Loader = () => (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid" />
     </div>
   );
 
-  return loader ? <Loader /> : <>{children}</>;
+  return loader ? <Loader /> : children;
 }

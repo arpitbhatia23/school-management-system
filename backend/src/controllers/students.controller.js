@@ -196,54 +196,55 @@ const genIdCard = asyncHandler(async (req, res) => {
 // attendance
 const getMonthlyAttendance = asyncHandler(async (req, res) => {
     const _id = req.user._id;
-    const { startDate, endDate } = req.body;
-    if (!(startDate, endDate)) {
-        throw new apiError(400, 'enter Date');
+    let { startDate, endDate } = req.body;
+
+    if (!startDate || !endDate) {
+        throw new apiError(400, 'Enter start date and end date');
     }
+
     const result = await User.aggregate([
         {
-            $match: { _id }, // Match student by ID
+            $match: { _id },
         },
+
         {
             $lookup: {
-                from: 'attendances', // Collection name for Attendance schema
-                localField: 'profile.attendance', // Field in Student schema
-                foreignField: '_id', // Field in Attendance schema
-                as: 'attendanceRecords', // Alias for joined data
+                from: 'attendances',
+                localField: 'profile.attendance',
+                foreignField: '_id',
+                as: 'attendanceRecords',
             },
         },
+
         {
-            $unwind: '$attendanceRecords', // Flatten attendance array
+            $unwind: '$attendanceRecords',
         },
+
         {
             $match: {
                 'attendanceRecords.date': {
                     $gte: new Date(startDate),
-                    $lte: new Date(endDate),
-                }, // Filter by date
+                    $lt: new Date(endDate),
+                },
             },
         },
         {
-            $project:{
-                _id:0,
-                name:1,
-                className:"$profile.className",
-                roll_no:"$profile.roll_no",
-                status:"$attendanceRecords.status",
-                Date:"$attendanceRecords.date",
-            }
-            
-        }
-        
+            $project: {
+                _id: 0,
+                name: 1,
+                className: '$profile.className',
+                roll_no: '$profile.roll_no',
+                status: '$attendanceRecords.status',
+                date: '$attendanceRecords.date',
+            },
+        },
     ]);
-   
-    if(result.length===0){
-        throw new apiError(404,"attendance not found")
+
+    if (result.length === 0) {
+        throw new apiError(404, 'Attendance not found');
     }
 
-    return res
-        .status(200)
-        .json(new apiResponse(200, result, 'attendance fetch successfully'));
+    return res.status(200).json(new apiResponse(200, result, 'Attendance fetched successfully'));
 });
 // get result by id
 const getResult = asyncHandler(async (req, res) => {
@@ -306,44 +307,52 @@ const getnotification = asyncHandler(async (req, res) => {
     return res.status(200).json(new apiResponse(200, notification, 'notification found'));
 });
 
-const getsubjects=asyncHandler(async(req,res)=>{
-    const className=req.user.profile.className
+const getsubjects = asyncHandler(async (req, res) => {
+    const className = req.user.profile.className;
     const escapedClassName = className?.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-    console.log(escapedClassName)
+    console.log(escapedClassName);
 
     const subject = await Subject.aggregate([
         {
-        $match:{
-            class: { $regex: escapedClassName, $options: 'i' }
-        }
+            $match: {
+                class: { $regex: escapedClassName, $options: 'i' },
+            },
         },
         {
-           $lookup:{
-            from:"users",
-            localField:"teacher_id",
-            foreignField:"_id",
-            as:"teacher"
-           } 
+            $lookup: {
+                from: 'users',
+                localField: 'teacher_id',
+                foreignField: '_id',
+                as: 'teacher',
+            },
         },
         {
-            $unwind:{
-                path:"$teacher"
-            }
+            $unwind: {
+                path: '$teacher',
+            },
         },
         {
-            $project:{
-                subject_name:1,
-                class:1,
-                days:1,
-                time:1,
-                teacher_name:"$teacher.name"
-            }
-        }
-    ])
-    if( subject.length===0){
-    throw new apiError(404,"subject fetch successfully")
+            $project: {
+                subject_name: 1,
+                class: 1,
+                days: 1,
+                time: 1,
+                teacher_name: '$teacher.name',
+            },
+        },
+    ]);
+    if (subject.length === 0) {
+        throw new apiError(404, 'subject fetch successfully');
     }
-    return res.status(200).json(new apiResponse(200,subject,"subject fetch successfully"))
-})
+    return res.status(200).json(new apiResponse(200, subject, 'subject fetch successfully'));
+});
 
-export { genIdCard, getMonthlyAttendance, getResult, getexam, getSyllabus, getnotification,getsubjects };
+export {
+    genIdCard,
+    getMonthlyAttendance,
+    getResult,
+    getexam,
+    getSyllabus,
+    getnotification,
+    getsubjects,
+};
